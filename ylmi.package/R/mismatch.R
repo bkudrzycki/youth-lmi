@@ -30,8 +30,7 @@ mismatch <- function(empxeduc, uexeduc) {
     mutate(obs_value = 100*1/3*(abs(prim_emp/total_emp-prim_unemp/total_unemp)+
                                         abs(sec_emp/total_emp-sec_unemp/total_unemp)+
                                         abs(tert_emp/total_emp-tert_unemp/total_unemp))) %>%
-    select(country = ref_area.label, time, sex.label, obs_value)
-
+    select(ref_area.label, time, sex.label, obs_value)
 
   return(mismatch)
 }
