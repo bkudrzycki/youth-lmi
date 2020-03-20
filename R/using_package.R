@@ -44,6 +44,31 @@ relative_unemp <- read.csv("./data/raw/unemployment_sex_age_ilostat.csv")
 empxeduc <- read.csv("./data/raw/employment_edu_ilostat.csv")
 uexeduc <- read.csv("./data/raw/unemployment_edu_ilostat.csv")
 
-## calculate transition dimension using "transComp" function
-index <- transComp(index, neet, relative_unemp, empxeduc, uexeduc, bygender = FALSE, lastyear = 2009)
+## calculate transition dimension using "transDim" function
+index <- transDim(index, neet, relative_unemp, empxeduc, uexeduc, bygender = FALSE, lastyear = 2009)
 
+## read in working poverty rate
+workingpov <- read.csv("./data/raw/workingpoverty_sex_ilostat.csv")
+
+## time-related underemployment
+underemp <- read.csv("./data/raw/underemployment_sex_ilostat.csv")
+employment <- empxeduc
+
+## youth informality rate
+informal <- read.csv("./data/raw/informality_age_sex_Bonnet.csv") %>%
+  rename("ref_area.label" = Country, time = Year, "Sex: Total" = X15.24, "Sex: Male" = "X15.24..Men.", "Sex: Female" = "X15.24..Women.") %>%
+  pivot_longer(cols = c("Sex: Total","Sex: Male","Sex: Female"), names_to = "sex.label", values_to = "obs_value") ## pivot to longer form
+
+informal$ref_area.label <- informal$ref_area.label %>% ## fix country names to match ILOSTAT for joining
+  recode("Congo, Democratic Republic of" = "Congo, Democratic Republic of the",
+         "Czech Republic" = "Czechia",
+         "Lao Peoples Democratic Republic" = "Lao People's Democratic Republic",
+         "Republic of Moldova" = "Moldova, Republic of",
+         "Venezuela" = "Venezuela, Bolivarian Republic of")
+
+employment <- read.csv("./data/raw/employment_sex_age_status_ilostat.csv")
+
+occupations <- read.csv("./data/raw/occupation_sex_age_ilostat.csv")
+
+## calculate working conditions dimension using "workcondDim" function
+index <- workcondDim(index, workingpov, underemp, employment, informal, occupations)
