@@ -1,5 +1,5 @@
 filter_help <- function(df, bygender = FALSE, lastyear = 2009) {
-  varname <- deparse(substitute(df))
+  varname <- deparse(substitute(df)) ## save name of input dataframe as string
   if(bygender == FALSE){
     df <- df %>%
       filter(sex.label == "Sex: Total") %>%

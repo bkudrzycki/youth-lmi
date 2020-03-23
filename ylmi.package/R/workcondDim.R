@@ -56,7 +56,7 @@ workcondDim <- function(index, workingpov, underemp, employment, informal, occup
     ##rescale all transition indicators and calculate arithmetic mean
     index <- index %>%
       mutate_at(c("workingpov", "underemp", "informal", "vulnerable", "elementary", "saff"), rescale) %>%
-      mutate(working_conditions_score = ifelse(rowSums(is.na(.))<3, rowMeans(.[3:7], na.rm = TRUE),NA)) %>%
+      mutate(working_conditions_score = ifelse(rowSums(is.na(.[7:12]))<3, rowMeans(.[7:12], na.rm = TRUE),NA)) %>%
       filter(!is.na(country_code))
     return(index)
   }

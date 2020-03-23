@@ -72,3 +72,60 @@ occupations <- read.csv("./data/raw/occupation_sex_age_ilostat.csv")
 
 ## calculate working conditions dimension using "workcondDim" function
 index <- workcondDim(index, workingpov, underemp, employment, informal, occupations)
+
+nosecondary <- read.csv("./data/raw/education_sex_dhs.csv") %>%
+  mutate("Sex: Female" = rowSums(.[c(3:5)]),
+         "Sex: Male" = rowSums(.[c(12:14)]),
+         time = substr(Survey, 0, 4)) %>%
+  mutate("Sex: Total" = rowMeans(.[c(22:23)])) %>% ## Total is naively calculated as the mean of male and female (see paper)
+  rename("ref_area.label" = Country) %>%
+  pivot_longer(cols = c("Sex: Total","Sex: Male","Sex: Female"), names_to = "sex.label", values_to = "obs_value") ## pivot to longer form
+
+nosecondary$ref_area.label <- nosecondary$ref_area.label %>%
+  recode("Kyrgyz Republic" = "Kyrgyzstan",
+         "Congo Democratic Republic" = "Congo, Democratic Republic of the",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Tanzania" = "Tanzania, United Republic of")
+
+literacy <- read.csv("./data/raw/literacy_sex_unesco.csv") %>%
+  rename("ref_area.label" = Country,
+         "obs_value" = Value,
+         "time" = Time)
+
+literacy$sex.label <- literacy$Indicator %>%
+  recode("Youth literacy rate, population 15-24 years, female (%)" = "Sex: Female",
+         "Youth literacy rate, population 15-24 years, male (%)" = "Sex: Male",
+         "Youth literacy rate, population 15-24 years, both sexes (%)" = "Sex: Total")
+
+literacy$ref_area.label <- literacy$ref_area.label %>%
+  recode("United Republic of Tanzania" = "Tanzania, United Republic of",
+       "Bolivia (Plurinational State of)" = "Bolivia",
+       "China, Macao Special Administrative Region" = "Macau, China",
+       "Democratic Republic of the Congo" = "Congo, Democratic Republic of the",
+       "Iran (Islamic Republic of)" = "Iran, Islamic Republic of",
+       "Venezuela (Bolivarian Republic of)" = "Venezuela, Bolivarian Republic of",
+       "Palestine" = "Occupied Palestinian Territory",
+       "Republic of Moldova" = "Moldova, Republic of")
+
+test_scores <- read.csv("./data/raw/test_scores_sex_wb.csv") %>%
+  rename("sex.label" = Indicator.Name,
+         "ref_area.label" = Economy.Name,
+         "obs_value" = "X2017..YR2017.") %>%
+  mutate(time = 2017)
+
+test_scores$obs_value <- as.numeric(levels(test_scores$obs_value))[test_scores$obs_value] ## recode factors as numeric
+
+test_scores$sex.label <- test_scores$sex.label %>%
+  recode("Harmonized Test Scores, Female" = "Sex: Female",
+         "Harmonized Test Scores, Male" = "Sex: Male",
+         "Harmonized Test Scores" = "Sex: Total")
+
+index <- educDim(nosecondary, literacy, test_scores, bygender = FALSE, lastyear = 2009)
+
+## generate overall index score
+
+rank <- index %>%
+  mutate(final_score = ifelse(rowSums(is.na(.))<3, rowMeans(.[c(6,13,17)], na.rm = TRUE),NA)) %>%
+  filter(!is.na(final_score)) %>%
+  select(country, country_code, final_score)
+
