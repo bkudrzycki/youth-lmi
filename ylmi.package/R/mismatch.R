@@ -1,35 +1,28 @@
 #' mismatch function
 #'
-#' @description This function calculates the exucation mismatch, taking raw employment-by-education and unemployment-by-education dataframes as inputs
+#' @description
 #' @title mismatch
 #' @keywords ilostat clean
 #' @export
 #' @examples
-##
 
-mismatch <- function(empxeduc, uexeduc) {
-  empxeduc <- empxeduc %>%
+mismatch <- function(employed, unemployed) {
+  employed <- employed %>%
+    filter(classif1.label == "Age (Aggregate bands): 15-24") %>%
     select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
-    pivot_wider(names_from = c(classif2.label), values_from = obs_value) %>%
-    mutate(prim_emp = rowSums(.[5:7], na.rm = TRUE), #sum aggregate educational attainment for youth and total
-           sec_emp = rowSums(.[8:9], na.rm = TRUE),
-           tert_emp = rowSums(.[c(10:12,14)], na.rm = TRUE)) %>%
-    mutate_all(funs(na_if(.,0))) %>%
-    select(ref_area.label, time, sex.label, prim_emp, sec_emp, tert_emp, total_emp = "Education (ISCED-11): Total")
+    pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
-  uexeduc <- uexeduc %>%
+  unemployed <- unemployed %>%
+    filter(classif1.label == "Age (Aggregate bands): 15-24") %>%
     select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
-    pivot_wider(names_from = c(classif2.label), values_from = obs_value) %>%
-    mutate(prim_unemp = rowSums(.[5:7], na.rm = TRUE), #sum aggregate educational attainment for youth and total
-           sec_unemp = rowSums(.[8:9], na.rm = TRUE),
-           tert_unemp = rowSums(.[c(10:12,15)], na.rm = TRUE))  %>%
-    mutate_all(funs(na_if(.,0))) %>%
-    select(ref_area.label, time, sex.label, prim_unemp, sec_unemp, tert_unemp, total_unemp = "Education (ISCED-11): Total")
+    pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
-  mismatch <- inner_join(uexeduc, empxeduc, by = c("ref_area.label", "time", "sex.label")) %>%
-    mutate(obs_value = 100*1/3*(abs(prim_emp/total_emp-prim_unemp/total_unemp)+
-                                        abs(sec_emp/total_emp-sec_unemp/total_unemp)+
-                                        abs(tert_emp/total_emp-tert_unemp/total_unemp))) %>%
+  mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
+
+  mismatch <- mismatch %>%
+    mutate(obs_value = 100*1/2*abs(.[[13]]/.[[12]]-.[[30]]/.[[29]]) +
+             abs(.[[14]]/.[[12]]-.[[31]]/.[[29]]) +
+             abs(.[[15]]/.[[12]]-.[[32]]/.[[29]])) %>%
     select(ref_area.label, time, sex.label, obs_value)
 
   return(mismatch)
