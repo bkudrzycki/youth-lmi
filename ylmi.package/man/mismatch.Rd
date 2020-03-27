@@ -4,10 +4,10 @@
 \alias{mismatch}
 \title{mismatch}
 \usage{
-mismatch(empxeduc, uexeduc)
+mismatch(employed, unemployed)
 }
 \description{
-This function calculates the exucation mismatch, taking raw employment-by-education and unemployment-by-education dataframes as inputs
+mismatch
 }
 \details{
 mismatch function

@@ -7,7 +7,7 @@
 rank_generator(dfList, country_list, bygender = FALSE, lastyear = 2009)
 }
 \description{
-This function takes a cleaned list of dataframes for each indicator in the youth labor market index and the list of countries of interest and outputs a country ranking according to desired parameters. These parameters are: disaggregation by gender (yes or no), the last year (i.e. the oldest data) to be entered into the index, rescaling method (raw, zscore) and aggregation method across indicators and dimensions (arithmetic mean, geometric mean).
+This function takes a cleaned list of dataframes for each indicator in the youth labor market index and the list of countries of interest and outputs an index score for each country according to the desired parameters. These parameters are: disaggregation by gender (yes or no), the last year (i.e. the oldest data) to be entered into the index, rescaling method (raw, zscore) and aggregation method across indicators and dimensions (arithmetic mean, geometric mean).
 }
 \details{
 rank_generator function
