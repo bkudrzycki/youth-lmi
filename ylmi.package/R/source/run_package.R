@@ -1,5 +1,5 @@
 library(tidyverse)
-library(roxygen2)
+
 rm(list=ls())
 
 setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
@@ -136,9 +136,29 @@ dfList <- list("neet"=neet, "relative_unemp"=relative_unemp, "mismatch"=mismatch
 ## choose country list of interest
 chosen_list <- country_lists[[3]]
 
-rank <- rank_generator(dfList, chosen_list, bygender = FALSE, lastyear = 2009)
+rank <- rank_generator(dfList, chosen_list, bygender = FALSE, lastyear = 2013, impute = FALSE)
+
+
+#----------
+# Clean up
 
 rm(chosen_list, country_lists, dfList, elementary, employed, informal, literacy, mismatch, neet, nosecondary, relative_unemp, saff, test_scores, total_emp, underemp, unemployed, vulnerable, workingpov)
 
+#----------
+# some plots
 
+# hist(log(elementary$obs_value))
+# hist(log(neet$obs_value))
+# hist(log(relative_unemp$obs_value))
+# hist(log(mismatch$obs_value))
+# hist(log(underemp$obs_value))
+# hist(log(vulnerable$obs_value))
+# hist(log(saff$obs_value))
+# hist(log(informal$obs_value))
+# hist(log(workingpov$obs_value))
+# hist(log(test_scores$obs_value))
+# hist(log(literacy$obs_value))
+# hist(log(nosecondary$obs_value))
 
+plot(rank$index_mean, rank$index_geom)
+text(rank$index_mean, rank$index_geom, labels=rank$country_code, cex= .7, pos = 3)
