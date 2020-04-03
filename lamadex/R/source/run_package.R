@@ -28,7 +28,7 @@ rank <- rank %>%
 ##rank <- rank %>%
 ##  filter(!is.na(index_mean)) ## remove unranked countries
 
-rm(country_lists, dfList, neet, unemployment_rate, employed, unemployed, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)
+## rm(country_lists, dfList, neet, unemployment_rate, employed, unemployed, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)
 
 #----------
 # some plots
@@ -36,6 +36,9 @@ rm(country_lists, dfList, neet, unemployment_rate, employed, unemployed, working
 plot(rank$index_mean, rank$index_geom)
 text(rank$index_mean, rank$index_geom, labels=rank$country_code, cex= .7, pos = 3)
 
+
+plot(rank$vulnerable, rank$informal)
+text(rank$vulnerable, rank$informal, labels=rank$country_code, cex= .7, pos = 3)
 # hist(log(elementary$obs_value))
 # hist(log(neet$obs_value))
 # hist(log(relative_unemp$obs_value))
