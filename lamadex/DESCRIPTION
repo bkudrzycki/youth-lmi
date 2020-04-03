@@ -1,0 +1,12 @@
+Package: lamadex
+Type: Package
+Title: Package for Generating (Youth) Labor Market Index (for Developing Countries)
+Version: 0.1.0
+Authors@R: person("Bartlomiej", "Kudrzycki", email = "bartlomiej.kudrzycki@nadel.ethz.ch",
+                  role = c("aut", "cre"))
+Description: This package takes raw data from ILOSTAT, UNESCO, and the DHS program and compiles the Youth Labor Market Index for Low-Income Countries (YLMILIC). The score is calculated for the total youth population and for males and females separately.
+Imports:
+    tidyverse
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0

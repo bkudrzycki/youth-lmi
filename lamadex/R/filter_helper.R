@@ -1,0 +1,22 @@
+#' filter_helper function
+#'
+#' @description This helper function filters the desired observations from the dataframe of each indicator and appends them to the "index" dataframe. Each dataframe passed through this function must have the following columns: ref_area.label (i.e. country name), sex.label, and obs_value.
+#' @title filter_helper
+#' @keywords filter helper
+#' @export
+#' @examples index <- filter_helper(neet, index, bygender = TRUE, lastyear= 2009)
+
+filter_helper <- function(df, bygender, lastyear) {
+  varname <- deparse(substitute(df)) ## save name of input dataframe as string
+  df$sex.label <- substring(df$sex.label,6) ## clip prefix from Sex: Total, Sex: Male and Sex: Female labels
+
+    df <- as_tibble(df) %>%
+      filter(sex.label == bygender) %>%
+      filter(time >= lastyear) %>%
+      group_by(ref_area.label) %>%
+      top_n(1, time) %>% ## include only a single observation per country per year
+      select(ref_area.label, obs_value)
+    df <- df %>%
+      rename(!!varname := obs_value)
+
+    }
