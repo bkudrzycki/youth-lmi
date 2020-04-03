@@ -1,10 +1,10 @@
 #' filter_helper function
 #'
-#' @description This helper function filters the desired observations from the dataframe of each indicator and appends them to the "index" dataframe. Each dataframe passed through this function must have the following columns: ref_area.label (i.e. country name), sex.label, and obs_value.
+#' @description This function is used in rank_generator to filter observations on gender (for male, female, or total) and choose the most recent observation for each country, provided that country is no older than the year indicated in the function parameter "last year".
 #' @title filter_helper
 #' @keywords filter helper
 #' @export
-#' @examples index <- filter_helper(neet, index, bygender = TRUE, lastyear= 2009)
+#' @examples index <- filter_helper(neet, bygender = TRUE, lastyear= 2009)
 
 filter_helper <- function(df, bygender, lastyear) {
   varname <- deparse(substitute(df)) ## save name of input dataframe as string
