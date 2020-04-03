@@ -13,7 +13,7 @@ rank_generator(
 )
 }
 \description{
-This function takes a cleaned list of dataframes for each indicator in the youth labor market index and the list of countries of interest and outputs an index score for each country according to the desired parameters. These parameters are: disaggregation by gender (yes or no), the last year (i.e. the oldest data) to be entered into the index, and whether missing data should be imputed for countries with sufficient but incomplete observations.
+This function takes a formatted list of dataframes for the following indicators: neet, unemployment rate, employed (in thousands), unemployed (in thousands), working povertyy, underemployment, rate of workers in informal jobs, employed by status, employed by occupation, education, literacy, and harmonized test scores. All these indicators must be disaggregated by sex and limited to the 15-24 age demographic (the unemployment rate must also include data from those 25+). The function returns dimension and index scores, compiled separately for the arithmetic and the geometric mean, for each country according to the desired parameters. These parameters are: gender (male, female, or total), the last year (i.e. the oldest data) to be entered into the index, and whether missing data should be imputed for countries with sufficient but incomplete observations.
 }
 \details{
 rank_generator function
