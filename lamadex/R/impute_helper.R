@@ -1,6 +1,6 @@
 #' impute_helper function
 #'
-#' @description This helper function imputes missing values conditional on the country having enough observations to be considered for the index.
+#' @description This helper function imputes missing values conditional on the country having enough observations to be considered for the index. The imputation take the average percentile of the existing observations in the dimension and impute the missing indicator(s) by taking the corresponding quantile of the distribution of the missing indicator. For example, if observations for two of three observations in the "education" dimension exist for a country, and this country is in the 90th percentile of countries when the averaged across the two existing indicators, then the function will impute the third, missing dimension to be the 90th percentile of the distribution of this last variable.
 #' @title impute_helper
 #' @keywords impute helper
 #' @export
