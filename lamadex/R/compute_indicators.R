@@ -12,24 +12,19 @@ compute_indicators <- function(dfList) {
   dfList[c(1:4,6,8,9)] <- map(dfList[c(1:4,6,8,9)], ~filter(.x, obs_status.label != "Unreliable"))
 
   ## reload indicators into dataframe, calculating indicators from raw data as needed
-
-  neet <- dfList[[1]] %>%
-    filter(obs_status.label != "Unreliable")
+  neet <- dfList[[1]]
 
   ## calculate relative unemployment rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
   relative_unemp <- dfList[[2]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
     mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`)
 
   ## calculate mismatch rate by summing over the differences in the youth employment and unemployment rates by (ILO aggregate) education level
   employed <- dfList[[3]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
   unemployed <- dfList[[4]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
@@ -43,8 +38,7 @@ compute_indicators <- function(dfList) {
 
   working_pov <- dfList[[5]]
 
-  underemp <- dfList[[6]] %>%
-    filter(obs_status.label != "Unreliable")
+  underemp <- dfList[[6]]
 
   # calculate youth underemployment rate by dividing number of underemployed youth divided by total number of youth employed
   underemp <- full_join(underemp, employed, by=c("ref_area.label", "time", "sex.label")) %>%
@@ -58,14 +52,12 @@ compute_indicators <- function(dfList) {
 
   ## calculate youth in vulnerable employment by dividing number of youth own account and contributing family workers by total working youth
   vulnerable <- dfList[[8]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     pivot_wider(names_from = classif2.label, values_from = obs_value) %>%
     mutate(obs_value = 100 * rowSums(.[14:15]) / `Status in employment (ICSE-93): Total`)
 
   ## calculate elementary work rate - rate of youth working in elementary occupations
   elementary <- dfList[[9]] %>%
-    filter(obs_status.label != "Unreliable",
-           classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
+    filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
            classif2.label %in% c("Occupation (ISCO-08): 9. Elementary occupations",
                                  "Occupation (ISCO-08): Total")) %>%
     pivot_wider(names_from = c(classif1.label, classif2.label), values_from = obs_value) %>%
@@ -73,7 +65,6 @@ compute_indicators <- function(dfList) {
 
   ## calculate SAFF - rate of youth working in skilled agriculture, forestry, and fishery
   saff <- dfList[[9]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
            classif2.label %in% c("Occupation (ISCO-08): 6. Skilled agricultural, forestry and fishery workers",
                                  "Occupation (ISCO-08): Total"),
@@ -97,7 +88,6 @@ compute_indicators <- function(dfList) {
   test_scores <- dfList[[12]]
 
   dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, vulnerable, elementary, saff, nosecondary, literacy, test_scores)
-
 
 }
 
