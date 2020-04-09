@@ -7,13 +7,12 @@
 #' @examples
 
 rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 2009, impute = FALSE) {
-
   ## use the compute_indicators helper function to take raw data and calculate indicators as used in the index
   dfList <- compute_indicators(dfList)
 
   ## apply the filter_helper function to each indicator dataframe in dfList, then append the values to the chosen list of countries
   index <- lapply(dfList, filter_helper, bygender = bygender, lastyear = lastyear) %>%
-    reduce(left_join, by = "ref_area.label")
+    reduce(full_join, by = "ref_area.label", accumulate == TRUE)
 
   index <- right_join(index, country_list, by = "ref_area.label") ## filter data for countries in chosen list
 
@@ -21,13 +20,11 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
 
 
   ## impute missing values if required (only for dimensions that already meet required number of indicators)
-
   if (impute == TRUE) {
     index <- impute_helper(index)
   }
 
   ## rescale all indicators and calculate dimension scores
-
   rescale <- function(x, na.rm = FALSE) (100-x)
   rur_rescale <- function(x, na.rm = FALSE) ifelse(x < 1, 100, ifelse(x > 10, 0, (100-(((x-1)/(10-1))*100))))
   hts_rescale <- function(x, na.rm = FALSE) (((x-300)/(625-300))*100)

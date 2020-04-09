@@ -8,7 +8,6 @@ library(lamadex, lib("./lamadex/lamadex"))
 
 #----------
 # Load data
-
 ## read in country lists according to the World Bank Lending Groups classification
 source("./lamadex/R/source/countryList.R") # stored lists: [1]: LICs (30) [2]: LMICs (46) [3]: LICs+LMICs (76) [4]: All countries (244)
 
@@ -17,14 +16,12 @@ source("./lamadex/R/source/data_loader.R")
 
 #----------
 # Run the package
-
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE)
+rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE)
 rank <- rank %>%
   arrange(desc(index_mean))
 
 #----------
 # Clean up
-
 ##rank <- rank %>%
 ##  filter(!is.na(index_mean)) ## remove unranked countries
 
@@ -32,7 +29,6 @@ rank <- rank %>%
 
 #----------
 # some plots
-
 plot(rank$index_mean, rank$index_geom)
 text(rank$index_mean, rank$index_geom, labels=rank$country_code, cex= .7, pos = 3)
 
@@ -67,4 +63,29 @@ text(rank$vulnerable, rank$informal, labels=rank$country_code, cex= .7, pos = 3)
 # plot(rank$elementary, rank$saff)
 # text(rank$elementary, rank$saff, labels=rank$country_code, cex= .7, pos = 3)
 
+plot(total$index_mean, female$index_mean)
+text(total$index_mean, female$index_mean, labels=total$country_code, cex= .7, pos = 3)
+lines(x = c(0,100), y = c(0,100))
 
+plot(total$index_mean, total$index_geom)
+text(total$index_mean, total$index_geom, labels=total$country_code, cex= .7, pos = 3)
+
+gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
+  rename("country" = Country.Name) %>%
+  select(country, "gdp"=X2018)
+
+gdp$country <- gdp$country %>%
+  recode("Vietnam" = "Viet Name",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+         "Gambia, The" = "Gambia",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Egypt, Arab Rep." = "Egypt",
+         "Lao PDR" = "Lao People's Democratic Republic",
+         "Kyrgyz Republic" = "Kyrgystan",
+         "Moldova" = "Moldova, Republic of")
+total <- left_join(total, gdp, by = "country")
+
+plot(total$gdp, total$index_mean)
+text(total$gdp, total$index_mean, labels=total$country_code, cex= .7, pos = 3)
+abline(lm(total$index_mean ~ total$gdp))

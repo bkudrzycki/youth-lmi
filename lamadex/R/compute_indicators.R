@@ -9,7 +9,7 @@
 compute_indicators <- function(dfList) {
 
   ## remove all observations marked by ILO as "unreliable"
-  dfList[c(1:4,6,8,9)] <- map(dfList[c(1:4,6,8,9)], ~filter(.x, obs_status.label != "Unreliable"))
+  # dfList[c(1:4,6,8,9)] <- map(dfList[c(1:4,6,8,9)], ~filter(.x, obs_status.label != "Unreliable"))
 
   ## reload indicators into dataframe, calculating indicators from raw data as needed
   neet <- dfList[[1]]
@@ -31,10 +31,10 @@ compute_indicators <- function(dfList) {
   mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
 
   mismatch <- mismatch %>%
-    mutate(obs_value = 100*1/2*abs(.[[13]]/.[[12]]-.[[30]]/.[[29]]) + # less than basic
-             abs(.[[14]]/.[[12]]-.[[31]]/.[[29]]) + # basic
-             abs(.[[15]]/.[[12]]-.[[32]]/.[[29]]) + # intermediate
-             abs(.[[16]]/.[[12]]-.[[33]]/.[[29]])) # advanced
+    mutate(obs_value = 100*1/2*abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
+             abs(.[[16]]/.[[14]]-.[[34]]/.[[32]]) + # basic
+             abs(.[[17]]/.[[14]]-.[[35]]/.[[32]]) + # intermediate
+             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]])) # advanced
 
   working_pov <- dfList[[5]]
 
@@ -52,11 +52,13 @@ compute_indicators <- function(dfList) {
 
   ## calculate youth in vulnerable employment by dividing number of youth own account and contributing family workers by total working youth
   vulnerable <- dfList[[8]] %>%
+    filter(obs_status.label != "Unreliable") %>%
     pivot_wider(names_from = classif2.label, values_from = obs_value) %>%
     mutate(obs_value = 100 * rowSums(.[14:15]) / `Status in employment (ICSE-93): Total`)
 
   ## calculate elementary work rate - rate of youth working in elementary occupations
   elementary <- dfList[[9]] %>%
+    filter(obs_status.label != "Unreliable") %>%
     filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
            classif2.label %in% c("Occupation (ISCO-08): 9. Elementary occupations",
                                  "Occupation (ISCO-08): Total")) %>%
@@ -65,6 +67,7 @@ compute_indicators <- function(dfList) {
 
   ## calculate SAFF - rate of youth working in skilled agriculture, forestry, and fishery
   saff <- dfList[[9]] %>%
+    filter(obs_status.label != "Unreliable") %>%
     filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
            classif2.label %in% c("Occupation (ISCO-08): 6. Skilled agricultural, forestry and fishery workers",
                                  "Occupation (ISCO-08): Total"),
