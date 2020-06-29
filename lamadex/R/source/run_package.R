@@ -16,7 +16,7 @@ source("./lamadex/R/source/data_loader.R")
 
 #----------
 # Run the package
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE)
+rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE)
 rank <- rank %>%
   arrange(desc(index_mean))
 
@@ -28,6 +28,35 @@ rank <- rank %>%
 ## rm(country_lists, dfList, neet, unemployment_rate, employed, unemployed, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)
 
 #----------
+## add gdp and unemployment columns
+gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
+  rename("country" = Country.Name) %>%
+  select(country, "gdp"=X2018)
+
+gdp$country <- gdp$country %>%
+  recode("Vietnam" = "Viet Nam",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+         "Gambia, The" = "Gambia",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Egypt, Arab Rep." = "Egypt",
+         "Lao PDR" = "Lao People's Democratic Republic",
+         "Kyrgyz Republic" = "Kyrgyzstan",
+         "Moldova" = "Moldova, Republic of")
+
+index <- left_join(rank, gdp, by = "country")
+
+unemployment_rate <- unemployment_rate %>%
+  filter(classif1.label == "Age (Youth, adults): 15-24")
+
+unemployment_rate <- filter_helper(unemployment_rate, bygender = "Total", lastyear = 2010) %>%
+  rename("country" = ref_area.label)
+
+index <- left_join(index, unemployment_rate, by = "country")
+
+write.csv(index, "/Users/kudrzycb/Desktop/index.csv")
+
+
 # some plots
 plot(rank$index_mean, rank$index_geom)
 text(rank$index_mean, rank$index_geom, labels=rank$country_code, cex= .7, pos = 3)

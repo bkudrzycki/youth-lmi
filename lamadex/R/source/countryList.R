@@ -161,11 +161,125 @@ developing <- full_list %>%
                                "Uganda",
                                "Yemen"))
 
+ssa <- full_list %>%
+  filter(ref_area.label %in% c("Angola",
+                               "Benin",
+                               "Botswana",
+                               "Burkina Faso",
+                               "Burundi",
+                               "Cape Verde",
+                               "Cameroon",
+                               "Central African Republic",
+                               "Chad",
+                               "Comoros",
+                               "Congo, Democratic Republic of the",
+                               "Congo",
+                               "Côte d'Ivoire",
+                               "Djibouti",
+                               "Equatorial Guinea",
+                               "Eritrea",
+                               "Ethiopia",
+                               "Gabon",
+                               "Gambia",
+                               "Ghana",
+                               "Guinea",
+                               "Guinea-Bissau",
+                               "Kenya",
+                               "Lesotho",
+                               "Liberia",
+                               "Madagascar",
+                               "Malawi",
+                               "Mali",
+                               "Mauritania",
+                               "Mauritius",
+                               "Mozambique",
+                               "Namibia",
+                               "Niger",
+                               "Nigeria",
+                               "Rwanda",
+                               "Sao Tome and Principe",
+                               "Senegal",
+                               "Seychelles",
+                               "Sierra Leone",
+                               "Somalia",
+                               "South Africa",
+                               "South Sudan",
+                               "Sudan",
+                               "Eswatini",
+                               "Tanzania, United Republic of",
+                               "Togo",
+                               "Uganda",
+                               "Zambia",
+                               "Zimbabwe"))
+
+east_africa <- full_list %>%
+  filter(ref_area.label %in% c("Burundi",
+                               "Comoros",
+                               "Djibouti",
+                               "Eritrea",
+                               "Ethiopia",
+                               "Kenya",
+                               "Madagascar",
+                               "Malawi",
+                               "Mauritius",
+                               "Mozambique",
+                               "Rwanda",
+                               "Seychelles",
+                               "Somalia",
+                               "South Sudan",
+                               "Sudan",
+                               "Tanzania, United Republic of",
+                               "Uganda",
+                               "Zambia",
+                               "Zimbabwe"))
+
+central_africa <- full_list %>%
+  filter(ref_area.label %in% c("Angola",
+                               "Cameroon",
+                               "Central African Republic",
+                               "Chad",
+                               "Congo, Democratic Republic of the",
+                               "Congo",
+                               "Equatorial Guinea",
+                               "Gabon",
+                               "Sao Tome and Principe"))
+
+west_africa <- full_list %>%
+  filter(ref_area.label %in% c("Benin",
+                               "Burkina Faso",
+                               "Cape Verde",
+                               "Côte d'Ivoire",
+                               "Gambia",
+                               "Ghana",
+                               "Guinea",
+                               "Guinea-Bissau",
+                               "Liberia",
+                               "Mali",
+                               "Mauritania",
+                               "Niger",
+                               "Nigeria",
+                               "Senegal",
+                               "Sierra Leone",
+                               "Togo"))
+
+southern_africa <- full_list %>%
+  filter(ref_area.label %in% c("Botswana",
+                               "Eswatini",
+                               "Lesotho",
+                               "Namibia",
+                               "South Africa"))
+
 sort(lics$ref_area.label)
 sort(lmics$ref_area.label)
 sort(developing$ref_area.label)
+sort(ssa$ref_area.label)
+sort(east_africa$ref_area.label)
+sort(central_africa$ref_area.label)
+sort(west_africa$ref_area.label)
+sort(southern_africa$ref_area.label)
 sort(full_list$ref_area.label)
 
-country_lists <- list(lics, lmics, developing, full_list)
 
-rm(lics, lmics, developing, full_list)
+country_lists <- list(lics, lmics, developing, ssa, east_africa, central_africa, west_africa, southern_africa, full_list)
+
+rm(lics, lmics, developing, ssa, east_africa, central_africa, west_africa, southern_africa, full_list)
