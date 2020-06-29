@@ -42,7 +42,8 @@ gdp$country <- gdp$country %>%
          "Egypt, Arab Rep." = "Egypt",
          "Lao PDR" = "Lao People's Democratic Republic",
          "Kyrgyz Republic" = "Kyrgyzstan",
-         "Moldova" = "Moldova, Republic of")
+         "Moldova" = "Moldova, Republic of",
+         "West Bank and Gaza" = "Occupied Palestinian Territory")
 
 index <- left_join(rank, gdp, by = "country")
 
