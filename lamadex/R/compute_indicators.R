@@ -21,11 +21,11 @@ compute_indicators <- function(dfList) {
 
   ## calculate mismatch rate by summing over the differences in the youth employment and unemployment rates by (ILO aggregate) education level
   employed <- dfList[[3]] %>%
-    select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
+    dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
   unemployed <- dfList[[4]] %>%
-    select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
+    dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
   mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))

@@ -42,7 +42,7 @@ impute_helper <- function(index) {
     mutate(nosecondary = ifelse(rowSums(is.na(.[11:13]))<2, coalesce(nosecondary, nosecondary_impute), nosecondary),
            literacy = ifelse(rowSums(is.na(.[11:13]))<2, coalesce(literacy, literacy_impute), literacy),
            test_scores = ifelse(rowSums(is.na(.[11:13]))<2, coalesce(test_scores, testScore_impute), test_scores)) %>%
-    select(-contains(c("impute", "pct")))
+    dplyr::select(-contains(c("impute", "pct")))
 
     return(index)
 }

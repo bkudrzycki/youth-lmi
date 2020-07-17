@@ -56,7 +56,7 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
   rank <- index %>%
     mutate(index_mean = ifelse(rowSums(is.na(.[15:17]))==0, rowMeans(.[15:17], na.rm = TRUE),NA)) %>%
     mutate(index_geom = ifelse(rowSums(is.na(.[18:20]))==0, apply(.[18:20], 1, gm_mean),NA)) #%>%
-    #select(country, country_code, transition_mean, working_conditions_mean, education_mean, transition_geom, working_conditions_geom, education_geom, index_mean, index_geom)
+    #dplyr::select(country, country_code, transition_mean, working_conditions_mean, education_mean, transition_geom, working_conditions_geom, education_geom, index_mean, index_geom)
 
   return(rank)
 }

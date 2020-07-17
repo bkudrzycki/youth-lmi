@@ -16,7 +16,7 @@ source("./lamadex/R/source/data_loader.R")
 
 #----------
 # Run the package
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE)
+rank <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE)
 rank <- rank %>%
   arrange(desc(index_mean))
 

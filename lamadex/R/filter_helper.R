@@ -16,7 +16,7 @@ filter_helper <- function(df, bygender, lastyear) {
              !is.na(obs_value)) %>%
       group_by(ref_area.label) %>%
       top_n(1, time) %>% ## include only a single observation per country per year
-      select(ref_area.label, obs_value)
+      dplyr::select(ref_area.label, obs_value)
     df <- df %>%
       rename(!!varname := obs_value)
 
