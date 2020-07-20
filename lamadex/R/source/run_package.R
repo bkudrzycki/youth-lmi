@@ -16,7 +16,7 @@ source("./lamadex/R/source/data_loader.R")
 
 #----------
 # Run the package
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE)
+rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE)
 rank <- rank %>%
   arrange(desc(index_mean))
 
@@ -119,3 +119,129 @@ total <- left_join(total, gdp, by = "country")
 plot(total$gdp, total$index_mean)
 text(total$gdp, total$index_mean, labels=total$country_code, cex= .7, pos = 3)
 abline(lm(total$index_mean ~ total$gdp))
+
+df <- left_join(male, female, by = c("country"), suffix = c("_male", "_female"))
+df <- left_join(total, df, by = c("country"))
+
+total <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE)
+total <- total %>%
+  arrange(desc(index_mean))
+
+female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = FALSE)
+female <- female %>%
+  arrange(desc(index_mean))
+
+male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = FALSE)
+male <- male %>%
+  arrange(desc(index_mean))
+
+df <- left_join(male, female, by = c("country", "country_code"), suffix = c("_male", "_female"))
+df <- left_join(total, df, by = c("country", "country_code"))
+
+df %>%
+  ggplot(aes(x = index_mean_female, y = index_mean_male, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(35, 84) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("MALE v FEMALE: ARITHMETIC MEAN (raw)")
+
+df %>%
+  ggplot(aes(x = index_geom_female, y = index_geom_male, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(39, 78) +
+  ylim(39, 78) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("MALE v FEMALE: GEOMETRIC MEAN (raw)")
+
+
+total_imp <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE)
+total_imp <- total_imp %>%
+  arrange(desc(index_mean))
+
+female_imp <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE)
+female_imp <- female_imp %>%
+  arrange(desc(index_mean))
+
+male_imp <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = TRUE)
+male_imp <- male_imp %>%
+  arrange(desc(index_mean))
+
+df2 <- left_join(male_imp, female_imp, by = c("country", "country_code"), suffix = c("_male", "_female"))
+df2 <- left_join(total_imp, df2, by = c("country", "country_code"))
+
+df2 %>%
+  ggplot(aes(x = index_mean_female, y = index_mean_male, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(40, 84) +
+  ylim(40, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("MALE v FEMALE: ARITHMETIC MEAN (imputed)")
+
+df2 %>%
+  ggplot(aes(x = index_geom_female, y = index_geom_male, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(40, 84) +
+  ylim(40, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("MALE v FEMALE: GEOMETRIC MEAN (imputed)")
+
+df3 <- left_join(total, total_imp, by = c("country", "country_code"), suffix = c("_raw", "_impute"))
+
+df3 %>%
+  ggplot(aes(x = index_mean_raw, y = index_mean_impute, label = country_code)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(35, 84) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3)
+
+df3 %>%
+  ggplot(aes(x = index_geom_raw, y = index_geom_impute, label = country_code)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1) +
+  xlim(35, 84) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3)
+
+total %>%
+  ggplot(aes(x = index_mean, y = index_geom, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  xlim(55, 80) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("ARITHMETIC v GEOMETRIC")
+
+female %>%
+  ggplot(aes(x = index_mean, y = index_geom, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  xlim(55, 80) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("ARITHMETIC v GEOMETRIC: FEMALES")
+
+male %>%
+  ggplot(aes(x = index_mean, y = index_geom, label = country_code)) +
+  geom_point() +
+  stat_summary(fun.data=mean_cl_normal) +
+  geom_smooth(method='lm') +
+  xlim(55, 80) +
+  ylim(35, 84) +
+  geom_text_repel(aes(label=country_code), size = 3) +
+  ggtitle("ARITHMETIC v GEOMETRIC: MALES")

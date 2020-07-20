@@ -28,8 +28,8 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
   rescale <- function(x, na.rm = FALSE) (100-x)
   rur_rescale <- function(x, na.rm = FALSE) ifelse(x < 1, 100, ifelse(x > 10, 0, (100-(((x-1)/(10-1))*100))))
   hts_rescale <- function(x, na.rm = FALSE) (((x-300)/(625-300))*100)
-  gm_mean = function(x, na.rm=TRUE){
-    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+  gm_mean = function(x){
+    exp(sum(log(x[x > 0]), na.rm=TRUE) / length(x[!is.na(x)]))
   }
 
   index <- index %>%
