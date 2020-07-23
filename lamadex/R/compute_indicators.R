@@ -58,16 +58,6 @@ compute_indicators <- function(dfList) {
     pivot_wider(names_from = c(classif1.label, classif2.label), values_from = obs_value) %>%
     mutate(obs_value = 100 * rowSums(.[c(11,13)]) / rowSums(.[c(10,12)]))
 
-  ## calculate SAFF - rate of youth working in skilled agriculture, forestry, and fishery
-  saff <- dfList[[9]] %>%
-    filter(obs_status.label != "Unreliable") %>%
-    filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
-           classif2.label %in% c("Occupation (ISCO-08): 6. Skilled agricultural, forestry and fishery workers",
-                                 "Occupation (ISCO-08): Total"),
-           obs_status.label != "Unreliable") %>%
-    pivot_wider(names_from = c(classif1.label, classif2.label), values_from = obs_value) %>%
-    mutate(obs_value = 100 * rowSums(.[c(11,13)]) / rowSums(.[c(10,12)]))
-
   ## calculate rate of youth with no secondary schooling
   nosecondary <- dfList[[10]] %>%
     mutate("Sex: Female" = rowSums(.[c(3:5)]),
@@ -83,7 +73,7 @@ compute_indicators <- function(dfList) {
 
   test_scores <- dfList[[12]]
 
-  dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, elementary, saff, nosecondary, literacy, test_scores)
+  dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, elementary, nosecondary, literacy, test_scores)
 
 }
 
