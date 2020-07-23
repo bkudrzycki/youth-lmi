@@ -20,6 +20,9 @@ rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear 
 rank <- rank %>%
   arrange(desc(index_mean))
 
+
+write.csv(rank, "/Users/kudrzycb/Desktop/ranks_new_mm_no_vuln.csv")
+
 #----------
 # Clean up
 ##rank <- rank %>%
@@ -56,7 +59,6 @@ unemployment_rate <- filter_helper(unemployment_rate, bygender = "Total", lastye
 index <- left_join(index, unemployment_rate, by = "country")
 
 write.csv(index, "/Users/kudrzycb/Desktop/index.csv")
-
 
 # some plots
 plot(rank$index_mean, rank$index_geom)

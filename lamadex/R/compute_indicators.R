@@ -24,17 +24,15 @@ compute_indicators <- function(dfList) {
     dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
-  unemployed <- dfList[[4]] %>%
-    dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
-    pivot_wider(names_from = c(classif2.label), values_from = obs_value)
-
-  mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
+  mismatch <- dfList[[4]] %>%
+    filter(obs_status.label != "Unreliable") %>%
+    pivot_wider(names_from = c(classif1.label, classif2.label), values_from = obs_value)
 
   mismatch <- mismatch %>%
-    mutate(obs_value = 100*1/2*abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
-             abs(.[[16]]/.[[14]]-.[[34]]/.[[32]]) + # basic
-             abs(.[[17]]/.[[14]]-.[[35]]/.[[32]]) + # intermediate
-             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]])) # advanced
+    mutate(obs_value = 100*1/3*(abs(.[[29]]/.[[11]]-.[[15]]/.[[12]]-.[[16]]/.[[13]]) + # less than basic
+             abs(.[[18]]/.[[11]]-.[[19]]/.[[12]]-.[[20]]/.[[13]]) + # basic
+             abs(.[[22]]/.[[11]]-.[[23]]/.[[12]]-.[[23]]/.[[13]]) + # intermediate
+             abs(.[[26]]/.[[11]]-.[[27]]/.[[12]]-.[[27]]/.[[13]]))) # advanced
 
   working_pov <- dfList[[5]]
 
@@ -50,11 +48,6 @@ compute_indicators <- function(dfList) {
                  values_to = "obs_value",
                  names_ptypes = list(sex.label = factor(levels = c("Sex: Total","Sex: Male","Sex: Female")))) ## pivot to longer form
 
-  ## calculate youth in vulnerable employment by dividing number of youth own account and contributing family workers by total working youth
-  vulnerable <- dfList[[8]] %>%
-    filter(obs_status.label != "Unreliable") %>%
-    pivot_wider(names_from = classif2.label, values_from = obs_value) %>%
-    mutate(obs_value = 100 * rowSums(.[14:15]) / `Status in employment (ICSE-93): Total`)
 
   ## calculate elementary work rate - rate of youth working in elementary occupations
   elementary <- dfList[[9]] %>%
@@ -90,7 +83,7 @@ compute_indicators <- function(dfList) {
 
   test_scores <- dfList[[12]]
 
-  dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, vulnerable, elementary, saff, nosecondary, literacy, test_scores)
+  dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, elementary, saff, nosecondary, literacy, test_scores)
 
 }
 
