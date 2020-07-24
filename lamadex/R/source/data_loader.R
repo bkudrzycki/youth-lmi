@@ -4,7 +4,7 @@ unemployment_rate <- read.csv("./data/raw/unemployment_rate_sex_age_ilostat.csv"
 
 employed <- read.csv("./data/raw/employed_sex_edu_ilostat.csv")
 
-transition <- read.csv("./data/raw/transition_sex_educ_ilostat.csv")
+unemployed <- read.csv("./data/raw/unemployed_sex_edu_ilostat.csv")
 
 working_pov <- read.csv("./data/raw/workingpoverty_sex_ilostat.csv")
 
@@ -86,4 +86,4 @@ test_scores$ref_area.label <- test_scores$ref_area.label %>%
          "West Bank and Gaza" = "Occupied Palestinian Territory")
 
 ## create list of all 12 indicators to serve as main input to the rank_generator function
-dfList <- list(neet, unemployment_rate, employed, transition, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)
+dfList <- list(neet, unemployment_rate, employed, unemployed, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)

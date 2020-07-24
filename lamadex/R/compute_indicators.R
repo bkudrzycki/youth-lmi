@@ -24,19 +24,23 @@ compute_indicators <- function(dfList) {
     dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
     pivot_wider(names_from = c(classif2.label), values_from = obs_value)
 
-  mismatch <- dfList[[4]] %>%
-    filter(obs_status.label != "Unreliable") %>%
-    pivot_wider(names_from = c(classif1.label, classif2.label), values_from = obs_value)
+  unemployed <- dfList[[4]] %>%
+    dplyr::select(ref_area.label, classif2.label, sex.label, time, obs_value) %>%
+    pivot_wider(names_from = c(classif2.label), values_from = obs_value)
+
+  mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
 
   mismatch <- mismatch %>%
-    mutate(obs_value = 100*1/3*(abs(.[[29]]/.[[11]]-.[[15]]/.[[12]]-.[[16]]/.[[13]]) + # less than basic
-             abs(.[[18]]/.[[11]]-.[[19]]/.[[12]]-.[[20]]/.[[13]]) + # basic
-             abs(.[[22]]/.[[11]]-.[[23]]/.[[12]]-.[[23]]/.[[13]]) + # intermediate
-             abs(.[[26]]/.[[11]]-.[[27]]/.[[12]]-.[[27]]/.[[13]]))) # advanced
+    mutate(obs_value = 100*1/2*abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
+             abs(.[[16]]/.[[14]]-.[[34]]/.[[32]]) + # basic
+             abs(.[[17]]/.[[14]]-.[[35]]/.[[32]]) + # intermediate
+             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]])) # advanced
 
-  working_pov <- dfList[[5]]
+  working_pov <- dfList[[5]] %>%
+    filter(classif1.label == "Age (Youth, adults): 15-24")
 
-  underemp <- dfList[[6]]
+  underemp <- dfList[[6]] %>%
+    filter(classif1.label == "Age (Youth, adults): 15-24")
 
   # calculate youth underemployment rate by dividing number of underemployed youth divided by total number of youth employed
   underemp <- full_join(underemp, employed, by=c("ref_area.label", "time", "sex.label")) %>%
