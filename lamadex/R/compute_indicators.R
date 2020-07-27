@@ -14,10 +14,19 @@ compute_indicators <- function(dfList) {
   ## reload indicators into dataframe, calculating indicators from raw data as needed
   neet <- dfList[[1]]
 
-  ## calculate relative unemployment rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
-  relative_unemp <- dfList[[2]] %>%
+  ## calculate relative working poverty rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
+  relative_workpov <- dfList[[5]] %>%
     pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
     mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`)
+
+  ## calculate relative underemployment rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
+  relative_underemp <- dfList[[6]] %>%
+    pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
+    mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`)
+
+  ## relative working conditions
+  relative_wc <- full_join(relative_workpov, relative_underemp, by = c("ref_area.label", "time", "sex.label")) %>%
+    mutate(obs_value = (obs_value.x + obs_value.y)/2)
 
   ## calculate mismatch rate by summing over the differences in the youth employment and unemployment rates by (ILO aggregate) education level
   employed <- dfList[[3]] %>%
@@ -77,7 +86,7 @@ compute_indicators <- function(dfList) {
 
   test_scores <- dfList[[12]]
 
-  dfList <- list(neet, relative_unemp, mismatch, working_pov, underemp, informal, elementary, nosecondary, literacy, test_scores)
+  dfList <- list(neet, relative_wc, mismatch, working_pov, underemp, informal, elementary, nosecondary, literacy, test_scores)
 
 }
 

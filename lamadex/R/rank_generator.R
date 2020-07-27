@@ -16,7 +16,7 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
 
   index <- right_join(index, country_list, by = "ref_area.label") ## filter data for countries in chosen list
 
-  colnames(index) <- c("ref_area.label", "neet", "relative_unemp", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores", "country_code")
+  colnames(index) <- c("ref_area.label", "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores", "country_code")
 
 
   ## impute missing values if required (only for dimensions that already meet required number of indicators)
@@ -26,7 +26,7 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
 
   ## rescale all indicators and calculate dimension scores
   rescale <- function(x, na.rm = FALSE) (100-x)
-  rur_rescale <- function(x, na.rm = FALSE) ifelse(x < 1, 100, ifelse(x > 10, 0, (100-(((x-1)/(10-1))*100))))
+  rur_rescale <- function(x, na.rm = FALSE) ifelse(x < 1, 100, ifelse(x > 3, 0, (100-(((x-1)/(3-1))*100))))
   hts_rescale <- function(x, na.rm = FALSE) (((x-300)/(625-300))*100)
   gm_mean = function(x){
     exp(sum(log(x[x > 0]), na.rm=TRUE) / length(x[!is.na(x)]))
@@ -40,7 +40,7 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
                 "informal",
                 "elementary",
                 "nosecondary"), rescale) %>%
-    mutate_at("relative_unemp", rur_rescale) %>%
+    mutate_at("relative_wc", rur_rescale) %>%
     mutate_at("test_scores", hts_rescale) %>%
     ungroup(.) %>%
     mutate(transition_mean = ifelse(rowSums(is.na(.[2:4]))<2, rowMeans(.[2:4], na.rm = TRUE),NA)) %>%
