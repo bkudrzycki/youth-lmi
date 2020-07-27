@@ -19,10 +19,7 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
   colnames(index) <- c("ref_area.label", "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores", "country_code")
 
 
-  ## impute missing values if required (only for dimensions that already meet required number of indicators)
-  if (impute == TRUE) {
-    index <- impute_helper(index)
-  }
+
 
   ## rescale all indicators and calculate dimension scores
   rescale <- function(x, na.rm = FALSE) (100-x)
@@ -42,7 +39,14 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
                 "nosecondary"), rescale) %>%
     mutate_at("relative_wc", rur_rescale) %>%
     mutate_at("test_scores", hts_rescale) %>%
-    ungroup(.) %>%
+    ungroup(.)
+
+  ## impute missing values if required (only for dimensions that already meet required number of indicators)
+  if (impute == TRUE) {
+    index <- impute_helper(index)
+  }
+
+  index <- index %>%
     mutate(transition_mean = ifelse(rowSums(is.na(.[2:4]))<2, rowMeans(.[2:4], na.rm = TRUE),NA)) %>%
     mutate(working_conditions_mean = ifelse(rowSums(is.na(.[5:8]))<3, rowMeans(.[5:8], na.rm = TRUE),NA)) %>%
     mutate(education_mean = ifelse(rowSums(is.na(.[9:11]))<2, rowMeans(.[9:11], na.rm = TRUE),NA)) %>%

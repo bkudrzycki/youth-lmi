@@ -40,20 +40,16 @@ compute_indicators <- function(dfList) {
   mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
 
   mismatch <- mismatch %>%
-    mutate(obs_value = 100*1/2*abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
+    mutate(obs_value = 100*1/2*(abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
              abs(.[[16]]/.[[14]]-.[[34]]/.[[32]]) + # basic
              abs(.[[17]]/.[[14]]-.[[35]]/.[[32]]) + # intermediate
-             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]])) # advanced
+             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]]))) # advanced
 
   working_pov <- dfList[[5]] %>%
     filter(classif1.label == "Age (Youth, adults): 15-24")
 
   underemp <- dfList[[6]] %>%
     filter(classif1.label == "Age (Youth, adults): 15-24")
-
-  # calculate youth underemployment rate by dividing number of underemployed youth divided by total number of youth employed
-  underemp <- full_join(underemp, employed, by=c("ref_area.label", "time", "sex.label")) %>%
-    mutate(obs_value = 100 * obs_value / `Education (Aggregate levels): Total`) ##
 
   informal <- dfList[[7]] %>%
     pivot_longer(cols = c("Sex: Total","Sex: Male","Sex: Female"),
