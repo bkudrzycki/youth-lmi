@@ -1,10 +1,7 @@
 library(tidyverse)
-
-rm(list=ls())
-
-setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
-
+library(here)
 library(lamadex, lib("./lamadex/lamadex"))
+
 
 #----------
 # Load data
@@ -17,8 +14,14 @@ source("./lamadex/R/source/data_loader.R")
 #----------
 # Run the package
 
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = FALSE) %>%
+male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
+
+comp <- full_join(male, female, by(c("country", "country_code")))
+
+
+
+#write.csv(rank, "/Users/kudrzycb/Desktop/total_raw.csv")
 
 #----------
 # Clean up
@@ -27,11 +30,25 @@ rank <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear
 
 ## rm(country_lists, dfList, neet, unemployment_rate, employed, unemployed, working_pov, underemp, informal, status, occupation, education, literacy, test_scores)
 
+
+
+plot <- left_join(unemployment_rate, informal, by = c("ref_area.label", "time")) %>%
+  filter(sex.label == "Sex: Total",
+         classif1.label == "Age (Youth, adults): 15-24") %>%
+  group_by(ref_area.label) %>%
+  top_n(1, time)
+
+plot(plot$obs_value, plot$`Sex: Total`)
+
 #----------
 ## add gdp and unemployment columns
 gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
   rename("country" = Country.Name) %>%
-  select(country, "gdp"=X2018)
+  select("ref_area.label" = country, "gdp"=X2018)
+
+plot <- left_join(gdp, informal, by = c("ref_area.label"))
+
+plot(plot$`Sex: Total`, plot$gdp, xlab = "Informality Rate", ylab = "Per capita GDP (2018)")
 
 gdp$country <- gdp$country %>%
   recode("Vietnam" = "Viet Nam",
