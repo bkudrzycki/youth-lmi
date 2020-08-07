@@ -1,5 +1,5 @@
 ## initialize index with country names to be included in the index
-full_list <- read.csv("./data/country_list.csv")
+full_list <- read.csv(here("data", "country_list.csv"))
 full_list$ref_area.label <- full_list$ref_area.label %>%
   recode("Reunion" = "Réunion",
          "Cote d'Ivoire" = "Côte d'Ivoire")
