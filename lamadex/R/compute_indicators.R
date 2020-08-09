@@ -60,7 +60,6 @@ compute_indicators <- function(dfList) {
 
   ## calculate elementary work rate - rate of youth working in elementary occupations
   elementary <- dfList[[9]] %>%
-    filter(obs_status.label != "Unreliable") %>%
     filter(classif1.label %in% c("Age (Youth bands): 15-19", "Age (Youth bands): 20-24"),
            classif2.label %in% c("Occupation (ISCO-08): 9. Elementary occupations",
                                  "Occupation (ISCO-08): Total")) %>%
