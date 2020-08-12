@@ -11,41 +11,19 @@ rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear 
 
 #----------
 
-male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = TRUE) %>%
+total <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE) %>%
   arrange(desc(index_mean))
 
-female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE) %>%
+male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = FALSE) %>%
   arrange(desc(index_mean))
 
-comp <- full_join(male, female, by = c("country", "country_code"), suffix = c("_male", "_female"))
+female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = FALSE) %>%
+  arrange(desc(index_mean))
 
-ggplot(comp, aes(x = index_mean_male, y = index_mean_female, label = country_code)) +
-  geom_point() +
-  geom_abline(slope = 1) +
-  xlab("Male score") +
-  ylab("Female score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3)
+gdp <- read.csv(here("data","raw","gdp_PPP_percap_worldbank.csv")) %>%
+  select("ref_area.label" = Country.Name, "gdp"=X2018)
 
-plot <- left_join(unemployment_rate, informal, by = c("ref_area.label", "time")) %>%
-  filter(sex.label == "Sex: Total",
-         classif1.label == "Age (Youth, adults): 15-24") %>%
-  group_by(ref_area.label) %>%
-  top_n(1, time)
-
-plot(plot$obs_value, plot$`Sex: Total`)
-
-#----------
-## add gdp and unemployment columns
-gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
-  rename("country" = Country.Name) %>%
-  select("ref_area.label" = country, "gdp"=X2018)
-
-plot <- left_join(gdp, informal, by = c("ref_area.label"))
-
-plot(plot$`Sex: Total`, plot$gdp, xlab = "Informality Rate", ylab = "Per capita GDP (2018)")
-
-gdp$country <- gdp$country %>%
+gdp$ref_area.label <- gdp$ref_area.label %>%
   recode("Vietnam" = "Viet Nam",
          "Cote d'Ivoire" = "Côte d'Ivoire",
          "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
@@ -57,6 +35,267 @@ gdp$country <- gdp$country %>%
          "Moldova" = "Moldova, Republic of",
          "West Bank and Gaza" = "Occupied Palestinian Territory")
 
+#---------- scatterplots for gender analysis
+
+
+comp <- full_join(male, female, by = c("country", "country_code"), suffix = c("_male", "_female"))
+
+comp <- full_join(comp, total, by = c("country", "country_code"))
+
+write.csv(comp, here("R/complete_raw.csv"))
+
+ggplot(comp, aes(x = index_mean_male, y = index_mean_female, label = country_code)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  xlab("Male") +
+  ylab("Female") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+gdp2 <- gdp %>% 
+  rename(country = ref_area.label)
+comp <- full_join(comp, gdp2, by = "country")
+rm(gdp2)
+
+comp <- comp %>% 
+  mutate(index_diff = index_mean_male-index_mean_female)
+
+ggplot(comp, aes(x = gdp, y = index_diff, label = country_code)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  xlab("GDP per capita") +
+  ylab("YLILI Gender Gap") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  scale_x_continuous(limits = c(0, 20000))
+  
+comp2 <- pivot_longer(comp, cols = c("index_mean_male", "index_mean_female"), names_prefix = "index_mean_", values_to = "gender_score", names_to = "Gender")
+
+ggplot(comp2, aes(x = gdp, y = gender_score, label = country_code, color = Gender)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE) +
+  xlab("GDP per capita") +
+  ylab("YLILI Score") +
+  theme_minimal() +
+  scale_x_continuous(limits = c(0, 20000))
+
+rm(comp2)
+
+ggplot(comp, aes(x = transition_mean_male, y = transition_mean_female, label = country_code)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  xlab("Male transition score") +
+  ylab("Female transition score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+ggplot(comp, aes(x = working_conditions_mean_male, y = working_conditions_mean_female, label = country_code)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  xlab("Male working conditions score") +
+  ylab("Female working conditions score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = country_code)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  xlab("Male education score") +
+  ylab("Female education score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+comp <- comp %>% 
+  mutate(diff_transition = transition_mean_male-transition_mean_female,
+         diff_working_conditions = working_conditions_mean_male-working_conditions_mean_female,
+         diff_education = education_mean_male-education_mean_female)
+
+ggplot(comp, aes(x = index_mean, y = diff_transition, label = country_code)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE) +
+  geom_hline(yintercept=0) +
+  xlab("YLILI score") +
+  ylab("Gender gap: transition") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+ggplot(comp, aes(x = index_mean, y = diff_working_conditions, label = country_code)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE) +
+  geom_hline(yintercept=0) +
+  xlab("YLILI score") +
+  ylab("Gender gap: working conditions") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+ggplot(comp, aes(x = index_mean, y = diff_education, label = country_code)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE) +
+  geom_hline(yintercept=0) +
+  xlab("YLILI score") +
+  ylab("Gender gap: education") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+ggplot(comp, aes(x = index_mean, y = index_geom, label = country_code)) +
+  geom_point() +
+  geom_smooth(method=lm, se=FALSE, color = "black", size = .5) +
+  xlab("Arithmetic mean") +
+  ylab("Geometric mean") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+#---------- correlation matrices
+
+library(corrplot)
+library(stargazer)
+
+cormat_indices <- rank %>% 
+  rename("work cond. ratio" = relative_wc,
+         "test scores" = test_scores,
+         "dim: transition" = transition_mean,
+         "dim: work cond." = working_conditions_mean,
+         "dim: education" = education_mean,
+         "YLILI" = index_mean) %>% 
+  select(c(2:11,13:15,19)) %>% 
+  filter(!is.na(`YLILI`)) %>% 
+  as.matrix()
+
+cormat_indices <- cormat_indices %>% 
+  cor()
+
+cor.mtest <- function(mat, ...) {
+  mat <- as.matrix(mat)
+  n <- ncol(mat)
+  p.mat<- matrix(NA, n, n)
+  diag(p.mat) <- 0
+  for (i in 1:(n - 1)) {
+    for (j in (i + 1):n) {
+      tmp <- cor.test(mat[, i], mat[, j], ...)
+      p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+    }
+  }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+
+p.mat <- cor.mtest(cormat_indices)
+
+corrplot(cormat_indices, method="circle", type="upper", p.mat = p.mat, sig.level = 0.01, tl.col="black", tl.srt=45)
+
+lower <- cormat_indices %>% round(3)
+lower[lower.tri(cormat_indices, diag=TRUE)]<-""
+lower <- as.matrix(lower)
+
+cormat_indices <- rank %>% 
+  rename("YLILI score" = index_mean,
+         "work cond. ratio" = relative_wc,
+         "test scores" = test_scores) %>% 
+  select(c(2:11,19)) %>% 
+  filter(!is.na(`YLILI score`)) %>% 
+  as.matrix()
+
+lower <- cormat_indices %>% round(3)
+lower[lower.tri(cormat_indices, diag=TRUE)]<-""
+lower <- as.matrix(lower)
+
+stargazer(lower,align = T)
+
+#---------- rank vs. GDP and unemployment
+
+df <- unemployment_rate %>% 
+  rename(country = ref_area.label) %>% 
+  filter(sex.label == "Sex: Total",
+         classif1.label == "Age (Youth, adults): 15-24") %>% 
+  group_by(country) %>%
+  top_n(1, time)
+  
+plot <- left_join(rank, df, by = c("country"))
+
+ggplot(plot, aes(x = obs_value, y = index_mean, label = country_code)) +
+  geom_point() +
+  xlab("Unemployment rate") +
+  ylab("YLILI score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+df <- gdp %>% 
+  rename(country = ref_area.label) %>% 
+  mutate(gdp = gdp/1000)
+
+plot <- left_join(rank, df, by = "country")
+
+lm_eqn <- function(df){
+  m <- lm(y ~ x, df);
+  eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
+                   list(a = format(unname(coef(m)[1]), digits = 2),
+                        b = format(unname(coef(m)[2]), digits = 2),
+                        r2 = format(summary(m)$r.squared, digits = 3)))
+  as.character(as.expression(eq));
+}
+
+df <- plot[c("index_mean", "gdp")] %>% 
+  rename(y = "index_mean",
+         x = "gdp")
+
+ggplot(plot, aes(x = gdp, y = index_mean)) +
+  geom_point() +
+  geom_smooth(method = lm) +
+  xlab("GDP per capita (PPP, current international $)") +
+  ylab("YLILI score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_text(aes(x = 12, y = 58, label = lm_eqn(df)), parse = TRUE, data.frame())
+
+
+#----------
+
+plot <- left_join(gdp, informal, by = c("ref_area.label"))
+  
+country_list <- country_lists[[3]]
+plot <- left_join(country_list, plot, by = "ref_area.label")
+
+ggplot(plot, aes(x = gdp, y = `Sex: Total`)) +
+  geom_point() +
+  xlab("GDP per capita (PPP, current international $)") +
+  ylab("Youth informal employment rate") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+plot <- left_join(gdp, unemployment_rate, by = c("ref_area.label")) %>% 
+  filter(sex.label == "Sex: Total",
+         classif1.label == "Age (Youth, adults): 15-24") %>% 
+  group_by(ref_area.label) %>%
+  top_n(1, time)
+
+plot <- left_join(country_list, plot, by = "ref_area.label")
+  
+ggplot(plot, aes(x = gdp, y = obs_value)) +
+  geom_point() +
+  xlab("GDP per capita (PPP, current international $)") +
+  ylab("Youth informal employment rate") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3)
+
+
+plot <- left_join(plot, informal, by = c("ref_area.label")) %>% 
+  pivot_longer(cols = c("Sex: Total", obs_value),
+               names_to = "indicator",
+               values_to = "obs_value",
+               names_ptypes = list(sex.label = factor(levels = c("informality","unemployment"))))
+             
+ggplot(plot, aes(x = gdp, y = obs_value)) +
+  geom_point(aes(color = indicator)) +
+  xlab("GDP per capita (PPP, current international $)") +
+  ylab("Percent") +
+  theme_minimal() +
+  theme(legend.position="top") +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  scale_color_discrete(name="",
+                      labels=c("Youth unemployment rate", "Youth informal employment rate"))
+
+
+
 index <- left_join(rank, gdp, by = "country")
 
 unemployment_rate <- unemployment_rate %>%
@@ -66,8 +305,6 @@ unemployment_rate <- filter_helper(unemployment_rate, bygender = "Total", lastye
   rename("country" = ref_area.label)
 
 index <- left_join(index, unemployment_rate, by = "country")
-
-write.csv(index, "/Users/kudrzycb/Desktop/index.csv")
 
 # some plots
 plot(rank$index_mean, rank$index_geom)
