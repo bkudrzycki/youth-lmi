@@ -8,10 +8,14 @@ ui <- fluidPage(
   # App title ----
   titlePanel("Youth Labor Market Index For Low-Income Countries"),
   
+  sidebarLayout(
+    position = "right",
+    sidebarPanel("Interactive Data"),
+    mainPanel("World Map")
+  ),
+  
       leafletOutput("mymap"),
-      p(),
-      actionButton("recalc", "New points")
-      
+      p()
 )
 
 
