@@ -143,7 +143,8 @@ ggplot(comp, aes(x = index_mean, y = index_geom, label = country_code)) +
   xlab("Arithmetic mean") +
   ylab("Geometric mean") +
   theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3)
+  geom_text_repel(aes(label=country_code),size = 3) +
+  ggsave(here("arithmetic_vs_geom.png"), width = 20, height = 12, units = "cm")
 
 #---------- correlation matrices
 

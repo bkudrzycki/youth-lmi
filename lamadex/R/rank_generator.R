@@ -19,8 +19,6 @@ rank_generator <- function(dfList, country_list, bygender = "Total", lastyear = 
   colnames(index) <- c("ref_area.label", "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores", "country_code")
 
 
-
-
   ## rescale all indicators and calculate dimension scores
   rescale <- function(x, na.rm = FALSE) (100-x)
   rur_rescale <- function(x, na.rm = FALSE) ifelse(x < 1, 100, ifelse(x > 3, 0, (100-(((x-1)/(3-1))*100))))
