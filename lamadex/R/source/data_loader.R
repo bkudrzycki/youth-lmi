@@ -58,7 +58,7 @@ test_scores <- read.csv(here("..", "data","raw","test_scores_sex_wb.csv")) %>%
          "ref_area.label" = Economy.Name,
          "obs_value" = "X2017..YR2017.") %>%
   mutate(time = 2017) %>%
-  suppressWarnings(transform(obs_value = as.numeric(as.character(obs_value))))
+  transform(obs_value = as.numeric(as.character(obs_value)))
 
 test_scores$sex.label <- test_scores$sex.label %>%
   recode("Harmonized Test Scores, Female" = "Sex: Female",

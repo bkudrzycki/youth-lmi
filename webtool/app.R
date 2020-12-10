@@ -11,11 +11,11 @@ if (any(installed_packages == FALSE)) {
 invisible(lapply(packages, library, character.only = TRUE))
 ## ---------------------------------------
 
-devtools::load_all(here("lamadex"))
+devtools::load_all(here())
 
 ##globals: load list of countries and raw data, define geometric mean function
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
+source(here("R", "source", "countryList.R"))
+source(here("R", "source", "data_loader.R"))
 gm_mean = function(x, na.rm = FALSE) {
   exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x[!is.na(x)]))
 }
