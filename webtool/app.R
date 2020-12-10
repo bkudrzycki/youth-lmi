@@ -9,9 +9,9 @@ if (any(installed_packages == FALSE)) {
 
 # Packages loading
 invisible(lapply(packages, library, character.only = TRUE))
+## ---------------------------------------
 
-install_github("kudrzycb/lamadex")
-library(lamadex, lib(here("/lamadex/lamadex")))
+devtools::load_all(here("lamadex"))
 
 ##globals: load list of countries and raw data, define geometric mean function
 source(here("lamadex", "R", "source", "countryList.R"))

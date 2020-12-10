@@ -1,16 +1,17 @@
 library(tidyverse)
 library(here)
+set_here(path='/Users/kudrzycb/polybox/Youth Employment/1b Index/youth-lmi')
 #library(lamadex, lib("./lamadex/lamadex")) ##load lamadex package
-devtools::load_all(here("lamadex"))
+devtools::load_all(here())
 
 
 #----------
 # Load data
 ## read in country lists according to the World Bank Lending Groups classification
-source(here("lamadex", "R", "source", "countryList.R")) # stored lists: [1]: LICs (30) [2]: LMICs (46) [3]: LICs+LMICs (76) [4]: All countries (244)
+source(here("R", "source", "countryList.R")) # stored lists: [1]: LICs (30) [2]: LMICs (46) [3]: LICs+LMICs (76) [4]: All countries (244)
 
 ## read in dataframes from raw csv files
-source(here("lamadex", "R", "source", "data_loader.R"))
+source(here("R", "source", "data_loader.R"))
 
 #----------
 # Run the package
