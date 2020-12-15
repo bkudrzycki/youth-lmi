@@ -55,11 +55,21 @@ ui <- fluidPage(
                  fluidRow(
                    column(8,
                           hr(),
-                          selectizeInput("indicator", "Show on map:",
-                                         c("YLILI Score" = "score",
-                                           "Transition" = "transition",
+                          selectizeInput("select", "Show on map:",
+                                         c("YLILI Score" = "YLILI score",
+                                           "Transition" = "Transition",
                                            "Working conditions" = "Working conditions",
-                                           "Education" = "Education"),
+                                           "Education" = "Education",
+                                           "NEET score" = "NEET score",
+                                           "Working conditions ratio" =  "Working conditions ratio",
+                                           "Mismatch score" = "Mismatch score",
+                                           "Working poverty score" = "Working poverty score",
+                                           "Under- employment score" = "Under- employment score",
+                                           "Informal work score" = "Informal work score",
+                                           "Elementary occupation score" = "Elementary occupation score",
+                                           "Secondary schooling rate" = "Secondary schooling rate",
+                                           "Literacy rate" = "Literacy rate",
+                                           "Harmonized tests score" = "Harmonized tests score"),
                                          multiple = FALSE)
                    )
                  ),
@@ -68,10 +78,10 @@ ui <- fluidPage(
                mainPanel(
                  tabsetPanel(
                    id = 'dataset',
-                   tabPanel("Data", DT::dataTableOutput("ranks")),
                    tabPanel("Map",
                             style = "height:92vh;",
-                            leafletOutput("map", width = "120%", height = "93%"))
+                            leafletOutput("map", width = "120%", height = "93%")),
+                   tabPanel("Data", DT::dataTableOutput("ranks"))
                  )
                )
              )
@@ -111,17 +121,30 @@ server <- function(input, output) {
   )
   
   
-observe({
+  observe({
     
-    scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), data.frame(Country = reactiveIndex()$Country, indicator = reactiveIndex()$'YLILI score')))
+    indicator <- input$select
+    chosen_indicator <- reactive(reactiveIndex()[, c("Country", as.character(input$select)), drop=FALSE])
     
-    pal <- reactive(colorNumeric(c("#FFFFFFFF", inferno(256)), domain = c(min(scores()$indicator, na.rm = T),max(scores()$indicator, na.rm = T))))
+    scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator()))
     
+    pal <- reactive(colorNumeric(c("#FFFFFFFF", inferno(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T))))
+    
+    # 
     countries2 <- reactive(merge(countries,
-                        scores(),
-                        by.x = "NAME",
-                        by.y = "Country",
-                        sort = FALSE))
+                                 scores(),
+                                 by.x = "NAME",
+                                 by.y = "Country",
+                                 sort = FALSE))
+    
+    country_popup <- paste0("<strong>Country: </strong>",
+                            countries2()$NAME,
+                            "<br><strong>",
+                            "Total ", as.character(indicator)," :",
+                            
+                            
+                            " </strong>",
+                            round(countries2()[[indicator]],2))
     
     output$map <- renderLeaflet({
       
@@ -132,14 +155,15 @@ observe({
       leaflet(countries2()) %>% 
         addTiles() %>%
         addPolygons(data = countries2(),
-                    fillColor = ~pal()(countries2()$indicator),
+                    fillColor = ~pal()(countries2()[[indicator]]),
                     layerId = ~NAME, weight = 1, smoothFactor = 0.5,
-                    opacity = 1.0, fillOpacity = 0.5,  color = "#BDBDC3",
-                    highlightOptions = highlightOptions(color = "black", weight = 2)) %>% 
+                    opacity = 1, fillOpacity = .8,  color = "#BDBDC3",
+                    highlightOptions = highlightOptions(color = "black", weight = 2),
+                    popup = country_popup) %>% 
         setView(0,30, zoom = 3) %>% 
         addLegend(position = "bottomright",
                   pal = pal(),
-                  value = c(min(scores()$indicator, na.rm = T),max(scores()$indicator, na.rm = T)))
+                  value = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)))
     })
   })
   
