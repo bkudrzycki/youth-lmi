@@ -1,15 +1,15 @@
-neet <- read.csv(here("..", "data","raw","neet_sex_ilostat.csv"))
-unemployment_rate <- read.csv(here("..", "data","raw","unemployment_rate_sex_age_ilostat.csv"))
+neet <- read.csv(here("data","raw","neet_sex_ilostat.csv"))
+unemployment_rate <- read.csv(here("data","raw","unemployment_rate_sex_age_ilostat.csv"))
 
-employed <- read.csv(here("..", "data","raw","employed_sex_edu_ilostat.csv"))
+employed <- read.csv(here("data","raw","employed_sex_edu_ilostat.csv"))
 
-unemployed <- read.csv(here("..", "data","raw","unemployed_sex_edu_ilostat.csv"))
+unemployed <- read.csv(here("data","raw","unemployed_sex_edu_ilostat.csv"))
 
-working_pov <- read.csv(here("..", "data","raw","workingpoverty_sex_ilostat.csv"))
+working_pov <- read.csv(here("data","raw","workingpoverty_sex_ilostat.csv"))
 
-underemp <- read.csv(here("..", "data","raw","underemployment_sex_ilostat.csv"))
+underemp <- read.csv(here("data","raw","underemployment_sex_ilostat.csv"))
 
-informal <- read.csv(here("..", "data","raw","informality_age_sex_Bonnet.csv")) %>%
+informal <- read.csv(here("data","raw","informality_age_sex_Bonnet.csv")) %>%
   rename("ref_area.label" = Country, time = Year, "Sex: Total" = X15.24, "Sex: Male" = "X15.24..Men.", "Sex: Female" = "X15.24..Women.")
 informal$ref_area.label <- informal$ref_area.label %>% ## fix country names to match ILOSTAT for joining
   recode("Congo, Democratic Republic of" = "Congo, Democratic Republic of the",
@@ -20,11 +20,11 @@ informal$ref_area.label <- informal$ref_area.label %>% ## fix country names to m
          "West Bank and Gaza Strip" = "Occupied Palestinian Territory",
          "Cabo Verde" = "Cape Verde")
 
-status <- read.csv(here("..", "data","raw","employment_sex_status_ilostat.csv"))
+status <- read.csv(here("data","raw","employment_sex_status_ilostat.csv"))
 
-occupation <- read.csv(here("..", "data","raw","occupation_sex_age_ilostat.csv"))
+occupation <- read.csv(here("data","raw","occupation_sex_age_ilostat.csv"))
 
-education <- read.csv(here("..", "data","raw","education_sex_dhs.csv")) %>%
+education <- read.csv(here("data","raw","education_sex_dhs.csv")) %>%
   rename("ref_area.label" = Country)
 education$ref_area.label <- education$ref_area.label %>%
   recode("Kyrgyz Republic" = "Kyrgyzstan",
@@ -34,7 +34,7 @@ education$ref_area.label <- education$ref_area.label %>%
          "Moldova" = "Moldova, Republic of",
          "Vietnam" = "Viet Nam")
 
-literacy <- read.csv(here("..", "data","raw","literacy_sex_unesco.csv")) %>%
+literacy <- read.csv(here("data","raw","literacy_sex_unesco.csv")) %>%
   rename("ref_area.label" = Country,
          "obs_value" = Value,
          "time" = Time)
@@ -53,7 +53,7 @@ literacy$ref_area.label <- literacy$ref_area.label %>%
          "Republic of Moldova" = "Moldova, Republic of",
          "Cabo Verde" = "Cape Verde")
 
-test_scores <- read.csv(here("..", "data","raw","test_scores_sex_wb.csv")) %>%
+test_scores <- read.csv(here("data","raw","test_scores_sex_wb.csv")) %>%
   rename("sex.label" = Indicator.Name,
          "ref_area.label" = Economy.Name,
          "obs_value" = "X2017..YR2017.") %>%

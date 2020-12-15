@@ -14,7 +14,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 devtools::load_all(here())
 
 # load map, shapefile name "countries", country names saved as NAME
-load(here("..", "data", "shapeFile.RData"))
+load(here("data", "shapeFile.RData"))
 
 ##globals: load list of countries and raw data, define geometric mean function
 source(here("R", "source", "countryList.R"))

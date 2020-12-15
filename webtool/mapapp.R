@@ -1,5 +1,5 @@
 # Package names
-packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyverse", "usethis", "shinythemes", "viridis", "tigris")
+packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyverse", "usethis", "shinythemes", "viridis", "tigris", "rgdal")
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -11,14 +11,15 @@ if (any(installed_packages == FALSE)) {
 invisible(lapply(packages, library, character.only = TRUE))
 ## ---------------------------------------
 
-devtools::load_all(here())
+devtools::load_all(here("lamadex"))
 
 # load map, shapefile name "countries", country names saved as NAME
-load(here("..", "data", "shapeFile.RData"))
+
+load(here("data", "shapeFile.RData"))
 
 ##globals: load list of countries and raw data, define geometric mean function
-source(here("R", "source", "countryList.R"))
-source(here("R", "source", "data_loader.R"))
+source(here("lamadex", "R", "source", "countryList.R"))
+source(here("lamadex", "R", "source", "data_loader.R"))
 gm_mean = function(x, na.rm = FALSE) {
   exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x[!is.na(x)]))
 }
@@ -42,13 +43,24 @@ ui <- fluidPage(
                           selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
                           selectInput("gender", "Gender", c("Total", "Male", "Female")),
                           hr())
-                   ),
+                 ),
                  fluidRow(
                    column(4,
-                   submitButton("Update")
+                          submitButton("Update")
                    ),
                    column(4,
-                   downloadButton("dl", "Download .Excel")
+                          downloadButton("dl", "Download .Excel")
+                   )
+                 ),
+                 fluidRow(
+                   column(8,
+                          hr(),
+                          selectizeInput("indicator", "Show on map:",
+                                         c("YLILI Score" = "score",
+                                           "Transition" = "transition",
+                                           "Working conditions" = "Working conditions",
+                                           "Education" = "Education"),
+                                         multiple = FALSE)
                    )
                  ),
                  width = 2,
@@ -58,13 +70,14 @@ ui <- fluidPage(
                    id = 'dataset',
                    tabPanel("Data", DT::dataTableOutput("ranks")),
                    tabPanel("Map",
-                   style = "height:92vh;",
-                   leafletOutput("map", width = "120%", height = "93%"))
-                   )
+                            style = "height:92vh;",
+                            leafletOutput("map", width = "120%", height = "93%"))
+                 )
                )
              )
   )
 )
+
 
 # Define server logic
 server <- function(input, output) {
@@ -98,28 +111,40 @@ server <- function(input, output) {
   )
   
   
-  
-  #pal <- colorNumeric(c("#FFFFFFFF", rev(inferno(256))), domain = c(0,100))
-  
-  countries2 <- reactive(geo_join(countries, reactiveIndex(), "NAME", "ref_area.label"))
-  
-  output$map <- renderLeaflet({
+observe({
     
-    # Use leaflet() here, and only include aspects of the map that
-    # won't need to change dynamically (at least, not unless the
-    # entire map is being torn down and recreated).
+    scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), data.frame(Country = reactiveIndex()$Country, indicator = reactiveIndex()$'YLILI score')))
     
-    leaflet(countries2()) %>% 
-      addTiles() %>%
-      addPolygons(data = countries2(),
-                  #fillColor = ~pal()(countries2data())[['YLILI Score']],
-                  layerId = ~NAME, weight = 1, smoothFactor = 0.5,
-                  opacity = 1.0, fillOpacity = 0.5,  color = "#BDBDC3",
-                  highlightOptions = highlightOptions(color = "black", weight = 2)) %>% 
-      setView(0,30, zoom = 3)
+    pal <- reactive(colorNumeric(c("#FFFFFFFF", inferno(256)), domain = c(min(scores()$indicator, na.rm = T),max(scores()$indicator, na.rm = T))))
+    
+    countries2 <- reactive(merge(countries,
+                        scores(),
+                        by.x = "NAME",
+                        by.y = "Country",
+                        sort = FALSE))
+    
+    output$map <- renderLeaflet({
+      
+      # Use leaflet() here, and only include aspects of the map that
+      # won't need to change dynamically (at least, not unless the
+      # entire map is being torn down and recreated).
+      
+      leaflet(countries2()) %>% 
+        addTiles() %>%
+        addPolygons(data = countries2(),
+                    fillColor = ~pal()(countries2()$indicator),
+                    layerId = ~NAME, weight = 1, smoothFactor = 0.5,
+                    opacity = 1.0, fillOpacity = 0.5,  color = "#BDBDC3",
+                    highlightOptions = highlightOptions(color = "black", weight = 2)) %>% 
+        setView(0,30, zoom = 3) %>% 
+        addLegend(position = "bottomright",
+                  pal = pal(),
+                  value = c(min(scores()$indicator, na.rm = T),max(scores()$indicator, na.rm = T)))
+    })
   })
-
-    output$ranks <- DT::renderDataTable({
+  
+  
+  output$ranks <- DT::renderDataTable({
     rank <- reactiveIndex() %>% 
       mutate_if(is.numeric, round, 3) %>% 
       arrange(desc(`YLILI score`))
@@ -137,7 +162,7 @@ server <- function(input, output) {
       formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
   })
   
-    data_list <- reactive({
+  data_list <- reactive({
     list(
       total = rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = input$lastyear, impute = input$impute) %>% 
         rowwise() %>%
