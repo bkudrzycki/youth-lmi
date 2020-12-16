@@ -1,5 +1,5 @@
 # Package names
-packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyverse", "usethis", "shinythemes", "viridis", "tigris", "rgdal")
+packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyverse", "usethis", "shinythemes", "viridis", "tigris", "rgdal", "leaflet.extras", "shinyWidgets")
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -24,9 +24,19 @@ gm_mean = function(x, na.rm = FALSE) {
   exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x[!is.na(x)]))
 }
 
+# background color
+css <- HTML(" body {
+    background-color: #4e5d6c;
+}")
+
 # Define UI
 ui <- fluidPage(
-  navbarPage("YLILI", theme = shinytheme("lumen"),
+  tags$head(
+    tags$style(HTML(".leaflet-container { background: #4e5d6c; }"))
+  ),
+  navbarPage("YLILI", theme = shinytheme("superhero"),
+             tags$head(
+               tags$style(css)),
              tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE),
              # Sidebar layout with a input and output definitions
              sidebarLayout(
@@ -128,7 +138,7 @@ server <- function(input, output) {
     
     scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator()))
     
-    pal <- reactive(colorNumeric(c("#FFFFFFFF", inferno(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T))))
+    pal <- reactive(colorNumeric(c("#FFFFFFFF", viridis(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "white"))
     
     # 
     countries2 <- reactive(merge(countries,
@@ -140,11 +150,10 @@ server <- function(input, output) {
     country_popup <- paste0("<strong>Country: </strong>",
                             countries2()$NAME,
                             "<br><strong>",
-                            "Total ", as.character(indicator)," :",
-                            
-                            
+                            input$gender, " ", as.character(indicator),":",
                             " </strong>",
-                            round(countries2()[[indicator]],2))
+                            round(countries2()[[indicator]],2),
+                            hr())
     
     output$map <- renderLeaflet({
       
@@ -153,14 +162,13 @@ server <- function(input, output) {
       # entire map is being torn down and recreated).
       
       leaflet(countries2()) %>% 
-        addTiles() %>%
         addPolygons(data = countries2(),
                     fillColor = ~pal()(countries2()[[indicator]]),
                     layerId = ~NAME, weight = 1, smoothFactor = 0.5,
-                    opacity = 1, fillOpacity = .8,  color = "#BDBDC3",
-                    highlightOptions = highlightOptions(color = "black", weight = 2),
+                    opacity = .8, fillOpacity = .8,  color = "#BDBDC3",
+                    highlightOptions = highlightOptions(color = "black", weight = 2, opacity = .8),
                     popup = country_popup) %>% 
-        setView(0,30, zoom = 3) %>% 
+        setView(10, 20, zoom = 3) %>% 
         addLegend(position = "bottomright",
                   pal = pal(),
                   value = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)))
