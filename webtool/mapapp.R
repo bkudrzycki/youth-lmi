@@ -17,7 +17,7 @@ devtools::load_all(here("lamadex"))
 
 load(here("data", "shapeFile.RData"))
 
-##globals: load list of countries and raw data, define geometric mean function
+# globals: load list of countries and raw data, define geometric mean function
 source(here("lamadex", "R", "source", "countryList.R"))
 source(here("lamadex", "R", "source", "data_loader.R"))
 gm_mean = function(x, na.rm = FALSE) {
@@ -184,7 +184,7 @@ server <- function(input, output) {
     brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
     clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
       {paste0("rgb(255,", ., ",", ., ")")}
-    clrs_dims <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+    clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
       {paste0("rgb(", ., ",", 75+.,",", ., ")")}
     clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
       {paste0("rgb(", ., ",", ., ",255)")}
@@ -196,7 +196,7 @@ server <- function(input, output) {
   
   data_list <- reactive({
     list(
-      total = rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = input$lastyear, impute = input$impute) %>% 
+      total = rank_generator(dfList, country_lists[[3]], bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -284,4 +284,7 @@ server <- function(input, output) {
   
 }
 
-shinyApp(ui = ui, server = server)
+app <- shinyApp(ui = ui, server = server)
+
+#runApp(app, launch.browser = TRUE)
+#runGitHub("webtool_test", "bkudrzycki", launch.browser = TRUE)
