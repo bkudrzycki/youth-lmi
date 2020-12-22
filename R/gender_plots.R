@@ -1,6 +1,15 @@
-library(tidyverse)
-library(here)
-library(ggrepel)
+# Package names
+packages <- c("tidyverse", "here", "ggrepel")
+
+# Install packages not yet installed
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# Packages loading
+invisible(lapply(packages, library, character.only = TRUE))
+## ---------------------------------------
 
 devtools::load_all(here("lamadex"))
 source(here("lamadex", "R", "source", "countryList.R"))
@@ -65,3 +74,81 @@ ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = cou
   xlim(20,100) +
   ylim(20,100) +
   ggsave(here("education_genderdiff.png"), width = 20, height = 12, units = "cm")
+
+gindex <- read_excel(here("data", "CFR_index.xlsx")) %>% 
+  rename("CFR_score" = "OVERALL AVERAGE SCORE",
+         "CFR_institutions" = "ACESSING INSTITUTIONS SCORE",
+         "CFR_work_incentives" = "PROVIDING INCENTIVES TO WORK SCORE")
+
+gindex$Economy <- gindex$Economy %>% ## fix country names to match ILOSTAT for joining
+  recode("Democratic Republic of Congo" = "Congo, Democratic Republic of the",
+         "East Timor" = "Timor-Leste",
+         "Ivory Coast" = "Côte d'Ivoire",
+         "Laos" = "Lao People's Democratic Republic",
+         "Micronesia" = "Micronesia, Federated States of",
+         "Moldova" = "Moldova, Republic of",
+         "Republic of Congo" = "Congo",
+         "Syria" = "Syrian Arab Republic",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Vietnam" = "Viet Nam")
+
+comp <- full_join(comp, gindex, by = c("country" = "Economy"))
+
+
+ggplot(comp, aes(x = CFR_score, y = index_mean_female, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Gender Quota Index vs. Female YLILI") +
+  xlab("") +
+  ylab("") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE) +
+  xlim(25,100) +
+  ylim(0,100)
+
+ggplot(comp, aes(x = CFR_score, y = index_diff, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
+  xlab("") +
+  ylab("") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE) +
+  xlim(25,100) +
+  ylim(-15,15)
+  
+  #ggsave(here("gender_diff_vs_CFR_score.png"), width = 20, height = 12, units = "cm")
+
+
+ggplot(comp, aes(x = CFR_institutions, y = index_diff, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
+  xlab("") +
+  ylab("") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE) +
+  xlim(25,100) +
+  ylim(-15,15)
+
+#ggsave(here("gender_diff_vs_CFR_institutions.png"), width = 20, height = 12, units = "cm")
+
+ggplot(comp, aes(x = CFR_work_incentives, y = index_diff, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
+  xlab("") +
+  ylab("") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE) +
+  xlim(25,100) +
+  ylim(-15,15)
+
+comp %>% dplyr::select(index_mean_female, CFR_work_incentives) %>% 
+  filter(!is.na(index_mean_female)) %>% 
+  tbl_summary(by = "CFR_work_incentives",
+              statistic = list(all_continuous() ~ "{mean} ({sd})"))
+
+#no differences in either gender_diff or female index score across work incentives categories
+
+                     
