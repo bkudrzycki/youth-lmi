@@ -28,6 +28,22 @@ regions$country <- regions$country %>% #fix country names to match ILOSTAT for j
 
 rank <- left_join(rank, regions, by = c("country"))
 
+gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
+  rename("country" = Country.Name) %>%
+  select(country, "gdp"=X2018)
+
+gdp$country <- gdp$country %>%
+  recode("Vietnam" = "Viet Name",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+         "Gambia, The" = "Gambia",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Egypt, Arab Rep." = "Egypt",
+         "Lao PDR" = "Lao People's Democratic Republic",
+         "Kyrgyz Republic" = "Kyrgystan",
+         "Moldova" = "Moldova, Republic of")
+total <- left_join(total, gdp, by = "country")
+
 #----------
 
 total <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE) %>%
@@ -39,23 +55,7 @@ male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear =
 female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = FALSE) %>%
   arrange(desc(index_mean))
 
-gdp <- read.csv(here("data","raw","gdp_PPP_percap_worldbank.csv")) %>%
-  select("ref_area.label" = Country.Name, "gdp"=X2018)
-
-gdp$ref_area.label <- gdp$ref_area.label %>%
-  recode("Vietnam" = "Viet Nam",
-         "Cote d'Ivoire" = "Côte d'Ivoire",
-         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
-         "Gambia, The" = "Gambia",
-         "Tanzania" = "Tanzania, United Republic of",
-         "Egypt, Arab Rep." = "Egypt",
-         "Lao PDR" = "Lao People's Democratic Republic",
-         "Kyrgyz Republic" = "Kyrgyzstan",
-         "Moldova" = "Moldova, Republic of",
-         "West Bank and Gaza" = "Occupied Palestinian Territory")
-
 #---------- scatterplots for gender analysis
-
 
 comp <- full_join(male, female, by = c("country", "country_code"), suffix = c("_male", "_female"))
 
@@ -71,10 +71,7 @@ ggplot(comp, aes(x = index_mean_male, y = index_mean_female, label = country_cod
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3)
 
-gdp2 <- gdp %>% 
-  rename(country = ref_area.label)
-comp <- full_join(comp, gdp2, by = "country")
-rm(gdp2)
+comp <- full_join(comp, gdp, by = "country")
 
 comp <- comp %>% 
   mutate(index_diff = index_mean_male-index_mean_female)
@@ -241,7 +238,6 @@ ggplot(plot, aes(x = obs_value, y = index_mean, label = country_code)) +
   #+ ggsave(here("score_vs_youth_unemp.png"), width = 20, height = 12, units = "cm")
 
 df <- gdp %>% 
-  rename(country = ref_area.label) %>% 
   mutate(gdp = gdp/1000)
 
 plot <- left_join(rank, df, by = "country")
@@ -271,10 +267,10 @@ ggplot(plot, aes(x = gdp, y = index_mean)) +
 
 #----------
 
-plot <- left_join(gdp, informal, by = c("ref_area.label"))
+plot <- left_join(x = gdp, y = informal, by = c("country" = "ref_area.label"))
   
 country_list <- country_lists[[3]]
-plot <- left_join(country_list, plot, by = "ref_area.label")
+plot <- left_join(country_list, plot, by = c("ref_area.label" = "country"))
 
 ggplot(plot, aes(x = gdp, y = `Sex: Total`)) +
   geom_point() +
@@ -283,13 +279,13 @@ ggplot(plot, aes(x = gdp, y = `Sex: Total`)) +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3)
 
-plot <- left_join(gdp, unemployment_rate, by = c("ref_area.label")) %>% 
+plot <- left_join(gdp, unemployment_rate, by = c("country" = "ref_area.label")) %>% 
   filter(sex.label == "Sex: Total",
          classif1.label == "Age (Youth, adults): 15-24") %>% 
-  group_by(ref_area.label) %>%
+  group_by(country) %>%
   top_n(1, time)
 
-plot <- left_join(country_list, plot, by = "ref_area.label")
+plot <- left_join(country_list, plot, by = c("ref_area.label" = "country"))
   
 ggplot(plot, aes(x = gdp, y = obs_value)) +
   geom_point() +
@@ -315,8 +311,6 @@ ggplot(plot, aes(x = gdp, y = obs_value)) +
   scale_color_discrete(name="",
                       labels=c("Youth unemployment rate", "Youth informal employment rate"))
 
-
-
 index <- left_join(rank, gdp, by = "country")
 
 unemployment_rate <- unemployment_rate %>%
@@ -332,8 +326,6 @@ plot(rank$index_mean, rank$index_geom)
 text(rank$index_mean, rank$index_geom, labels=rank$country_code, cex= .7, pos = 3)
 
 
-plot(rank$vulnerable, rank$informal)
-text(rank$vulnerable, rank$informal, labels=rank$country_code, cex= .7, pos = 3)
 # hist(log(elementary$obs_value))
 # hist(log(neet$obs_value))
 # hist(log(relative_unemp$obs_value))
@@ -368,22 +360,6 @@ lines(x = c(0,100), y = c(0,100))
 
 plot(total$index_mean, total$index_geom)
 text(total$index_mean, total$index_geom, labels=total$country_code, cex= .7, pos = 3)
-
-gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
-  rename("country" = Country.Name) %>%
-  select(country, "gdp"=X2018)
-
-gdp$country <- gdp$country %>%
-  recode("Vietnam" = "Viet Name",
-         "Cote d'Ivoire" = "Côte d'Ivoire",
-         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
-         "Gambia, The" = "Gambia",
-         "Tanzania" = "Tanzania, United Republic of",
-         "Egypt, Arab Rep." = "Egypt",
-         "Lao PDR" = "Lao People's Democratic Republic",
-         "Kyrgyz Republic" = "Kyrgystan",
-         "Moldova" = "Moldova, Republic of")
-total <- left_join(total, gdp, by = "country")
 
 plot(total$gdp, total$index_mean)
 text(total$gdp, total$index_mean, labels=total$country_code, cex= .7, pos = 3)
@@ -536,6 +512,51 @@ cor(rank[, c("wc_rank","trans_rank", "educ_rank")])
 
 rank[, c("wc_rank","trans_rank", "educ_rank")]
 
+#population growth
+
+pop_growth <- read.csv(here("data","raw","population_growth_wb.csv")) %>%
+  rename("country" = "Country.Name",
+         "pop_growth_then" = X2005,
+         "pop_growth_now" = X2019) %>% 
+  select(c(country, pop_growth_then, pop_growth_now))
+
+pop_growth$country <- pop_growth$country %>%
+  recode("Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+         "Yemen, Rep." = "Yemen",
+         "Gambia, The" = "Gambia",
+         "Egypt, Arab Rep." = "Egypt",
+         "Lao PDR" = "Lao People's Democratic Republic",
+         "Congo, Rep." = "Congo",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Kyrgyz Republic" = "Kyrgyzstan",
+         "Iran, Islamic Rep." = "Iran, Islamic Republic of",
+         "Moldova" = "Moldova, Republic of",
+         "Slovak Republic" = "Slovakia",
+         "Vietnam" = "Viet Nam",
+         "Czech Republic" = "Czechia",
+         "Macao SAR, China" = "Macau, China",
+         "Hong Kong SAR, China" = "Hong Kong, China",
+         "Korea, Rep." = "Korea, Republic of",
+         "Macedonia, FYR" = "North Macedonia",
+         "West Bank and Gaza" = "Occupied Palestinian Territory",
+         "Micronesia, Fed. Sts." = "Micronesia, Federated States of",
+         "Korea, Dem. People’s Rep." = "Korea, Democratic People's Republic of",
+         "Cabo Verde" = "Cape Verde")
+
+rank <- left_join(rank, pop_growth, by = "country")
+
+
+ggplot(rank, aes(x = pop_growth_now, y = index_mean_female, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Population Growth vs YLILI") +
+  xlab("Population Growth (2019)") +
+  ylab("YLILI") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+
 ## regional analysis
 colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
 colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
@@ -544,10 +565,6 @@ library(fmsb)
 
 x <- rank %>% 
   summarise(across(c(transition_mean, working_conditions_mean,education_mean), ~ mean(.x, na.rm = TRUE)))
-
-  dplyr::select("Region Name", transition_mean, working_conditions_mean, education_mean) %>% 
-  summarise("Region Name", mean(.x, na.rm = TRUE)))
-
 
 radarchart( rank  , axistype=1 , 
             #custom polygon

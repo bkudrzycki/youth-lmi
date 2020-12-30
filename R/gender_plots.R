@@ -39,8 +39,8 @@ ggplot(comp, aes(x = index_mean_male, y = index_mean_female, label = country_cod
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3) +
   xlim(50,90) +
-  ylim(50,90) +
-  ggsave(here("male_vs_female.png"), width = 20, height = 12, units = "cm")
+  ylim(50,90) 
+  #ggsave(here("male_vs_female.png"), width = 20, height = 12, units = "cm")
 
 ggplot(comp, aes(x = transition_mean_male, y = transition_mean_female, label = country_code)) +
   geom_point(size = 2) +
@@ -50,8 +50,8 @@ ggplot(comp, aes(x = transition_mean_male, y = transition_mean_female, label = c
   ylab("") +
   theme_minimal() +
   xlim(20,100) +
-  ylim(20,100) +
-  ggsave(here("transition_genderdiff.png"), width = 20, height = 12, units = "cm")
+  ylim(20,100) 
+  #ggsave(here("transition_genderdiff.png"), width = 20, height = 12, units = "cm")
 
 ggplot(comp, aes(x = working_conditions_mean_male, y = working_conditions_mean_female, label = country_code)) +
   geom_point(size=2) +
@@ -61,8 +61,8 @@ ggplot(comp, aes(x = working_conditions_mean_male, y = working_conditions_mean_f
   ylab("") +
   theme_minimal() +
   xlim(20,100) +
-  ylim(20,100) +
-  ggsave(here("workingcond_genderdiff.png"), width = 20, height = 12, units = "cm")
+  ylim(20,100) 
+  #ggsave(here("workingcond_genderdiff.png"), width = 20, height = 12, units = "cm")
 
 ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = country_code)) +
   geom_point(size=2) +
@@ -72,8 +72,8 @@ ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = cou
   ylab("") +
   theme_minimal() +
   xlim(20,100) +
-  ylim(20,100) +
-  ggsave(here("education_genderdiff.png"), width = 20, height = 12, units = "cm")
+  ylim(20,100) 
+  #ggsave(here("education_genderdiff.png"), width = 20, height = 12, units = "cm")
 
 gindex <- read_excel(here("data", "CFR_index.xlsx")) %>% 
   rename("CFR_score" = "OVERALL AVERAGE SCORE",
