@@ -14,6 +14,9 @@ regions <- read_csv(here("data", "raw", "country_regions.csv")) %>%
          "Region Name",
          "Sub-region Name")
 
+regions$`Sub-region Name` <- regions$`Sub-region Name` %>% #fix country names to match ILOSTAT for joining
+  recode("Latin America and the Caribbean" = "Latin America")
+
 regions$country <- regions$country %>% #fix country names to match ILOSTAT for joining
   recode("Democratic Republic of the Congo" = "Congo, Democratic Republic of the",
          "Republic of Moldova" = "Moldova, Republic of",
@@ -361,9 +364,9 @@ lines(x = c(0,100), y = c(0,100))
 plot(total$index_mean, total$index_geom)
 text(total$index_mean, total$index_geom, labels=total$country_code, cex= .7, pos = 3)
 
-plot(total$gdp, total$index_mean)
-text(total$gdp, total$index_mean, labels=total$country_code, cex= .7, pos = 3)
-abline(lm(total$index_mean ~ total$gdp))
+#plot(total$gdp, total$index_mean)
+#text(total$gdp, total$index_mean, labels=total$country_code, cex= .7, pos = 3)
+#abline(lm(total$index_mean ~ total$gdp))
 
 df <- left_join(male, female, by = c("country"), suffix = c("_male", "_female"))
 df <- left_join(total, df, by = c("country"))
@@ -544,34 +547,253 @@ pop_growth$country <- pop_growth$country %>%
          "Korea, Dem. People’s Rep." = "Korea, Democratic People's Republic of",
          "Cabo Verde" = "Cape Verde")
 
-rank <- left_join(rank, pop_growth, by = "country")
+pop_growth <- left_join(rank, pop_growth, by = "country")
 
 
-ggplot(rank, aes(x = pop_growth_now, y = index_mean_female, label = country_code)) +
+ggplot(pop_growth, aes(x = pop_growth_now, y = index_mean, label = country_code)) +
   geom_point(size=2) +
   ggtitle("Population Growth vs YLILI") +
   xlab("Population Growth (2019)") +
-  ylab("YLILI") +
+  ylab("YLILI Score") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3) +
   geom_smooth(method = lm,  se = FALSE)
 
+summary(lm(formula = index_mean ~ pop_growth_now, data = pop_growth))
 
-## regional analysis
-colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
-colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
+ggplot(pop_growth, aes(x = pop_growth_then, y = index_mean, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Population Growth vs YLILI") +
+  xlab("Population Growth (2005)") +
+  ylab("YLILI Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
 
-library(fmsb)
+summary(lm(formula = index_mean ~ pop_growth_then, data = pop_growth))
+
+ggplot(pop_growth, aes(x = pop_growth_then, y = transition_mean, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Population Growth vs Education Score") +
+  xlab("Population Growth (2019)") +
+  ylab("Education Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = transition_mean ~ pop_growth_then, data = pop_growth))
+
+ggplot(pop_growth, aes(x = pop_growth_then, y = working_conditions_mean, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Population Growth vs Education Score") +
+  xlab("Population Growth (2019)") +
+  ylab("Education Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = working_conditions_mean ~ pop_growth_then, data = pop_growth))
+
+ggplot(pop_growth, aes(x = pop_growth_then, y = education_mean, label = country_code)) +
+  geom_point(size=2) +
+  ggtitle("Population Growth vs Education Score") +
+  xlab("Population Growth (2019)") +
+  ylab("Education Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = education_mean ~ pop_growth_then, data = pop_growth))
+
+## top quintile (11 countries)
+pop_growth <- pop_growth %>% 
+  mutate(pop_now_top11 = as.numeric(ntile(-pop_growth_now, 5)==1))
+
+pop_growth <- pop_growth %>% 
+  mutate(pop_then_top11 = as.numeric(ntile(-pop_growth_then, 5)==1))
+        
+pop_growth %>% dplyr::select(contains("mean"), pop_now_top11) %>% 
+  tbl_summary(by =  pop_now_top11,
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p() 
+
+
+## BY ABSOLUTE YOUTH POPULATION AND YOUTH-TO ADULT RATIO
+
+pop <- read.csv(here("data","raw","population_age_ilostat.csv")) %>%
+  filter(time == 2019,
+         sex.label == "Sex: Total") %>% 
+  pivot_wider(id_cols = c(ref_area.label, classif1.label, obs_value), names_from = classif1.label, values_from = obs_value)
+  
+pop <- pop %>% 
+  mutate(youth_ratio = `Age (Youth, adults): 15-24` / `Age (Aggregate bands): Total`) %>%
+  rename("country" = "ref_area.label",
+         "total_pop" = `Age (Aggregate bands): Total`,
+         "youth_pop" = `Age (Youth, adults): 15-24`,
+         "adult_pop" = `Age (Youth, adults): 25+`)
+
+pop <- left_join(rank, pop, by = "country")
+  
+pop %>% 
+  filter(country != "India") %>% 
+  ggplot(aes(x = youth_pop, y = index_mean, label = country_code)) +
+    geom_point(size=2) +
+    ggtitle("Absolute Youth Population vs YLILI") +
+    xlab("15-24 Population (2019)") +
+    ylab("YLILI Score") +
+    theme_minimal() +
+    geom_text_repel(aes(label=country_code),size = 3) +
+    geom_smooth(method = lm,  se = FALSE)
+  
+x <- pop %>% 
+  filter(country != "India") 
+summary(lm(formula = index_mean ~ youth_pop, data = x))
+
+ggplot(aes(x = youth_ratio, y = index_mean, label = country_code), data = pop) +
+  geom_point(size=2) +
+  ggtitle("Youth Ratio vs YLILI") +
+  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
+  ylab("YLILI Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = index_mean ~ youth_ratio, data = pop))
+
+ggplot(aes(x = youth_ratio, y = working_conditions_mean, label = country_code), data = pop) +
+  geom_point(size=2) +
+  ggtitle("Youth Ratio vs YLILI") +
+  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
+  ylab("YLILI Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = working_conditions_mean ~ youth_ratio, data = x))
+
+ggplot(aes(x = youth_ratio, y = education_mean, label = country_code), data = pop) +
+  geom_point(size=2) +
+  ggtitle("Youth Ratio vs YLILI") +
+  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
+  ylab("YLILI Score") +
+  theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
+  geom_smooth(method = lm,  se = FALSE)
+
+summary(lm(formula = education_mean ~ youth_ratio, data = x))
+
+## REGIONAL ANALYSIS
+colors_border=c( rgb(.2,0.2,0.8,0.9), rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+colors_in=c( rgb(.2,0.2,0.8,0.4), rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
+
+# 4D
 
 x <- rank %>% 
-  summarise(across(c(transition_mean, working_conditions_mean,education_mean), ~ mean(.x, na.rm = TRUE)))
+  dplyr::select(country, `Region Name`, "Overall YLILI" = index_mean, "Transition" = transition_mean, "Working Conditions" = working_conditions_mean, "Education" = education_mean) %>% 
+  group_by(`Region Name`) %>% 
+  summarise_at(vars(-country), funs(mean(., na.rm = TRUE))) %>% 
+  as.data.frame()
 
-radarchart( rank  , axistype=1 , 
+rownames(x) <- x[,1]
+x <- x[,-1]
+
+x <- rbind(rep(90,5) , rep(50,5) , x)
+            
+radarchart( x , axistype=6, 
             #custom polygon
             pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
             #custom the grid
-            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
+            cglcol="grey", cglty=1, axislabcol="grey",
             #custom labels
             vlcex=0.8 
 )
+
+legend(x=0.7, y=1, legend = rownames(x[-c(1,2),]), bty = "n", pch=20 , col=colors_in , text.col = "grey", cex=1.2, pt.cex=3)
+
+#11D
+
+x <- rank %>% 
+  dplyr::select(country, `Region Name`, "Overall YLILI" = index_mean, "NEET" = neet, "Work Conditions  " = relative_wc, "Mismatch" = mismatch, "Working Pov." = workingpov, "Underemp." = underemp, "Informality" = informal, "Elementary" = elementary, "   No Secondary" = nosecondary, "Literacy" = literacy, "Test Scores" = test_scores) %>% 
+  group_by(`Region Name`) %>% 
+  summarise_at(vars(-country), funs(mean(., na.rm = TRUE))) %>% 
+  as.data.frame()
+
+rownames(x) <- x[,1]
+x <- x[,-1]
+
+x <- rbind(rep(100,5) , rep(0,5) , x)
+
+radarchart( x , axistype=6, 
+            #custom polygon
+            pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey",
+            #custom labels
+            vlcex=0.8 
+)
+
+
+legend(x=1.2, y=1.2, legend = rownames(x[-c(1,2),]), bty = "n", pch=20 , col=colors_in)
+
+## SUB-REGIONAL ANALYSIS
+
+library(RColorBrewer)
+library(GISTools)
+colors_border <- add.alpha(brewer.pal(9, "Set1"), .9)
+colors_in <- add.alpha(brewer.pal(9, "Set1"), .4)
+
+
+#11D for Asia
+
+x <- rank %>% 
+  filter(`Region Name` == "Asia") %>% 
+  dplyr::select(country, `Sub-region Name`, "Overall YLILI" = index_mean, "NEET" = neet, "Work Conditions  " = relative_wc, "Mismatch" = mismatch, "Working Pov." = workingpov, "Underemp." = underemp, "Informality" = informal, "Elementary" = elementary, "   No Secondary" = nosecondary, "Literacy" = literacy, "Test Scores" = test_scores) %>% 
+  group_by(`Sub-region Name`) %>% 
+  summarise_at(vars(-country), funs(mean(., na.rm = TRUE))) %>% 
+  as.data.frame()
+
+rownames(x) <- x[,1]
+x <- x[,-1]
+
+x <- rbind(rep(100,5) , rep(0,5) , x)
+
+radarchart( x , axistype=6, 
+            #custom polygon
+            pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey",
+            #custom labels
+            vlcex=0.8 
+)
+
+
+legend(x=1.2, y=1.2, legend = rownames(x[-c(1,2),]), bty = "n", pch=20 , col=colors_in)
+
+#11D for Non-Asia
+
+x <- rank %>% 
+  filter(`Region Name` != "Asia") %>% 
+  dplyr::select(country, `Sub-region Name`, "Overall YLILI" = index_mean, "NEET" = neet, "Work Conditions  " = relative_wc, "Mismatch" = mismatch, "Working Pov." = workingpov, "Underemp." = underemp, "Informality" = informal, "Elementary" = elementary, "   No Secondary" = nosecondary, "Literacy" = literacy, "Test Scores" = test_scores) %>% 
+  group_by(`Sub-region Name`) %>% 
+  summarise_at(vars(-country), funs(mean(., na.rm = TRUE))) %>% 
+  as.data.frame()
+
+rownames(x) <- x[,1]
+x <- x[,-1]
+
+x <- rbind(rep(100,5) , rep(0,5) , x)
+
+radarchart( x , axistype=6, 
+            #custom polygon
+            pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey",
+            #custom labels
+            vlcex=0.8 
+)
+
+
+legend(x=1.2, y=1.2, legend = rownames(x[-c(1,2),]), bty = "n", pch=20 , col=colors_in)
+
 
