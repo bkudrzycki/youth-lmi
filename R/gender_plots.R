@@ -1,5 +1,5 @@
 # Package names
-packages <- c("tidyverse", "here", "ggrepel")
+packages <- c("tidyverse", "here", "ggrepel", "gtsummary", "readxl")
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -92,25 +92,37 @@ gindex$Economy <- gindex$Economy %>% ## fix country names to match ILOSTAT for j
          "Tanzania" = "Tanzania, United Republic of",
          "Vietnam" = "Viet Nam")
 
-comp <- full_join(comp, gindex, by = c("country" = "Economy"))
+comp <- left_join(comp, gindex, by = c("country" = "Economy"))
+
+quotas <- read_csv(here("data", "quotas.csv"))
+
+quotas$Country <- quotas$Country %>% ## fix country names to match ILOSTAT for joining
+  recode("State of Palestine" = "Occupied Palestinian Territory",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Republic of The Congo (Brazzaville)" = "Congo",
+         "Cabo Verde" = "Cape Verde")
+
+comp <- left_join(total, quotas, by = c("country" = "Country"))
 
 
 ggplot(comp, aes(x = CFR_score, y = index_mean_female, label = country_code)) +
   geom_point(size=2) +
   ggtitle("Gender Quota Index vs. Female YLILI") +
-  xlab("") +
-  ylab("") +
+  xlab("CFR Score") +
+  ylab("Female YLILI") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3) +
   geom_smooth(method = lm,  se = FALSE) +
   xlim(25,100) +
   ylim(0,100)
 
+summary(lm(formula = index_mean_female ~ CFR_score, data = comp))
+
 ggplot(comp, aes(x = CFR_score, y = index_diff, label = country_code)) +
   geom_point(size=2) +
   ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
-  xlab("") +
-  ylab("") +
+  xlab("CFR Score") +
+  ylab("Gender difference in YLILI Score") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3) +
   geom_smooth(method = lm,  se = FALSE) +
@@ -118,13 +130,13 @@ ggplot(comp, aes(x = CFR_score, y = index_diff, label = country_code)) +
   ylim(-15,15)
   
   #ggsave(here("gender_diff_vs_CFR_score.png"), width = 20, height = 12, units = "cm")
-
+summary(lm(formula = index_diff ~ CFR_score, data = comp))
 
 ggplot(comp, aes(x = CFR_institutions, y = index_diff, label = country_code)) +
   geom_point(size=2) +
-  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
-  xlab("") +
-  ylab("") +
+  ggtitle("CFR Institutions Score vs. YLILI Gender Diff.") +
+  xlab("CFR Institutions Score") +
+  ylab("Gender difference in YLILI Score") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3) +
   geom_smooth(method = lm,  se = FALSE) +
@@ -133,9 +145,10 @@ ggplot(comp, aes(x = CFR_institutions, y = index_diff, label = country_code)) +
 
 #ggsave(here("gender_diff_vs_CFR_institutions.png"), width = 20, height = 12, units = "cm")
 
+
 ggplot(comp, aes(x = CFR_work_incentives, y = index_diff, label = country_code)) +
   geom_point(size=2) +
-  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
+  ggtitle("CFR Work Incentives Score vs. YLILI Gender Diff.") +
   xlab("") +
   ylab("") +
   theme_minimal() +
@@ -151,4 +164,38 @@ comp %>% dplyr::select(index_mean_female, CFR_work_incentives) %>%
 
 #no differences in either gender_diff or female index score across work incentives categories
 
-                     
+
+## USING QUOTAS DATA
+
+comp %>% dplyr::select(contains("female"), index_diff, "Parliament type") %>% 
+  tbl_summary(by = "Parliament type",
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p()
+
+comp %>% dplyr::select(contains("female"), index_diff, "Voluntary political party quotas") %>% 
+  tbl_summary(by = "Voluntary political party quotas",
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p()
+
+comp %>% dplyr::select(contains("female"), index_diff, "Single/Lower House > Quota type") %>% 
+  tbl_summary(by = "Single/Lower House > Quota type",
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p()
+
+comp %>% dplyr::select(contains("female"), index_diff, "Single/Lower House > Constitutional quota details") %>% 
+  tbl_summary(by = "Single/Lower House > Constitutional quota details",
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p()
+
+comp %>% dplyr::select(contains("female"), index_diff, "Single/Lower House > Electoral law quota details") %>% 
+  tbl_summary(by = "Single/Lower House > Electoral law quota details",
+              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
+              missing = "no") %>% 
+  add_p()
+
+#no differences in either gender_diff or female index scores across different types of gender quota legislation in the political sphere
+            

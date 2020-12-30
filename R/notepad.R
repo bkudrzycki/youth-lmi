@@ -9,6 +9,25 @@ source(here("lamadex", "R", "source", "data_loader.R"))
 rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
 
+regions <- read_csv(here("data", "raw", "country_regions.csv")) %>% 
+  select("country" = "Country or Area",
+         "Region Name",
+         "Sub-region Name")
+
+regions$country <- regions$country %>% #fix country names to match ILOSTAT for joining
+  recode("Democratic Republic of the Congo" = "Congo, Democratic Republic of the",
+         "Republic of Moldova" = "Moldova, Republic of",
+         "United Republic of Tanzania" = "Tanzania, United Republic of",
+         "State of Palestine" = "Occupied Palestinian Territory",
+         "Côte d’Ivoire" = "Côte d'Ivoire",
+         "Bolivia (Plurinational State of)" = "Bolivia",
+         "Cabo Verde" = "Cape Verde",
+         "Micronesia (Federated States of)" = "Micronesia, Federated States of",
+         "Democratic People's Republic of Korea" = "Korea, Democratic People's Republic of"
+  )
+
+rank <- left_join(rank, regions, by = c("country"))
+
 #----------
 
 total <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE) %>%
@@ -143,8 +162,8 @@ ggplot(comp, aes(x = index_mean, y = index_geom, label = country_code)) +
   xlab("Arithmetic mean") +
   ylab("Geometric mean") +
   theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  ggsave(here("arithmetic_vs_geom.png"), width = 20, height = 12, units = "cm")
+  geom_text_repel(aes(label=country_code),size = 3)
+  #+ ggsave(here("arithmetic_vs_geom.png"), width = 20, height = 12, units = "cm")
 
 #---------- correlation matrices
 
@@ -215,10 +234,11 @@ plot <- left_join(rank, df, by = c("country"))
 
 ggplot(plot, aes(x = obs_value, y = index_mean, label = country_code)) +
   geom_point() +
-  xlab("Unemployment rate") +
+  xlab("Youth unemployment rate") +
   ylab("YLILI score") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3)
+  #+ ggsave(here("score_vs_youth_unemp.png"), width = 20, height = 12, units = "cm")
 
 df <- gdp %>% 
   rename(country = ref_area.label) %>% 
@@ -494,3 +514,47 @@ male %>%
   ylim(35, 84) +
   geom_text_repel(aes(label=country_code), size = 3) +
   ggtitle("ARITHMETIC v GEOMETRIC: MALES")
+
+rank <- rank %>% 
+arrange(desc(working_conditions_mean)) %>% 
+  mutate(wc_rank = rank(-working_conditions_mean,na.last = "keep")) %>% 
+  filter(!is.na(working_conditions_mean))
+
+rank <- rank %>% 
+  arrange(desc(transition_mean)) %>% 
+  mutate(trans_rank = rank(-transition_mean,na.last = "keep")) %>% 
+  filter(!is.na(transition_mean))
+
+rank <- rank %>% 
+  arrange(desc(education_mean)) %>% 
+  mutate(educ_rank = rank(-education_mean,na.last = "keep")) %>% 
+  filter(!is.na(education_mean))
+
+rank$sd <- apply(rank[, c("wc_rank","trans_rank", "educ_rank")],1,sd)
+
+cor(rank[, c("wc_rank","trans_rank", "educ_rank")])
+
+rank[, c("wc_rank","trans_rank", "educ_rank")]
+
+## regional analysis
+colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
+
+library(fmsb)
+
+x <- rank %>% 
+  summarise(across(c(transition_mean, working_conditions_mean,education_mean), ~ mean(.x, na.rm = TRUE)))
+
+  dplyr::select("Region Name", transition_mean, working_conditions_mean, education_mean) %>% 
+  summarise("Region Name", mean(.x, na.rm = TRUE)))
+
+
+radarchart( rank  , axistype=1 , 
+            #custom polygon
+            pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+            #custom the grid
+            cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
+            #custom labels
+            vlcex=0.8 
+)
+
