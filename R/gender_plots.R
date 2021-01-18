@@ -49,6 +49,7 @@ ggplot(comp, aes(x = transition_mean_male, y = transition_mean_female, label = c
   xlab("") +
   ylab("") +
   theme_minimal() +
+  #geom_text_repel(aes(label=country_code),size = 3) +
   xlim(20,100) +
   ylim(20,100) 
   #ggsave(here("transition_genderdiff.png"), width = 20, height = 12, units = "cm")
@@ -60,6 +61,7 @@ ggplot(comp, aes(x = working_conditions_mean_male, y = working_conditions_mean_f
   xlab("") +
   ylab("") +
   theme_minimal() +
+  #geom_text_repel(aes(label=country_code),size = 3) +
   xlim(20,100) +
   ylim(20,100) 
   #ggsave(here("workingcond_genderdiff.png"), width = 20, height = 12, units = "cm")
@@ -71,6 +73,7 @@ ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = cou
   xlab("") +
   ylab("") +
   theme_minimal() +
+  geom_text_repel(aes(label=country_code),size = 3) +
   xlim(20,100) +
   ylim(20,100) 
   #ggsave(here("education_genderdiff.png"), width = 20, height = 12, units = "cm")
@@ -94,20 +97,10 @@ gindex$Economy <- gindex$Economy %>% ## fix country names to match ILOSTAT for j
 
 comp <- left_join(comp, gindex, by = c("country" = "Economy"))
 
-quotas <- read_csv(here("data", "quotas.csv"))
-
-quotas$Country <- quotas$Country %>% ## fix country names to match ILOSTAT for joining
-  recode("State of Palestine" = "Occupied Palestinian Territory",
-         "Cote d'Ivoire" = "Côte d'Ivoire",
-         "Republic of The Congo (Brazzaville)" = "Congo",
-         "Cabo Verde" = "Cape Verde")
-
-comp <- left_join(total, quotas, by = c("country" = "Country"))
-
 
 ggplot(comp, aes(x = CFR_score, y = index_mean_female, label = country_code)) +
   geom_point(size=2) +
-  ggtitle("Gender Quota Index vs. Female YLILI") +
+  ggtitle("Workplace Equality Index vs. Female YLILI") +
   xlab("CFR Score") +
   ylab("Female YLILI") +
   theme_minimal() +
@@ -120,7 +113,7 @@ summary(lm(formula = index_mean_female ~ CFR_score, data = comp))
 
 ggplot(comp, aes(x = CFR_score, y = index_diff, label = country_code)) +
   geom_point(size=2) +
-  ggtitle("Gender quota Index vs. YLILI Gender Diff.") +
+  ggtitle("Workplace Equality Index vs. YLILI Gender Diff.") +
   xlab("CFR Score") +
   ylab("Gender difference in YLILI Score") +
   theme_minimal() +
@@ -166,6 +159,17 @@ comp %>% dplyr::select(index_mean_female, CFR_work_incentives) %>%
 
 
 ## USING QUOTAS DATA
+
+quotas <- read_csv(here("data", "quotas.csv"))
+
+quotas$Country <- quotas$Country %>% ## fix country names to match ILOSTAT for joining
+  recode("State of Palestine" = "Occupied Palestinian Territory",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Republic of The Congo (Brazzaville)" = "Congo",
+         "Cabo Verde" = "Cape Verde")
+
+comp <- left_join(comp, quotas, by = c("country" = "Country"))
+
 
 comp %>% dplyr::select(contains("female"), index_diff, "Parliament type") %>% 
   tbl_summary(by = "Parliament type",

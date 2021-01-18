@@ -36,15 +36,29 @@ gdp <- read.csv("./data/raw/gdp_PPP_percap_worldbank.csv") %>%
   select(country, "gdp"=X2018)
 
 gdp$country <- gdp$country %>%
-  recode("Vietnam" = "Viet Name",
-         "Cote d'Ivoire" = "Côte d'Ivoire",
-         "Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+  recode("Congo, Dem. Rep." = "Congo, Democratic Republic of the",
+         "Yemen, Rep." = "Yemen",
          "Gambia, The" = "Gambia",
-         "Tanzania" = "Tanzania, United Republic of",
          "Egypt, Arab Rep." = "Egypt",
          "Lao PDR" = "Lao People's Democratic Republic",
-         "Kyrgyz Republic" = "Kyrgystan",
-         "Moldova" = "Moldova, Republic of")
+         "Congo, Rep." = "Congo",
+         "Cote d'Ivoire" = "Côte d'Ivoire",
+         "Tanzania" = "Tanzania, United Republic of",
+         "Kyrgyz Republic" = "Kyrgyzstan",
+         "Iran, Islamic Rep." = "Iran, Islamic Republic of",
+         "Moldova" = "Moldova, Republic of",
+         "Slovak Republic" = "Slovakia",
+         "Vietnam" = "Viet Nam",
+         "Czech Republic" = "Czechia",
+         "Macao SAR, China" = "Macau, China",
+         "Hong Kong SAR, China" = "Hong Kong, China",
+         "Korea, Rep." = "Korea, Republic of",
+         "Macedonia, FYR" = "North Macedonia",
+         "West Bank and Gaza" = "Occupied Palestinian Territory",
+         "Micronesia, Fed. Sts." = "Micronesia, Federated States of",
+         "Korea, Dem. People’s Rep." = "Korea, Democratic People's Republic of",
+         "Cabo Verde" = "Cape Verde")
+
 total <- left_join(total, gdp, by = "country")
 
 #----------
@@ -220,53 +234,6 @@ lower[lower.tri(cormat_indices, diag=TRUE)]<-""
 lower <- as.matrix(lower)
 
 stargazer(lower,align = T)
-
-#---------- rank vs. GDP and unemployment
-
-df <- unemployment_rate %>% 
-  rename(country = ref_area.label) %>% 
-  filter(sex.label == "Sex: Total",
-         classif1.label == "Age (Youth, adults): 15-24") %>% 
-  group_by(country) %>%
-  top_n(1, time)
-  
-plot <- left_join(rank, df, by = c("country"))
-
-ggplot(plot, aes(x = obs_value, y = index_mean, label = country_code)) +
-  geom_point() +
-  xlab("Youth unemployment rate") +
-  ylab("YLILI score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3)
-  #+ ggsave(here("score_vs_youth_unemp.png"), width = 20, height = 12, units = "cm")
-
-df <- gdp %>% 
-  mutate(gdp = gdp/1000)
-
-plot <- left_join(rank, df, by = "country")
-
-lm_eqn <- function(df){
-  m <- lm(y ~ x, df);
-  eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)^2~"="~r2, 
-                   list(a = format(unname(coef(m)[1]), digits = 2),
-                        b = format(unname(coef(m)[2]), digits = 2),
-                        r2 = format(summary(m)$r.squared, digits = 3)))
-  as.character(as.expression(eq));
-}
-
-df <- plot[c("index_mean", "gdp")] %>% 
-  rename(y = "index_mean",
-         x = "gdp")
-
-ggplot(plot, aes(x = gdp, y = index_mean)) +
-  geom_point() +
-  geom_smooth(method = lm) +
-  xlab("GDP per capita (PPP, current international $)") +
-  ylab("YLILI score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_text(aes(x = 12, y = 58, label = lm_eqn(df)), parse = TRUE, data.frame())
-
 
 #----------
 
@@ -514,173 +481,3 @@ rank$sd <- apply(rank[, c("wc_rank","trans_rank", "educ_rank")],1,sd)
 cor(rank[, c("wc_rank","trans_rank", "educ_rank")])
 
 rank[, c("wc_rank","trans_rank", "educ_rank")]
-
-#population growth
-
-pop_growth <- read.csv(here("data","raw","population_growth_wb.csv")) %>%
-  rename("country" = "Country.Name",
-         "pop_growth_then" = X2005,
-         "pop_growth_now" = X2019) %>% 
-  select(c(country, pop_growth_then, pop_growth_now))
-
-pop_growth$country <- pop_growth$country %>%
-  recode("Congo, Dem. Rep." = "Congo, Democratic Republic of the",
-         "Yemen, Rep." = "Yemen",
-         "Gambia, The" = "Gambia",
-         "Egypt, Arab Rep." = "Egypt",
-         "Lao PDR" = "Lao People's Democratic Republic",
-         "Congo, Rep." = "Congo",
-         "Cote d'Ivoire" = "Côte d'Ivoire",
-         "Tanzania" = "Tanzania, United Republic of",
-         "Kyrgyz Republic" = "Kyrgyzstan",
-         "Iran, Islamic Rep." = "Iran, Islamic Republic of",
-         "Moldova" = "Moldova, Republic of",
-         "Slovak Republic" = "Slovakia",
-         "Vietnam" = "Viet Nam",
-         "Czech Republic" = "Czechia",
-         "Macao SAR, China" = "Macau, China",
-         "Hong Kong SAR, China" = "Hong Kong, China",
-         "Korea, Rep." = "Korea, Republic of",
-         "Macedonia, FYR" = "North Macedonia",
-         "West Bank and Gaza" = "Occupied Palestinian Territory",
-         "Micronesia, Fed. Sts." = "Micronesia, Federated States of",
-         "Korea, Dem. People’s Rep." = "Korea, Democratic People's Republic of",
-         "Cabo Verde" = "Cape Verde")
-
-pop_growth <- left_join(rank, pop_growth, by = "country")
-
-
-ggplot(pop_growth, aes(x = pop_growth_now, y = index_mean, label = country_code)) +
-  geom_point(size=2) +
-  ggtitle("Population Growth vs YLILI") +
-  xlab("Population Growth (2019)") +
-  ylab("YLILI Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = index_mean ~ pop_growth_now, data = pop_growth))
-
-ggplot(pop_growth, aes(x = pop_growth_then, y = index_mean, label = country_code)) +
-  geom_point(size=2) +
-  ggtitle("Population Growth vs YLILI") +
-  xlab("Population Growth (2005)") +
-  ylab("YLILI Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = index_mean ~ pop_growth_then, data = pop_growth))
-
-ggplot(pop_growth, aes(x = pop_growth_then, y = transition_mean, label = country_code)) +
-  geom_point(size=2) +
-  ggtitle("Population Growth vs Education Score") +
-  xlab("Population Growth (2019)") +
-  ylab("Education Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = transition_mean ~ pop_growth_then, data = pop_growth))
-
-ggplot(pop_growth, aes(x = pop_growth_then, y = working_conditions_mean, label = country_code)) +
-  geom_point(size=2) +
-  ggtitle("Population Growth vs Education Score") +
-  xlab("Population Growth (2019)") +
-  ylab("Education Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = working_conditions_mean ~ pop_growth_then, data = pop_growth))
-
-ggplot(pop_growth, aes(x = pop_growth_then, y = education_mean, label = country_code)) +
-  geom_point(size=2) +
-  ggtitle("Population Growth vs Education Score") +
-  xlab("Population Growth (2019)") +
-  ylab("Education Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = education_mean ~ pop_growth_then, data = pop_growth))
-
-## top quintile (11 countries)
-pop_growth <- pop_growth %>% 
-  mutate(pop_now_top11 = as.numeric(ntile(-pop_growth_now, 5)==1))
-
-pop_growth <- pop_growth %>% 
-  mutate(pop_then_top11 = as.numeric(ntile(-pop_growth_then, 5)==1))
-        
-pop_growth %>% dplyr::select(contains("mean"), pop_now_top11) %>% 
-  tbl_summary(by =  pop_now_top11,
-              statistic = list(all_continuous() ~ "{mean} [{median}] ({sd})"),
-              missing = "no") %>% 
-  add_p() 
-
-
-## BY ABSOLUTE YOUTH POPULATION AND YOUTH-TO ADULT RATIO
-
-pop <- read.csv(here("data","raw","population_age_ilostat.csv")) %>%
-  filter(time == 2019,
-         sex.label == "Sex: Total") %>% 
-  pivot_wider(id_cols = c(ref_area.label, classif1.label, obs_value), names_from = classif1.label, values_from = obs_value)
-  
-pop <- pop %>% 
-  mutate(youth_ratio = `Age (Youth, adults): 15-24` / `Age (Aggregate bands): Total`) %>%
-  rename("country" = "ref_area.label",
-         "total_pop" = `Age (Aggregate bands): Total`,
-         "youth_pop" = `Age (Youth, adults): 15-24`,
-         "adult_pop" = `Age (Youth, adults): 25+`)
-
-pop <- left_join(rank, pop, by = "country")
-  
-pop %>% 
-  filter(country != "India") %>% 
-  ggplot(aes(x = youth_pop, y = index_mean, label = country_code)) +
-    geom_point(size=2) +
-    ggtitle("Absolute Youth Population vs YLILI") +
-    xlab("15-24 Population (2019)") +
-    ylab("YLILI Score") +
-    theme_minimal() +
-    geom_text_repel(aes(label=country_code),size = 3) +
-    geom_smooth(method = lm,  se = FALSE)
-  
-x <- pop %>% 
-  filter(country != "India") 
-summary(lm(formula = index_mean ~ youth_pop, data = x))
-
-ggplot(aes(x = youth_ratio, y = index_mean, label = country_code), data = pop) +
-  geom_point(size=2) +
-  ggtitle("Youth Ratio vs YLILI") +
-  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
-  ylab("YLILI Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = index_mean ~ youth_ratio, data = pop))
-
-ggplot(aes(x = youth_ratio, y = working_conditions_mean, label = country_code), data = pop) +
-  geom_point(size=2) +
-  ggtitle("Youth Ratio vs YLILI") +
-  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
-  ylab("YLILI Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = working_conditions_mean ~ youth_ratio, data = x))
-
-ggplot(aes(x = youth_ratio, y = education_mean, label = country_code), data = pop) +
-  geom_point(size=2) +
-  ggtitle("Youth Ratio vs YLILI") +
-  xlab("Aged 15-24 as Fraction of Total Population (2019)") +
-  ylab("YLILI Score") +
-  theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
-  geom_smooth(method = lm,  se = FALSE)
-
-summary(lm(formula = education_mean ~ youth_ratio, data = x))
-
-
