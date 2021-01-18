@@ -11,7 +11,9 @@ if (any(installed_packages == FALSE)) {
 invisible(lapply(packages, library, character.only = TRUE))
 ## ---------------------------------------
 
-devtools::load_all(here("lamadex"))
+install_github("bkudrzycki/youth-lmi/lamadex")
+
+library(lamadex)
 
 # load map, shapefile name "countries", country names saved as NAME
 
