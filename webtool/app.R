@@ -11,7 +11,8 @@ if (any(installed_packages == FALSE)) {
 invisible(lapply(packages, library, character.only = TRUE))
 ## ---------------------------------------
 
-install_github("bkudrzycki/youth-lmi/lamadex")
+install_github("bkudrzycki/youth-lmi/lamadex", force = TRUE)
+1
 
 library(lamadex)
 
