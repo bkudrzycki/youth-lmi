@@ -240,7 +240,7 @@ server <- function(input, output) {
         "Harmonized tests score" = rank(-`Harmonized tests score`, na.last = "keep")
       ) %>%      
       mutate_if(is.numeric, round, 3) %>% 
-      arrange(desc(`YLILI score`))
+      arrange(`YLILI score`)
     nums <- rank %>% select_if(is.numeric)
     brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
     clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
