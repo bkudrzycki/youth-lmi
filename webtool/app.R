@@ -4,7 +4,7 @@ packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyver
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
 if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages])
+  install.packages(packages[!installed_packages], quiet = TRUE)
 }
 
 # Packages loading
