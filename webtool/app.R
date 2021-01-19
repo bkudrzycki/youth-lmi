@@ -93,7 +93,8 @@ ui <- fluidPage(
                    tabPanel("Map",
                             style = "height:92vh;",
                             leafletOutput("map", width = "120%", height = "93%")),
-                   tabPanel("Data", DT::dataTableOutput("ranks"))
+                   tabPanel("Scores", DT::dataTableOutput("scores")),
+                   tabPanel("Ranks", DT::dataTableOutput("ranks"))
                  )
                )
              )
@@ -104,7 +105,7 @@ ui <- fluidPage(
 # Define server logic
 server <- function(input, output) {
   
-  # generate index according to user-specified preferences
+  # generate index according to user specification
   reactiveIndex <- reactive(rank_generator(dfList, country_lists[[3]], bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
@@ -178,7 +179,8 @@ server <- function(input, output) {
   })
   
   
-  output$ranks <- DT::renderDataTable({
+  # generate table with dynamic color-coding
+  output$scores <- DT::renderDataTable({
     rank <- reactiveIndex() %>% 
       mutate_if(is.numeric, round, 3) %>% 
       arrange(desc(`YLILI score`))
@@ -196,6 +198,42 @@ server <- function(input, output) {
       formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
   })
   
+  output$ranks <- DT::renderDataTable({
+    rank <- reactiveIndex() %>% 
+      ungroup() %>% 
+      mutate(
+        "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
+        "Transition" = rank(-`Transition`, na.last = "keep"),
+        "Working conditions" = rank(-`Working conditions`, na.last = "keep"),
+        "Education" = rank(-`Education`, na.last = "keep"),
+        "NEET score" = rank(-`NEET score`, na.last = "keep"),
+        "Working conditions ratio" = rank(-`Working conditions ratio`, na.last = "keep"),
+        "Mismatch score" = rank(-`Mismatch score`, na.last = "keep"),
+        "Working poverty score" = rank(-`Working poverty score`, na.last = "keep"),
+        "Under- employment score" = rank(-`Under- employment score`, na.last = "keep"),
+        "Informal work score" = rank(-`Informal work score`, na.last = "keep"),
+        "Elementary occupation score" = rank(-`Elementary occupation score`, na.last = "keep"),
+        "Secondary schooling rate" = rank(-`Secondary schooling rate`, na.last = "keep"),
+        "Literacy rate" = rank(-`Literacy rate`, na.last = "keep"),
+        "Harmonized tests score" = rank(-`Harmonized tests score`, na.last = "keep")
+      ) %>%      
+      mutate_if(is.numeric, round, 3) %>% 
+      arrange(desc(`YLILI score`))
+    nums <- rank %>% select_if(is.numeric)
+    brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
+    clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+      {paste0("rgb(255,", ., ",", ., ")")}
+    clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
+      {paste0("rgb(", ., ",", 75+.,",", ., ")")}
+    clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
+      {paste0("rgb(", ., ",", ., ",255)")}
+    DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
+      formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
+      formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
+      formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+  })
+  
+  #generate data
   data_list <- reactive({
     list(
       total = rank_generator(dfList, country_lists[[3]], bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
@@ -288,5 +326,5 @@ server <- function(input, output) {
 
 app <- shinyApp(ui = ui, server = server)
 
-#runApp(app, launch.browser = TRUE)
+runApp(app, launch.browser = TRUE)
 #runGitHub("webtool_test", "bkudrzycki", launch.browser = TRUE)
