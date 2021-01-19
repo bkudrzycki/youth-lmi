@@ -143,20 +143,42 @@ server <- function(input, output) {
     
     pal <- reactive(colorNumeric(c("#FFFFFFFF", viridis(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "white"))
     
-    # 
+    # total number of countries ranked
+    num_ranked <- reactive(colSums(!is.na(reactiveIndex()["YLILI score"])))
+    
+
     countries2 <- reactive(merge(countries,
-                                 scores(),
+                                 reactiveIndex(),
                                  by.x = "NAME",
                                  by.y = "Country",
                                  sort = FALSE))
     
-    country_popup <- paste0("<strong>Country: </strong>",
+    table <- data.frame(a = 1:3, b= c("a", "b", "c"))
+    
+    country_popup <- paste0("<h4><strong>Country:  </strong>",
                             countries2()$NAME,
                             "<br><strong>",
-                            input$gender, " ", as.character(indicator),":",
-                            " </strong>",
-                            round(countries2()[[indicator]],2),
-                            hr())
+                            input$gender, " ", as.character(indicator),": </strong>",
+                            round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",                             " </h4>",
+                            hr(),
+                            "<strong>", input$gender, " YLILI score: </strong>", round(countries2()[["YLILI score"]],2), " (", rank(-countries2()$`YLILI score`, na.last = "keep"), "/", num_ranked(), ")",
+                            hr(),
+                            "<strong>", input$gender, " Transition score: </strong>", round(countries2()[["Transition"]],2), " (", rank(-countries2()$Transition, na.last = "keep"), "/", num_ranked(), ")",
+                            "<br> NEET rate: ", round(countries2()[["NEET score"]],2),
+                            "<br> Working conditions ratio: ", round(countries2()[["Working conditions ratio"]],2),
+                            "<br> Mismatch rate: ", round(countries2()[["Mismatch score"]],2),
+                            hr(),
+                            "<strong>", input$gender, " Working Conditions score: </strong>", round(countries2()[["Working conditions"]],2), " (", rank(-countries2()$`Working conditions`, na.last = "keep"), "/", num_ranked(), ")",
+                            "<br> Working poverty rate: ", round(countries2()[["Working poverty score"]],2),
+                            "<br> Underemployed rate: ", round(countries2()[["Under- employment score"]],2),
+                            "<br> Informal work rate: ", round(countries2()[["Informal work score"]],2),
+                            "<br> Elementary occupations: ", round(countries2()[["Elementary occupation score"]],2),
+                            hr(),
+                            "<strong>", input$gender, " Education score: </strong>", round(countries2()[["Education"]],2), " (", rank(-countries2()$Education, na.last = "keep"), "/", num_ranked(), ")",
+                            "<br> Secondary school rate: ", round(countries2()[["Secondary schooling rate"]],2),
+                            "<br> Literacy rate: ", round(countries2()[["Literacy rate"]],2),
+                            "<br> Harmonized test scores: ", round(countries2()[["Harmonized tests score"]],2)
+                            )
     
     output$map <- renderLeaflet({
       
