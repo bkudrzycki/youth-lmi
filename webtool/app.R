@@ -8,7 +8,7 @@ if (any(installed_packages == FALSE)) {
 }
 
 # Packages loading
-invisible(lapply(packages, library, character.only = TRUE))
+invisible(lapply(packages, library, character.only = TRUE, quietly = TRUE))
 ## ---------------------------------------
 
 devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
