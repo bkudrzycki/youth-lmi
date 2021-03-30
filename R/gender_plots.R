@@ -9,6 +9,7 @@ if (any(installed_packages == FALSE)) {
 
 # Packages loading
 invisible(lapply(packages, library, character.only = TRUE))
+rm(installed_packages, packages)
 ## ---------------------------------------
 
 devtools::load_all(here("lamadex"))
@@ -73,7 +74,7 @@ ggplot(comp, aes(x = education_mean_male, y = education_mean_female, label = cou
   xlab("") +
   ylab("") +
   theme_minimal() +
-  geom_text_repel(aes(label=country_code),size = 3) +
+  #geom_text_repel(aes(label=country_code),size = 3) +
   xlim(20,100) +
   ylim(20,100) 
   #ggsave(here("education_genderdiff.png"), width = 20, height = 12, units = "cm")

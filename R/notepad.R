@@ -2,6 +2,8 @@ library(tidyverse)
 library(here)
 library(ggrepel)
 
+setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
+
 devtools::load_all(here("lamadex"))
 source(here("lamadex", "R", "source", "countryList.R"))
 source(here("lamadex", "R", "source", "data_loader.R"))
@@ -198,6 +200,9 @@ cormat_indices <- rank %>%
 cormat_indices <- cormat_indices %>% 
   cor()
 
+cormat_indices_spearman <- cormat_indices %>% 
+  cor(method ="spearman")
+
 cor.mtest <- function(mat, ...) {
   mat <- as.matrix(mat)
   n <- ncol(mat)
@@ -290,6 +295,37 @@ unemployment_rate <- filter_helper(unemployment_rate, bygender = "Total", lastye
   rename("country" = ref_area.label)
 
 index <- left_join(index, unemployment_rate, by = "country")
+
+
+# plot for Isabel
+
+all_countries <- country_lists[[9]] %>% 
+  mutate(inc_level = ifelse(ref_area.label %in% c(country_lists[[1]]$ref_area.label, country_lists[[2]]$ref_area.label), "LIC/LMIC", "HIC/HMIC"))
+  
+unemp_r <- unemployment_rate %>% 
+  filter(sex.label == "Sex: Total",
+         classif1.label == "Age (Youth, adults): 15-24") %>% 
+  group_by(ref_area.label) %>%
+  top_n(1, time) %>% select(ref_area.label, unemp_r = obs_value)
+
+inform_r <-informal %>% select(ref_area.label, inform_r = "Sex: Total")
+
+df <- left_join(all_countries, unemp_r) %>% left_join(., inform_r)
+
+ggplot(df, aes(x = inform_r, y = unemp_r)) +
+  geom_point(aes(color = inc_level)) +
+  xlab("Youth Informality Rate") +
+  ylab("Youth Unemployment Rate") +
+  theme_minimal() +
+  geom_smooth(method = "lm", aes(color = inc_level, linetype = inc_level), se = F, size=0.75) +
+  scale_colour_manual(name = "Income Level", values = c("azure4", "black")) +
+  labs(linetype="Income Level") +
+  theme(legend.position="bottom") +
+  ggsave(here("inf_unemp.png"), width = 20, height = 12, units = "cm")
+  
+  #geom_text_repel(aes(label=country_code),size = 3)
+
+
 
 # some plots
 plot(rank$index_mean, rank$index_geom)

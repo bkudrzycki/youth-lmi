@@ -20,7 +20,6 @@ rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear 
   arrange(desc(index_mean))
 
 #write.csv(rank, here("R/total_raw.csv"))
-
 #----------
 # Clean up
 ##rank <- rank %>%

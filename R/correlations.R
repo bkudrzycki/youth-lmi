@@ -87,13 +87,19 @@ gdp <- left_join(rank, gdp, by = "country") %>%
 
 ggplot(gdp, aes(x = gdp, y = index_mean, label = country_code)) +
   geom_point(size=2) +
-  geom_smooth(method = lm) +
+  geom_smooth(method = lm, se = FALSE) +
+  #ggtitle("Per capita GDP vs YLILI") +
   xlab("GDP per capita (PPP, current international $)") +
   ylab("YLILI score") +
   theme_minimal() +
   geom_text_repel(aes(label=country_code),size = 3)
 
 summary(lm(formula = index_mean ~ gdp, data = gdp))
+
+# by dimension
+summary(lm(formula = transition_mean~ gdp, data = gdp))
+summary(lm(formula = working_conditions_mean ~ gdp, data = gdp))
+summary(lm(formula = education_mean ~ gdp, data = gdp))
 
 ## UNEMPLOYMENT RATE
 
