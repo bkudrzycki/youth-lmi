@@ -46,7 +46,7 @@ ui <- fluidPage(
                  # App title ----
                  titlePanel("Data Explorer"),
                  fluidRow(
-                   column(8,
+                   column(12,
                           checkboxInput("impute", "Impute missing values", value = TRUE),
                           sliderInput("lastyear", "Last year:",
                                       min = 2000, max = 2017,
@@ -85,7 +85,7 @@ ui <- fluidPage(
                                          multiple = FALSE)
                    )
                  ),
-                 width = 2,
+                 width = 3,
                ),
                mainPanel(
                  tabsetPanel(
