@@ -2,6 +2,8 @@ library(tidyverse)
 library(here)
 library(ggrepel)
 
+setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
+
 devtools::load_all(here("lamadex"))
 source(here("lamadex", "R", "source", "countryList.R"))
 source(here("lamadex", "R", "source", "data_loader.R"))
@@ -569,3 +571,18 @@ ggplot(fertility, aes(x = fertility18, y = index_mean, label = country_code)) +
   geom_smooth(method = lm,  se = FALSE)
 
 summary(lm(formula = index_mean ~ fertility18, data = fertility))
+
+
+
+df <-informal %>% mutate(gap = `X25.29..Women.`-`X25.29..Men.`) %>% 
+  left_join(gdp, by = c("ref_area.label" = "country")) %>% 
+  left_join(pop, by = c("ref_area.label" = "country"))
+
+df %>% filter(gdp < 60000, total_pop > 50000) %>% ggplot(aes(x = gdp, y = gap, size = youth_pop, weight=youth_pop)) +
+  geom_point() +
+  theme_minimal() +
+  geom_text_repel(aes(label=ISO),size = 3) +
+  geom_smooth(method = lm,  se = FALSE) +
+  scale_size_area(max_size = 10)
+  
+  

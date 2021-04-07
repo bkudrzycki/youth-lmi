@@ -1,23 +1,26 @@
-# Package names
-packages <- c("devtools", "DT", "here", "leaflet", "openxlsx", "shiny", "tidyverse", "usethis", "shinythemes", "viridis", "tigris", "rgdal", "leaflet.extras", "shinyWidgets")
-
-# Install packages not yet installed
-installed_packages <- packages %in% rownames(installed.packages())
-if (any(installed_packages == FALSE)) {
-  install.packages(packages[!installed_packages], quiet = TRUE)
-}
-
-# Packages loading
-invisible(lapply(packages, library, character.only = TRUE, quietly = TRUE))
-## ---------------------------------------
-
-devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
-
+library(devtools)
+library(DT)
+library(here)
+library(leaflet)
+library(openxlsx)
+library(shiny)
+library(tidyverse)
+library(usethis)
+library(shinythemes)
+library(viridis)
+library(tigris)
+library(rgdal)
+library(leaflet.extras)
+library(shinyWidgets)
+library(gridExtra)
+#devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
+
+## ---------------------------------------
 
 # load map, shapefile name "countries", country names saved as NAME
 
-load(here("data", "shapeFile.RData"))
+load("data/shapeFile.RData")
 
 # globals: load list of countries and raw data, define geometric mean function
 source(here("lamadex", "R", "source", "countryList.R"))
@@ -30,6 +33,12 @@ gm_mean = function(x, na.rm = FALSE) {
 css <- HTML(" body {
     background-color: #4e5d6c;
 }")
+
+tags$head(
+  tags$style(
+    ".radio-inline{margin-left:10px;"
+  )
+)
 
 # Define UI
 ui <- fluidPage(
@@ -57,10 +66,7 @@ ui <- fluidPage(
                           hr())
                  ),
                  fluidRow(
-                   column(4,
-                          submitButton("Update")
-                   ),
-                   column(4,
+                   column(8,
                           downloadButton("dl", "Download .Excel")
                    )
                  ),
@@ -92,9 +98,19 @@ ui <- fluidPage(
                    id = 'dataset',
                    tabPanel("Map",
                             style = "height:92vh;",
-                            leafletOutput("map", width = "120%", height = "93%")),
-                   tabPanel("Scores", DT::dataTableOutput("scores")),
-                   tabPanel("Ranks", DT::dataTableOutput("ranks"))
+                            leafletOutput("map", width = "110%", height = "93%")),
+                   tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline=T),
+                            DT::dataTableOutput("scores")),
+                   tabPanel("Country Comparison", 
+                            fluidRow(
+                              column(4,
+                                     selectInput("country1", "", sort(country_lists[[3]][[1]]))),
+                              column(4,
+                                     ),
+                              column(4,
+                                     selectInput("country2", "", sort(country_lists[[3]][[1]])))),
+                            plotOutput("test", width = "100%")
+                   )
                  )
                )
              )
@@ -200,59 +216,143 @@ server <- function(input, output) {
     })
   })
   
-  
-  # generate table with dynamic color-coding
-  output$scores <- DT::renderDataTable({
-    rank <- reactiveIndex() %>% 
-      mutate_if(is.numeric, round, 3) %>% 
-      arrange(desc(`YLILI score`))
-    nums <- rank %>% select_if(is.numeric)
-    brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
-    clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(255,", ., ",", ., ")")}
-    clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(", ., ",", 75+.,",", ., ")")}
-    clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(", ., ",", ., ",255)")}
-    DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
-      formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
-      formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
-      formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+  toListen <- reactive({
+    list(input$table, input$country1, input$country2)
   })
   
-  output$ranks <- DT::renderDataTable({
-    rank <- reactiveIndex() %>% 
-      ungroup() %>% 
-      mutate(
-        "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
-        "Transition" = rank(-`Transition`, na.last = "keep"),
-        "Working conditions" = rank(-`Working conditions`, na.last = "keep"),
-        "Education" = rank(-`Education`, na.last = "keep"),
-        "NEET score" = rank(-`NEET score`, na.last = "keep"),
-        "Working conditions ratio" = rank(-`Working conditions ratio`, na.last = "keep"),
-        "Mismatch score" = rank(-`Mismatch score`, na.last = "keep"),
-        "Working poverty score" = rank(-`Working poverty score`, na.last = "keep"),
-        "Under- employment score" = rank(-`Under- employment score`, na.last = "keep"),
-        "Informal work score" = rank(-`Informal work score`, na.last = "keep"),
-        "Elementary occupation score" = rank(-`Elementary occupation score`, na.last = "keep"),
-        "Secondary schooling rate" = rank(-`Secondary schooling rate`, na.last = "keep"),
-        "Literacy rate" = rank(-`Literacy rate`, na.last = "keep"),
-        "Harmonized tests score" = rank(-`Harmonized tests score`, na.last = "keep")
-      ) %>%      
-      mutate_if(is.numeric, round, 3) %>% 
-      arrange(`YLILI score`)
-    nums <- rank %>% select_if(is.numeric)
-    brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
-    clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(255,", ., ",", ., ")")}
-    clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(", ., ",", 75+.,",", ., ")")}
-    clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
-      {paste0("rgb(", ., ",", ., ",255)")}
-    DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
-      formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
-      formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
-      formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+  observeEvent(toListen(), {
+    
+    # generate table with dynamic color-coding
+    scores <- DT::renderDataTable({
+      rank <- reactiveIndex() %>% 
+        mutate_if(is.numeric, round, 3) %>% 
+        arrange(desc(`YLILI score`))
+      nums <- rank %>% select_if(is.numeric)
+      brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
+      clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(255,", ., ",", ., ")")}
+      clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(", ., ",", 75+.,",", ., ")")}
+      clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(", ., ",", ., ",255)")}
+      DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
+        formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
+        formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
+        formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+    })
+    
+    ranks <- DT::renderDataTable({
+      rank <- reactiveIndex() %>% 
+        ungroup() %>% 
+        mutate(
+          "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
+          "Transition" = rank(-`Transition`, na.last = "keep"),
+          "Working conditions" = rank(-`Working conditions`, na.last = "keep"),
+          "Education" = rank(-`Education`, na.last = "keep"),
+          "NEET score" = rank(-`NEET score`, na.last = "keep"),
+          "Working conditions ratio" = rank(-`Working conditions ratio`, na.last = "keep"),
+          "Mismatch score" = rank(-`Mismatch score`, na.last = "keep"),
+          "Working poverty score" = rank(-`Working poverty score`, na.last = "keep"),
+          "Under- employment score" = rank(-`Under- employment score`, na.last = "keep"),
+          "Informal work score" = rank(-`Informal work score`, na.last = "keep"),
+          "Elementary occupation score" = rank(-`Elementary occupation score`, na.last = "keep"),
+          "Secondary schooling rate" = rank(-`Secondary schooling rate`, na.last = "keep"),
+          "Literacy rate" = rank(-`Literacy rate`, na.last = "keep"),
+          "Harmonized tests score" = rank(-`Harmonized tests score`, na.last = "keep")
+        ) %>%      
+        mutate_if(is.numeric, round, 3) %>% 
+        arrange(`YLILI score`)
+      nums <- rank %>% select_if(is.numeric)
+      brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
+      clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(255,", ., ",", ., ")")}
+      clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(", ., ",", 75+.,",", ., ")")}
+      clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
+        {paste0("rgb(", ., ",", ., ",255)")}
+      DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
+        formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
+        formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
+        formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+    })
+    
+    if (input$table == "Scores") {
+      output$scores <- scores
+    } else {
+      output$scores <- ranks
+    }
+    
+    # back-to-back bar graph
+    left <- reactive({
+      reactiveIndex() %>% 
+        filter(Country == input$country1) %>% 
+        select(-Country) %>% 
+        t() %>%
+        as.data.frame() %>%
+        mutate(var = rownames(.))
+               #V2 = ifelse(input$country1 == input$country2, V1, V2)) # if same country is selected twice
+      })
+    
+    right <- reactive({
+      reactiveIndex() %>% 
+        filter(Country == input$country2) %>% 
+        select(-Country) %>% 
+        t() %>%
+        as.data.frame() %>%
+        mutate(var = rownames(.))
+    })
+    
+    
+    # Center labels
+    g.mid<-ggplot(left(), aes(x=1,y=left()$var)) + geom_text(aes(label=left()$var, color = "NEET score"), size = rel(5)) +
+      scale_colour_manual(values = c("white")) +
+      ggtitle("")+
+      ylab(NULL)+
+      scale_x_continuous(expand=c(0,0),limits=c(0.94,1.065))+
+      scale_y_discrete(expand = expansion(mult = c(0.095, 0.046))) +
+      theme_minimal() +
+      theme(text = element_text(color="white"),
+            axis.title=element_blank(),
+            panel.grid=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks.y=element_blank(),
+            panel.background=element_blank(),
+            axis.text.x=element_text(color="white"),
+            axis.ticks.x=element_line(color=NA),
+            plot.margin = unit(c(-5,-5,-5,-5), "mm"),
+            legend.position="none")
+    
+    g1 <- ggplot(data = left()) +
+      geom_bar(stat = "identity", aes(y= V1, x = var), fill = "white") +
+      ylim(0,100) +
+      theme_minimal() +
+      theme(axis.title.x = element_blank(), 
+            axis.title.y = element_blank(), 
+            axis.text.y = element_blank(), 
+            axis.ticks.y = element_blank(), 
+            axis.ticks.x = element_blank(), 
+            axis.text.x=element_text(color = "white"),
+            plot.margin = unit(c(1,-1,1,-1), "mm")) +
+      scale_y_reverse(limits=c(100,0)) + coord_flip()
+
+    
+    g2 <- ggplot(data = right()) +
+      geom_bar(stat = "identity", aes(y= V1, x = var), fill = "white") +
+      ylim(0,100) +
+      theme_minimal() +
+      theme(axis.title.x = element_blank(), 
+            axis.title.y = element_blank(), 
+            axis.text.y = element_blank(), 
+            axis.ticks.y = element_blank(), 
+            axis.ticks.x = element_blank(), 
+            axis.text.x=element_text(color = "white"),
+            plot.margin = unit(c(1,-1,1,-1), "mm")) +
+      coord_flip()
+    
+    output$test <- renderPlot({
+      grid.arrange(g1,g.mid, g2,ncol=3)
+    }, bg="transparent")
+    
   })
   
   #generate data
@@ -349,4 +449,4 @@ server <- function(input, output) {
 app <- shinyApp(ui = ui, server = server)
 
 #runApp(app, launch.browser = TRUE)
-runGitHub("webtool_test", "bkudrzycki", launch.browser = TRUE)
+#runGitHub("webtool_test", "bkudrzycki", launch.browser = TRUE)
