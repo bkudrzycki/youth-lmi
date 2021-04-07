@@ -7,6 +7,7 @@ Authors@R: person("Bartlomiej", "Kudrzycki", email = "bartlomiej.kudrzycki@nadel
                   role = c("aut", "cre"))
 Description: This package takes raw data from ILOSTAT, UNESCO, and the DHS program and uses it to compile the Youth Labor Market Index for Low-Income Countries (YLMILIC). The ten indicators are combined into dimensions of three, four, and three indicators, respectively, using either the arithmetic or the geometric mean. These dimension scores are then again combined using the arithmetic or geometric mean to produce the index score. This score is calculated for the total youth population and for males and females separately. Data is optionally imputed using relative percentile ranking within dimension. A corresponding web tool is in development using Shiny.
 Imports: tidyverse, here
+Depends: here (>= 1.0.1)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
