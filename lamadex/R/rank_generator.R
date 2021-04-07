@@ -9,7 +9,7 @@
 rank_generator <- function(bygender = "Total", lastyear = 2009, impute = FALSE) {
   ## use the compute_indicators helper function to take raw data and calculate indicators as used in the index
   dfList <- compute_indicators()
-  load(here("data", "country_list.rda"))
+  load("data/country_list.rda")
 
   ## apply the filter_helper function to each indicator dataframe in dfList, then append the values to the chosen list of countries
   index <- lapply(dfList, filter_helper, bygender = bygender, lastyear = lastyear) %>%
