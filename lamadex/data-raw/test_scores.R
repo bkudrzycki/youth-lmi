@@ -1,6 +1,6 @@
 ## load test scores
 
-test_scores <- read.csv(here("data-raw","test_scores_sex_wb.csv")) %>%
+test_scores <- read.csv("data-raw/test_scores_sex_wb.csv") %>%
   rename("sex.label" = Indicator.Name,
          "ref_area.label" = Economy.Name,
          "obs_value" = X2017..YR2017.) %>%

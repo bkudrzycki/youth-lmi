@@ -1,6 +1,6 @@
 ## informal work rate
 
-informal <- read.csv(here("data-raw","informality_age_sex_Bonnet.csv")) %>%
+informal <- read.csv("data-raw/informality_age_sex_Bonnet.csv") %>%
   rename("ref_area.label" = Country, time = Year, "Sex: Total" = X15.24, "Sex: Male" = "X15.24..Men.", "Sex: Female" = "X15.24..Women.")
 informal$ref_area.label <- informal$ref_area.label %>% ## fix country names to match ILOSTAT for joining
   recode("Congo, Democratic Republic of" = "Congo, Democratic Republic of the",

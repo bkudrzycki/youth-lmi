@@ -1,7 +1,7 @@
 ## load literacy rates
 
 
-literacy <- read.csv(here("data-raw","literacy_sex_unesco.csv")) %>%
+literacy <- read.csv("data-raw/literacy_sex_unesco.csv") %>%
   rename("ref_area.label" = Country,
          "obs_value" = Value,
          "time" = Time)
