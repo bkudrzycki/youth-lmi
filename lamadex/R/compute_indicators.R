@@ -12,7 +12,7 @@ compute_indicators <- function() {
   # dfList[c(1:4,6,8,9)] <- map(dfList[c(1:4,6,8,9)], ~filter(.x, obs_status.label != "Unreliable"))
 
   ## reload indicators into dataframe, calculating indicators from raw data as needed
-  load("lamadex/data/neet.rda")
+  load("data/neet.rda")
 
   ## calculate relative working poverty rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
   load("data/working_pov.rda")
