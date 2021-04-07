@@ -1,6 +1,5 @@
 library(devtools)
 library(DT)
-library(here)
 library(leaflet)
 library(openxlsx)
 library(shiny)

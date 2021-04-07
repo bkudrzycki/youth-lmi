@@ -3,6 +3,7 @@
 #' @description This function calculates the Youth Labor Market Index for Low Income Countries (YLILI) scores and ranks, compiled separately for the arithmetic and the geometric mean, for each country according to desired parameters. These parameters are: gender (male, female, or total), the last year (i.e. the oldest data) to be entered into the index, and whether missing data should be imputed for countries with sufficient but incomplete observations.
 #' @title rank_generator
 #' @keywords index ranking generator dimensions bygender
+#' @import here
 #' @export
 #' @examples
 
