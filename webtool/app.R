@@ -12,14 +12,14 @@ library(rgdal)
 library(leaflet.extras)
 library(shinyWidgets)
 library(gridExtra)
-#devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
+devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
 
 ## ---------------------------------------
 
 # load map, shapefile name "countries", country names saved as NAME
 
-load("data/shapeFile.RData")
+data(country_list)
 country_list <- read.csv("data/country_list.csv")
 
 # globals: load list of countries and raw data, define geometric mean function
