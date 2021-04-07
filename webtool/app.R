@@ -12,7 +12,7 @@ library(rgdal)
 library(leaflet.extras)
 library(shinyWidgets)
 library(gridExtra)
-#devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
+devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
 
 ## ---------------------------------------

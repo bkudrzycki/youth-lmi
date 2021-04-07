@@ -4,7 +4,6 @@
 #' @title compute_indicators
 #' @keywords compute indicators
 #' @export
-#' @import here
 #' @examples
 
 compute_indicators <- function() {
