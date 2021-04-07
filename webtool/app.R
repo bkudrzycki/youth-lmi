@@ -21,10 +21,10 @@ library(lamadex)
 # load map, shapefile name "countries", country names saved as NAME
 
 load("data/shapeFile.RData")
+country_list <- read.csv("data/country_list.csv")
 
 # globals: load list of countries and raw data, define geometric mean function
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
+
 gm_mean = function(x, na.rm = FALSE) {
   exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x[!is.na(x)]))
 }
@@ -104,11 +104,11 @@ ui <- fluidPage(
                    tabPanel("Country Comparison", 
                             fluidRow(
                               column(4,
-                                     selectInput("country1", "", sort(country_lists[[3]][[1]]))),
+                                     selectInput("country1", "", sort(country_list[,1]))),
                               column(4,
                                      ),
                               column(4,
-                                     selectInput("country2", "", sort(country_lists[[3]][[1]])))),
+                                     selectInput("country2", "", sort(country_list[,1])))),
                             plotOutput("test", width = "100%")
                    )
                  )
@@ -122,7 +122,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # generate index according to user specification
-  reactiveIndex <- reactive(rank_generator(dfList, country_lists[[3]], bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
+  reactiveIndex <- reactive(rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                                      wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -358,7 +358,7 @@ server <- function(input, output) {
   #generate data
   data_list <- reactive({
     list(
-      total = rank_generator(dfList, country_lists[[3]], bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
+      total = rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -384,7 +384,7 @@ server <- function(input, output) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      male = rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = input$lastyear, impute = input$impute) %>% 
+      male = rank_generator(bygender = "Male", lastyear = input$lastyear, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -410,7 +410,7 @@ server <- function(input, output) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      female = rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = input$lastyear, impute = input$impute) %>% 
+      female = rank_generator(bygender = "Female", lastyear = input$lastyear, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
