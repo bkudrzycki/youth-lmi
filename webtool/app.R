@@ -18,7 +18,7 @@ library(lamadex)
 ## ---------------------------------------
 
 # load map, shapefile name "countries", country names saved as NAME
-
+load("data/shapeFile.RData")
 country_list <- read.csv("data/country_list.csv")
 
 # globals: load list of countries and raw data, define geometric mean function
