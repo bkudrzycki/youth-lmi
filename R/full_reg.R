@@ -1,7 +1,7 @@
 setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
 
 # Package names
-packages <- c("here", "tidyverse", "stargazer", "gtsummary")
+packages <- c("here", "tidyverse", "stargazer", "gtsummary", "openxlsx")
 
 # Install packages not yet installed
 installed_packages <- packages %in% rownames(installed.packages())
@@ -14,15 +14,14 @@ invisible(lapply(packages, library, character.only = TRUE))
 rm(installed_packages, packages)
 
 devtools::load_all(here("lamadex"))
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
+source(here("R", "countryList.R"))
 
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE) %>%
-  arrange(desc(index_mean))
-male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = TRUE) %>%
-  select(country, male_index_mean = index_mean)
-female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE) %>%
-  select(country, female_index_mean = index_mean)
+rank <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
+  arrange(desc(index_mean)) %>% filter(country %in% country_lists[[3]][[1]])
+male <- rank_generator(bygender = "Male", lastyear = 2010, impute = TRUE) %>%
+  select(country, male_index_mean = index_mean) %>% filter(country %in% country_lists[[3]][[1]])
+female <- rank_generator(bygender = "Female", lastyear = 2010, impute = TRUE) %>%
+  select(country, female_index_mean = index_mean) %>% filter(country %in% country_lists[[3]][[1]])
 
 rank <- rank %>% 
   select(country, country_code, transition_mean, working_conditions_mean, education_mean, index_mean) %>% 
@@ -147,13 +146,70 @@ savings_rate <- read.csv(here("data","raw","savings_rate_worldbank.csv")) %>%
   top_n(1, time) %>% 
   select(c(country, savings_rate = obs_value, time))
 
+
+## load hdi
+
+hdi <- read.xlsx(here("data", "hdi.xlsx")) %>% select(c(country, hdi =`2019`)) %>% 
+  mutate(hdi = hdi*100,
+         country = substr(country,2,str_length(country)))
+
+hdi$country <- hdi$country %>% 
+  recode("Congo (Democratic Republic of the)" = "Congo, Democratic Republic of the",
+         "Moldova (Republic of)" = "Moldova, Republic of",
+         "Tanzania (United Republic of)" = "Tanzania, United Republic of",
+         "Iran (Islamic Republic of)" = "Iran, Islamic Republic of",
+         "Palestine, State of" = "Occupied Palestinian Territory")
+           
+
+## load remaining correlates
+correlates <- read.xlsx(here("data", "raw", "correlates_wb.xlsx")) %>% 
+  pivot_longer(c("2016.[YR2016]":"2020.[YR2020]"), names_to = "time") %>% 
+  mutate(time = as.numeric(substr(time, 1,4))) %>% 
+  rename(series = `Series.Name`) %>% 
+  wb_recode() %>% 
+  filter(country %in% country_lists[[3]][[1]]) 
+
+
+y <- levels(factor(correlates$series))
+
+count = 0
+# select most recent observation for each variable
+for (i in y) {
+  x <- correlates %>% 
+    filter(series == i) %>% 
+    group_by(country) %>% 
+    filter(value != "..") %>% 
+    top_n(1, time) %>% 
+    select(country, value) %>% 
+    mutate(value = as.numeric(value))
+  assign(paste0("corr", count), x)
+  count = count + 1
+}
+
+
 df <- rank %>%
   left_join(gdp, by = "country") %>% 
   left_join(youth_unemp_rate, by = "country") %>% 
   left_join(pop_growth, by = "country") %>% 
+  left_join(fertility, by = "country") %>% 
   left_join(minimum_wage, by = "country") %>% 
   left_join(savings_rate, by = "country") %>% 
   left_join(pop, by = "country") %>% 
+  left_join(hdi, by = "country") %>% 
+  left_join(corr0, by = "country") %>% 
+  rename("access_to_elec" = value) %>% 
+  left_join(corr1, by = "country") %>% 
+  rename("agriculture" = value) %>% 
+  left_join(corr4, by = "country") %>% 
+  rename("doing_business" = value) %>% 
+  left_join(corr5, by = "country") %>% 
+  rename("export" = value) %>% 
+  left_join(corr6, by = "country") %>% 
+  rename("fdi" = value) %>% 
+  left_join(corr9, by = "country") %>% 
+  rename("manu_value" = value) %>% 
+  left_join(corr11, by = "country") %>% 
+  rename("urban_pop" = value) %>% 
   mutate(youth_ratio = youth_ratio*100,
          log_gdp = log(gdp))
   
@@ -161,20 +217,34 @@ df <- rank %>%
 
 m1 <- lm(data = df, index_mean ~ log_gdp)
 
-m2 <- lm(data = df, index_mean ~ youth_unemp_rate)
+m2 <- lm(data = df, index_mean ~ hdi)
 
-m3 <- lm(data = df, index_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
+m3 <- lm(data = df, index_mean ~ youth_unemp_rate)
 
-m4 <- lm(data = df, male_index_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
+m4 <- lm(data = df, index_mean ~ youth_ratio)
 
-m5 <- lm(data = df, female_index_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
+m5 <- lm(data = df, index_mean ~ fertility_rate)
 
-m6 <- lm(data = df, transition_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
+m6 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
 
-m7 <- lm(data = df, working_conditions_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
+m6 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate)
 
-m8 <- lm(data = df, education_mean ~ log_gdp + youth_unemp_rate + mw_ppp + pop_growth_2019 + youth_ratio + savings_rate)
 
-stargazer(m1, m2, m3, m4, m5, m6, m7, m8, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("ylili", "male", "female", "transition", "working cond.", "education"), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
+
+m7 <- lm(data = df, index_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+
+m8 <- lm(data = df, male_index_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+
+m9 <- lm(data = df, female_index_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+
+m10 <- lm(data = df, transition_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+
+m11 <- lm(data = df, working_conditions_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+
+m12 <- lm(data = df, education_mean ~ log_gdp + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+            
+
+
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("ylili", "male", "female", "transition", "working cond.", "education"), covariate.labels = c("Log GDP", "HDI Score", "Youth unemployment rate", "Youth population ratio", "Fertility rate", "Access to Electr.", "Agriculture (\\% of GDP)", "Ease of Doing Business", "Exports (\\% of GDP)", "FDI (\\% of GDP)", "Manufacturing (\\% of GDP)", "Urban population rate", "Savings rate"), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
 
 

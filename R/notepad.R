@@ -5,10 +5,9 @@ library(ggrepel)
 setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
 
 devtools::load_all(here("lamadex"))
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
+source(here("R", "countryList.R"))
 
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE) %>%
+rank <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
 
 regions <- read_csv(here("data", "raw", "country_regions.csv")) %>% 
@@ -313,12 +312,13 @@ inform_r <-informal %>% select(ref_area.label, inform_r = "Sex: Total")
 df <- left_join(all_countries, unemp_r) %>% left_join(., inform_r)
 
 ggplot(df, aes(x = inform_r, y = unemp_r)) +
-  geom_point(aes(color = inc_level)) +
+  geom_point(aes(shape = inc_level, color = inc_level)) +
   xlab("Youth Informality Rate") +
   ylab("Youth Unemployment Rate") +
   theme_minimal() +
-  geom_smooth(method = "lm", aes(color = inc_level, linetype = inc_level), se = F, size=0.75) +
-  scale_colour_manual(name = "Income Level", values = c("azure4", "black")) +
+  geom_smooth(method = "lm", aes(color = inc_level, linetype = inc_level, weight = pop), se = F, size=0.75) +
+  scale_colour_manual(name = "Income Level", values = c("gray", "black")) +
+  scale_shape_manual(name = "Income Level", values=c(17, 16)) +
   labs(linetype="Income Level") +
   theme(legend.position="bottom") +
   ggsave(here("inf_unemp.png"), width = 20, height = 12, units = "cm")

@@ -90,5 +90,6 @@ compute_indicators <- function() {
 
   dfList <- list(neet, relative_wc, mismatch, working_pov, underemp, informal, elementary, nosecondary, literacy, test_scores)
 
+  return(dfList)
 }
 

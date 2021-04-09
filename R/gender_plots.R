@@ -13,16 +13,15 @@ rm(installed_packages, packages)
 ## ---------------------------------------
 
 devtools::load_all(here("lamadex"))
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
+source(here("R", "countryList.R"))
 
-total <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE) %>%
+total <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
 
-male <- rank_generator(dfList, country_lists[[3]], bygender = "Male", lastyear = 2010, impute = TRUE) %>%
+male <- rank_generator(bygender = "Male", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
 
-female <- rank_generator(dfList, country_lists[[3]], bygender = "Female", lastyear = 2010, impute = TRUE) %>%
+female <- rank_generator(bygender = "Female", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean))
 
 comp <- full_join(male, female, by = c("country", "country_code"), suffix = c("_male", "_female"))
@@ -30,7 +29,8 @@ comp <- full_join(male, female, by = c("country", "country_code"), suffix = c("_
 comp <- full_join(comp, total, by = c("country", "country_code"))
 
 comp <- comp %>% 
-  mutate(index_diff = index_mean_male-index_mean_female)
+  mutate(index_diff = index_mean_male-index_mean_female) %>% 
+  filter(country %in% country_lists[[3]][[1]])
 
 ggplot(comp, aes(x = index_mean_male, y = index_mean_female, label = country_code)) +
   geom_point() +
