@@ -47,7 +47,7 @@ pop <- pop %>%
 df <- left_join(all_countries, unemp_r) %>% left_join(., inform_r) %>% left_join(., pop)
 
 ggplot(df, aes(x = inform_r, y = unemp_r)) +
-  geom_point(aes(size = 2, shape = inc_level, color = inc_level)) +
+  geom_point(aes(shape = inc_level, color = inc_level)) +
   xlab("Youth informality rate") +
   ylab("Youth unemployment rate") +
   theme_minimal() +
@@ -58,7 +58,7 @@ ggplot(df, aes(x = inform_r, y = unemp_r)) +
   scale_shape_manual(name = "World Bank Income Classification", values=c(17, 16)) +
   #geom_text_repel(aes(label=country_code),size = 3)
   labs(linetype="World Bank Income Classification") +
-  theme(legend.position="bottom") +
+  theme(legend.position="top") +
   ggsave(here("figures", "inf_unemp.png"), width = 20, height = 12, units = "cm")
 
 
@@ -74,11 +74,9 @@ ggplot(df, aes(x = unemp_r, y = index_mean, label = country_code)) +
   theme_minimal() +
   geom_smooth(method = "lm", se = F, size=0.5, colour = "black") +
   geom_text_repel(aes(label=country_code),size = 3) + 
-  ggsave(here("figures", "score_vs_youth_unemp.png"), width = 20, height = 12, units = "cm")
+  ggsave(here("figures", "index_vs_unemp.png"), width = 20, height = 12, units = "cm")
 
 ## YLILI vs GDP
-
-df <- rank %>% left_join(unemp_r, by = c("country" = "ref_area.label"))
 
 gdp <- read.csv(here("data", "raw", "gdp_PPP_percap_worldbank.csv")) %>%
   rename("country" = Country.Name) %>%
@@ -118,6 +116,6 @@ ggplot(df, aes(x = gdp, y = index_mean, label = country_code)) +
   theme_minimal() +
   geom_smooth(method = "lm", se = F, size=0.5, colour = "black") +
   geom_text_repel(aes(label=country_code),size = 3) + 
-  ggsave(here("figures", "score_vs_gdo.png"), width = 20, height = 12, units = "cm")
+  ggsave(here("figures", "index_vs_gdp.png"), width = 20, height = 12, units = "cm")
 
 
