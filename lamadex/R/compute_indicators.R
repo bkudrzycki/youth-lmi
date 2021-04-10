@@ -14,13 +14,15 @@ compute_indicators <- function() {
   ## reload indicators into dataframe, calculating indicators from raw data as needed
   data(neet)
 
-  ## calculate relative working poverty rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
+  ## calculate relative working poverty rate by dividing the underemployment rate for youth by that of all workers over 25 years of age
   data(working_pov)
   relative_workpov <- working_pov %>%
     pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
-    mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`)
+    mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`,
+           obs_value = na_if(obs_value, "NaN"),
+           obs_value = ifelse(obs_value == Inf, 1, obs_value))
 
-  ## calculate relative underemployment rate by dividing the unemployment rate for youth by that of all workers over 25 years of age
+  ## calculate relative underemployment rate by dividing the working poverty rate for youth by that of all workers over 25 years of age
   data(underemp)
   relative_underemp <- underemp %>%
     pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
@@ -44,10 +46,10 @@ compute_indicators <- function() {
   mismatch <- inner_join(employed, unemployed, by = c("ref_area.label", "time", "sex.label"))
 
   mismatch <- mismatch %>%
-    mutate(obs_value = 100*1/2*(abs(.[[15]]/.[[14]]-.[[33]]/.[[32]]) + # less than basic
-             abs(.[[16]]/.[[14]]-.[[34]]/.[[32]]) + # basic
-             abs(.[[17]]/.[[14]]-.[[35]]/.[[32]]) + # intermediate
-             abs(.[[18]]/.[[14]]-.[[36]]/.[[32]]))) # advanced
+    mutate(obs_value = 100*1/2*(abs(.[[14]]/.[[13]]-.[[32]]/.[[31]]) + # less than basic
+             abs(.[[15]]/.[[13]]-.[[33]]/.[[31]]) + # basic
+             abs(.[[16]]/.[[13]]-.[[34]]/.[[31]]) + # intermediate
+             abs(.[[17]]/.[[13]]-.[[35]]/.[[31]]))) # advanced
 
   working_pov <- working_pov %>%
     filter(classif1.label == "Age (Youth, adults): 15-24")
@@ -78,7 +80,7 @@ compute_indicators <- function() {
     mutate("Sex: Female" = rowSums(.[c(3:5)]),
          "Sex: Male" = rowSums(.[c(12:14)]),
          time = as.integer(substr(Survey, 0, 4))) %>% ## keep only the year number (remove prefix)
-    mutate("Sex: Total" = rowMeans(.[c(22:23)])) %>%  ## Total is assumed to be average of the male and female rates (see paper)
+    mutate("Sex: Total" = rowMeans(.[c(21:22)])) %>%  ## Total is assumed to be average of the male and female rates (see paper)
     pivot_longer(cols = c("Sex: Total","Sex: Male","Sex: Female"),
                  names_to = "sex.label",
                  values_to = "obs_value",

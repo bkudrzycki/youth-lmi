@@ -61,6 +61,7 @@ ui <- fluidPage(
                           selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
                           selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
                           selectInput("gender", "Gender", c("Total", "Male", "Female")),
+                          selectInput("subset", "Country Selection", c("All", "LICs/LMICs")),
                           hr())
                  ),
                  fluidRow(
@@ -120,6 +121,16 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # generate index according to user specification
+  country_list <- reactive(
+    if (input$subset == "All") {
+      lamadex::countryLists()[[9]][[1]]
+    }
+    else {
+      lamadex::countryLists()[[3]][[1]]
+    }
+  )
+  
+  
   reactiveIndex <- reactive(rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
@@ -144,13 +155,38 @@ server <- function(input, output) {
                                 "Secondary schooling rate" = nosecondary,
                                 "Literacy rate" = literacy,
                                 "Harmonized tests score" = test_scores
-                              )
+                              ) %>% 
+                              filter(Country %in% country_list())
   )
   
+  # generate the default total, male, and female rankings
+  tot_ylili <- reactive(rank_generator(bygender = "Total", lastyear = input$lastyear, impute = input$impute) %>% 
+    select(
+      Country = country,
+      "Total YLILI score" = index_mean
+    ))
+  
+  tot_ranked <- reactive(colSums(!is.na(tot_ylili()["Total YLILI score"])))
+  male_ylili <- reactive(rank_generator(bygender = "Male", lastyear = input$lastyear, impute = input$impute) %>% 
+    select(
+      Country = country,
+      "Male YLILI score" = index_mean))
+  
+  male_ranked <- reactive(colSums(!is.na(male_ylili()["Male YLILI score"])))
+  fem_ylili <- reactive(rank_generator(bygender = "Female", lastyear = input$lastyear, impute = input$impute) %>% 
+    select(
+      Country = country,
+      "Female YLILI score" = index_mean))
+  fem_ranked <- reactive(colSums(!is.na(fem_ylili["Female YLILI score"])))
+  
+  countries1 <- reactive(merge(countries, tot_ylili(), by.x = "NAME", by.y = "Country"))
+  countries1 <- reactive(merge(countries1(), male_ylili(), by.x = "NAME", by.y = "Country"))
+  countries1 <- reactive(merge(countries1(), fem_ylili(), by.x = "NAME", by.y = "Country"))
   
   observe({
     
     indicator <- input$select
+    gender <- input$gender
     chosen_indicator <- reactive(reactiveIndex()[, c("Country", as.character(input$select)), drop=FALSE])
     
     scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator()))
@@ -160,7 +196,6 @@ server <- function(input, output) {
     # total number of countries ranked
     num_ranked <- reactive(colSums(!is.na(reactiveIndex()["YLILI score"])))
     
-
     countries2 <- reactive(merge(countries,
                                  reactiveIndex(),
                                  by.x = "NAME",
@@ -169,30 +204,26 @@ server <- function(input, output) {
     
     table <- data.frame(a = 1:3, b= c("a", "b", "c"))
     
-    country_popup <- paste0("<h4><strong>Country:  </strong>",
-                            countries2()$NAME,
-                            "<br><strong>",
-                            input$gender, " ", as.character(indicator),": </strong>",
-                            round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",                             " </h4>",
-                            hr(),
-                            "<strong>", input$gender, " YLILI score: </strong>", round(countries2()[["YLILI score"]],2), " (", rank(-countries2()$`YLILI score`, na.last = "keep"), "/", num_ranked(), ")",
-                            hr(),
-                            "<strong>", input$gender, " Transition score: </strong>", round(countries2()[["Transition"]],2), " (", rank(-countries2()$Transition, na.last = "keep"), "/", num_ranked(), ")",
-                            "<br> NEET rate: ", round(countries2()[["NEET score"]],2),
-                            "<br> Working conditions ratio: ", round(countries2()[["Working conditions ratio"]],2),
-                            "<br> Mismatch rate: ", round(countries2()[["Mismatch score"]],2),
-                            hr(),
-                            "<strong>", input$gender, " Working Conditions score: </strong>", round(countries2()[["Working conditions"]],2), " (", rank(-countries2()$`Working conditions`, na.last = "keep"), "/", num_ranked(), ")",
-                            "<br> Working poverty rate: ", round(countries2()[["Working poverty score"]],2),
-                            "<br> Underemployed rate: ", round(countries2()[["Under- employment score"]],2),
-                            "<br> Informal work rate: ", round(countries2()[["Informal work score"]],2),
-                            "<br> Elementary occupations: ", round(countries2()[["Elementary occupation score"]],2),
-                            hr(),
-                            "<strong>", input$gender, " Education score: </strong>", round(countries2()[["Education"]],2), " (", rank(-countries2()$Education, na.last = "keep"), "/", num_ranked(), ")",
-                            "<br> Secondary school rate: ", round(countries2()[["Secondary schooling rate"]],2),
-                            "<br> Literacy rate: ", round(countries2()[["Literacy rate"]],2),
-                            "<br> Harmonized test scores: ", round(countries2()[["Harmonized tests score"]],2)
-                            )
+    if (indicator == "YLILI score" & gender == "Total") {
+      country_popup <- paste0("<h4><strong>", countries2()$NAME, "</strong>",
+                              "<br><strong><h5>",
+                              hr(),
+                              input$gender, " ", as.character(indicator),": </strong>",
+                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",
+                              hr(),
+                              "<strong> Male YLILI score: </strong>", round(countries1()[["Male YLILI score"]],2), " (", rank(-countries1$`Male YLILI score`, na.last = "keep"), "/", male_ranked(), ")<br>",
+                              "<strong> Female YLILI score: </strong>", round(countries1()[["Female YLILI score"]],2), " (", rank(-countries1$`Female YLILI score`, na.last = "keep"), "/", fem_ranked(), ")")
+    } else {
+      country_popup <- paste0("<h4><strong>", countries2()$NAME, "</strong>",
+                              "<br><strong><h5>",
+                              hr(),
+                              input$gender, " ", as.character(indicator),": </strong>",
+                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",
+                              hr(),
+                              "<h6><strong> Total YLILI score: </strong>", round(countries1()[["Total YLILI score"]],2), " (", rank(-countries1$`Total YLILI score`, na.last = "keep"), "/", tot_ranked(), ")<br>",
+                              "<strong> Male YLILI score: </strong>", round(countries1()[["Male YLILI score"]],2), " (", rank(-countries1$`Male YLILI score`, na.last = "keep"), "/", male_ranked(), ")<br>",
+                              "<strong> Female YLILI score: </strong>", round(countries1()[["Female YLILI score"]],2), " (", rank(-countries1$`Female YLILI score`, na.last = "keep"), "/", fem_ranked(), ")")
+    }
     
     output$map <- renderLeaflet({
       
