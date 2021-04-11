@@ -5,8 +5,6 @@ account: bartkudz
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3923673
-bundleId: 4442490
+bundleId: 4457549
 url: https://bartkudz.shinyapps.io/YLILI/
-when: 1617808702.45916
-asMultiple: FALSE
-asStatic: FALSE
+when: 1618152104.47547

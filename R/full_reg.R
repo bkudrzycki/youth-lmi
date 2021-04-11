@@ -14,7 +14,7 @@ invisible(lapply(packages, library, character.only = TRUE))
 rm(installed_packages, packages)
 
 devtools::load_all(here("lamadex"))
-source(here("R", "countryList.R"))
+country_lists <- lamadex::countryLists()
 
 rank <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
   arrange(desc(index_mean)) %>% filter(country %in% country_lists[[3]][[1]])

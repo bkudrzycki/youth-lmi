@@ -1,0 +1,10 @@
+name: webtool_nadel
+title:
+username:
+account: nadel
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3943703
+bundleId: 4457567
+url: https://nadel.shinyapps.io/webtool_nadel/
+when: 1618152511.01823

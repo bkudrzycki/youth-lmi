@@ -18,8 +18,11 @@ library(lamadex)
 ## ---------------------------------------
 
 # load map, shapefile name "countries", country names saved as NAME
-load("data/shapeFile.RData")
-country_list <- read.csv("data/country_list.csv")
+source("data/recode_shapeFile.R")
+country_list <- read.csv2("data/country_list.csv")
+country_list$ref_area.label <- country_list$ref_area.label %>% 
+  recode("Cote d'Ivoire" = "Côte d'Ivoire",
+         "Curacao" = "Curaçao")
 
 # globals: load list of countries and raw data, define geometric mean function
 
@@ -41,78 +44,86 @@ tags$head(
 # Define UI
 ui <- fluidPage(
   tags$head(
-    tags$style(HTML(".leaflet-container { background: #4e5d6c; }"))
-  ),
-  navbarPage("YLILI", theme = shinytheme("superhero"),
-             tags$head(
-               tags$style(css)),
-             tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE),
-             # Sidebar layout with a input and output definitions
-             sidebarLayout(
-               sidebarPanel(
-                 # App title ----
-                 titlePanel("Data Explorer"),
-                 fluidRow(
-                   column(12,
-                          checkboxInput("impute", "Impute missing values", value = TRUE),
-                          sliderInput("lastyear", "Last year:",
-                                      min = 2000, max = 2017,
-                                      value = 2010, sep = "", ticks = FALSE),
-                          selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
-                          selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
-                          selectInput("gender", "Gender", c("Total", "Male", "Female")),
-                          selectInput("subset", "Country Selection", c("All", "LICs/LMICs")),
-                          hr())
-                 ),
-                 fluidRow(
-                   column(8,
-                          downloadButton("dl", "Download .Excel")
-                   )
-                 ),
-                 fluidRow(
-                   column(8,
-                          hr(),
-                          selectizeInput("select", "Show on map:",
-                                         c("YLILI Score" = "YLILI score",
-                                           "Transition" = "Transition",
-                                           "Working conditions" = "Working conditions",
-                                           "Education" = "Education",
-                                           "NEET score" = "NEET score",
-                                           "Working conditions ratio" =  "Working conditions ratio",
-                                           "Mismatch score" = "Mismatch score",
-                                           "Working poverty score" = "Working poverty score",
-                                           "Under- employment score" = "Under- employment score",
-                                           "Informal work score" = "Informal work score",
-                                           "Elementary occupation score" = "Elementary occupation score",
-                                           "Secondary schooling rate" = "Secondary schooling rate",
-                                           "Literacy rate" = "Literacy rate",
-                                           "Harmonized tests score" = "Harmonized tests score"),
-                                         multiple = FALSE)
-                   )
-                 ),
-                 width = 3,
-               ),
-               mainPanel(
-                 tabsetPanel(
-                   id = 'dataset',
-                   tabPanel("Map",
-                            style = "height:92vh;",
-                            leafletOutput("map", width = "110%", height = "93%")),
-                   tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline=T),
-                            DT::dataTableOutput("scores")),
-                   tabPanel("Country Comparison", 
+    tags$style(HTML(".leaflet-container { background: #4e5d6c; }")),
+    navbarPage("YLILI", theme = shinytheme("superhero"),
+               tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE,
+                        tags$head(
+                          tags$style(css)),
+                        # Sidebar layout with a input and output definitions
+                        sidebarLayout(
+                          sidebarPanel(
+                            # App title ----
+                            titlePanel("Data Explorer"),
                             fluidRow(
-                              column(4,
-                                     selectInput("country1", "", sort(country_list[,1]))),
-                              column(4,
-                                     ),
-                              column(4,
-                                     selectInput("country2", "", sort(country_list[,1])))),
-                            plotOutput("test", width = "100%")
-                   )
-                 )
+                              column(8,
+                                     sliderInput("lastyear", "Last year:",
+                                                 min = 2000, max = 2017,
+                                                 value = 2010, sep = "", ticks = FALSE),
+                                     selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
+                                     selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
+                                     selectInput("gender", "Gender", c("Total", "Male", "Female")),
+                                     checkboxInput("impute", "Impute missing values", value = TRUE),
+                                     radioButtons("subset", label = "Countries Ranked:", choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
+                                     hr())
+                            ),
+                            width = 3,
+                          ),
+                          mainPanel(
+                            tabsetPanel(
+                              id = 'dataset',
+                              tabPanel("Map",
+                                       style = "height:92vh;",
+                                       leafletOutput("map", width = "110%", height = "93%"),
+                                       tags$style("
+        #controls {
+          opacity: 0.5;
+        }
+        #controls:hover{
+          opacity: 1;
+        }
+               "),
+                                       absolutePanel(id = "controls", bottom = 50, left = 10,
+                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))),
+                                                     selectizeInput("select", "Show on map:",
+                                                                    c("YLILI Score" = "YLILI score",
+                                                                      "Transition" = "Transition",
+                                                                      "Working conditions" = "Working conditions",
+                                                                      "Education" = "Education",
+                                                                      "NEET score" = "NEET score",
+                                                                      "Working conditions ratio" =  "Working conditions ratio",
+                                                                      "Mismatch score" = "Mismatch score",
+                                                                      "Working poverty score" = "Working poverty score",
+                                                                      "Underemployment score" = "Under- employment score",
+                                                                      "Informal work score" = "Informal work score",
+                                                                      "Elementary occupation score" = "Elementary occupation score",
+                                                                      "Secondary schooling rate" = "Secondary schooling rate",
+                                                                      "Literacy rate" = "Literacy rate",
+                                                                      "Harmonized tests score" = "Harmonized tests score"),
+                                                                    multiple = FALSE))),
+                              tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
+                                       downloadButton("dl", "Download .Excel"),
+                                       DT::dataTableOutput("scores")),
+                              tabPanel("Country Comparison", 
+                                       fluidRow(
+                                         column(4,
+                                                selectInput("country1", "", sort(country_list[,1]), selected = "Benin")),
+                                         column(4,
+                                         ),
+                                         column(4,
+                                                selectInput("country2", "", sort(country_list[,1]), selected = "Nepal"))),
+                                       plotOutput("test", width = "100%")
+                              )
+                            )
+                          )
+                        )
+               ),
+               tabPanel("About",
+                        fluidRow(
+                          column(6,
+                        tags$h5("The Youth Labor Market Index for Low Income Countries (YLILI) is a composite index that scores countries on the strength of their youth labor markets. This website allows users to recreate the scores and rankings used in the paper by Kudrzycki, Lefoll, and Günther (2021) and adjust the parameters used to generate them. The parameters are: gender (male, female, or total), the cutoff year for the oldest data to be entered into the index, and whether missing data should be imputed (for countries which have a sufficient number of 'true' observations. This tool was designed by NADEL of the ETH Zürich."))
+                        )
                )
-             )
+    )
   )
 )
 
@@ -123,13 +134,12 @@ server <- function(input, output) {
   # generate index according to user specification
   country_list <- reactive(
     if (input$subset == "All") {
-      lamadex::countryLists()[[9]][[1]]
+      countryLists()[[9]][[1]]
     }
     else {
-      lamadex::countryLists()[[3]][[1]]
+      countryLists()[[3]][[1]]
     }
   )
-  
   
   reactiveIndex <- reactive(rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
                               rowwise() %>%
@@ -149,55 +159,45 @@ server <- function(input, output) {
                                 "Working conditions ratio" = relative_wc,
                                 "Mismatch score" = mismatch,
                                 "Working poverty score" = workingpov,
-                                "Under- employment score" = underemp,
+                                "Underemployment score" = underemp,
                                 "Informal work score" = informal,
                                 "Elementary occupation score" = elementary,
                                 "Secondary schooling rate" = nosecondary,
                                 "Literacy rate" = literacy,
                                 "Harmonized tests score" = test_scores
-                              ) %>% 
-                              filter(Country %in% country_list())
-  )
-  
-  # generate the default total, male, and female rankings
+                              )
+                            )
+                            
   tot_ylili <- reactive(rank_generator(bygender = "Total", lastyear = input$lastyear, impute = input$impute) %>% 
-    select(
-      Country = country,
-      "Total YLILI score" = index_mean
-    ))
-  
-  tot_ranked <- reactive(colSums(!is.na(tot_ylili()["Total YLILI score"])))
-  male_ylili <- reactive(rank_generator(bygender = "Male", lastyear = input$lastyear, impute = input$impute) %>% 
-    select(
-      Country = country,
-      "Male YLILI score" = index_mean))
-  
-  male_ranked <- reactive(colSums(!is.na(male_ylili()["Male YLILI score"])))
-  fem_ylili <- reactive(rank_generator(bygender = "Female", lastyear = input$lastyear, impute = input$impute) %>% 
-    select(
-      Country = country,
-      "Female YLILI score" = index_mean))
-  fem_ranked <- reactive(colSums(!is.na(fem_ylili["Female YLILI score"])))
-  
-  countries1 <- reactive(merge(countries, tot_ylili(), by.x = "NAME", by.y = "Country"))
-  countries1 <- reactive(merge(countries1(), male_ylili(), by.x = "NAME", by.y = "Country"))
-  countries1 <- reactive(merge(countries1(), fem_ylili(), by.x = "NAME", by.y = "Country"))
+                          rowwise() %>%
+                          rename("Country" = "country") %>% 
+                          mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
+                                 wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
+                                 educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom),
+                                 arith_score = mean(c(transdim,wcdim,educdim)),
+                                 geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>%  # don't generate if missing dims
+                          mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)))
   
   observe({
     
     indicator <- input$select
     gender <- input$gender
+    subset <- input$subset
     chosen_indicator <- reactive(reactiveIndex()[, c("Country", as.character(input$select)), drop=FALSE])
-    
-    scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator()))
+    scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator(), by = "Country"))
     
     pal <- reactive(colorNumeric(c("#FFFFFFFF", viridis(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "white"))
     
-    # total number of countries ranked
-    num_ranked <- reactive(colSums(!is.na(reactiveIndex()["YLILI score"])))
+    countries1 <- reactive(merge(countries,
+                                 tot_ylili() %>% 
+                                   filter(Country %in% country_list()),
+                                 by.x = "NAME",
+                                 by.y = "Country",
+                                 sort = FALSE))
     
     countries2 <- reactive(merge(countries,
-                                 reactiveIndex(),
+                                 reactiveIndex() %>% 
+                                   filter(Country %in% country_list()),
                                  by.x = "NAME",
                                  by.y = "Country",
                                  sort = FALSE))
@@ -209,20 +209,16 @@ server <- function(input, output) {
                               "<br><strong><h5>",
                               hr(),
                               input$gender, " ", as.character(indicator),": </strong>",
-                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",
-                              hr(),
-                              "<strong> Male YLILI score: </strong>", round(countries1()[["Male YLILI score"]],2), " (", rank(-countries1$`Male YLILI score`, na.last = "keep"), "/", male_ranked(), ")<br>",
-                              "<strong> Female YLILI score: </strong>", round(countries1()[["Female YLILI score"]],2), " (", rank(-countries1$`Female YLILI score`, na.last = "keep"), "/", fem_ranked(), ")")
+                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", length(na.omit(countries2()[[indicator]])), ")",
+                              hr())
     } else {
       country_popup <- paste0("<h4><strong>", countries2()$NAME, "</strong>",
                               "<br><strong><h5>",
                               hr(),
                               input$gender, " ", as.character(indicator),": </strong>",
-                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", num_ranked(), ")",
+                              round(countries2()[[indicator]],2), " (", rank(-countries2()[[indicator]], na.last = "keep"), "/", length(na.omit(countries2()[[indicator]])), ")",
                               hr(),
-                              "<h6><strong> Total YLILI score: </strong>", round(countries1()[["Total YLILI score"]],2), " (", rank(-countries1$`Total YLILI score`, na.last = "keep"), "/", tot_ranked(), ")<br>",
-                              "<strong> Male YLILI score: </strong>", round(countries1()[["Male YLILI score"]],2), " (", rank(-countries1$`Male YLILI score`, na.last = "keep"), "/", male_ranked(), ")<br>",
-                              "<strong> Female YLILI score: </strong>", round(countries1()[["Female YLILI score"]],2), " (", rank(-countries1$`Female YLILI score`, na.last = "keep"), "/", fem_ranked(), ")")
+                              "<h6><strong> Total YLILI score: </strong>", round(countries1()[["score"]],2), " (", rank(-countries1()[["score"]], na.last = "keep"), "/", length(na.omit(countries1()[["score"]])), ")<br>")
     }
     
     output$map <- renderLeaflet({
@@ -231,14 +227,20 @@ server <- function(input, output) {
       # won't need to change dynamically (at least, not unless the
       # entire map is being torn down and recreated).
       
-      leaflet(countries2()) %>% 
+      leaflet(countries2(), options = leafletOptions(
+        minZoom = 2, maxZoom = 5,
+        attributionControl=FALSE)) %>% 
         addPolygons(data = countries2(),
                     fillColor = ~pal()(countries2()[[indicator]]),
                     layerId = ~NAME, weight = 1, smoothFactor = 0.5,
                     opacity = .8, fillOpacity = .8,  color = "#BDBDC3",
                     highlightOptions = highlightOptions(color = "black", weight = 2, opacity = .8),
                     popup = country_popup) %>% 
-        setView(10, 20, zoom = 3) %>% 
+        setView(10, 20, zoom = 2) %>% 
+        setMaxBounds(lng1 = -200,
+                     lat1 = -90,
+                     lng2 = 200,
+                     lat2 = 90) %>% 
         addLegend(position = "bottomright",
                   pal = pal(),
                   value = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)))
@@ -255,6 +257,7 @@ server <- function(input, output) {
     scores <- DT::renderDataTable({
       rank <- reactiveIndex() %>% 
         mutate_if(is.numeric, round, 3) %>% 
+        filter(Country %in% country_list()) %>% 
         arrange(desc(`YLILI score`))
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
@@ -272,6 +275,7 @@ server <- function(input, output) {
     
     ranks <- DT::renderDataTable({
       rank <- reactiveIndex() %>% 
+        filter(Country %in% country_list()) %>% 
         ungroup() %>% 
         mutate(
           "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
@@ -282,7 +286,7 @@ server <- function(input, output) {
           "Working conditions ratio" = rank(-`Working conditions ratio`, na.last = "keep"),
           "Mismatch score" = rank(-`Mismatch score`, na.last = "keep"),
           "Working poverty score" = rank(-`Working poverty score`, na.last = "keep"),
-          "Under- employment score" = rank(-`Under- employment score`, na.last = "keep"),
+          "Underemployment score" = rank(-`Underemployment score`, na.last = "keep"),
           "Informal work score" = rank(-`Informal work score`, na.last = "keep"),
           "Elementary occupation score" = rank(-`Elementary occupation score`, na.last = "keep"),
           "Secondary schooling rate" = rank(-`Secondary schooling rate`, na.last = "keep"),
@@ -318,9 +322,24 @@ server <- function(input, output) {
         select(-Country) %>% 
         t() %>%
         as.data.frame() %>%
-        mutate(var = rownames(.))
-               #V2 = ifelse(input$country1 == input$country2, V1, V2)) # if same country is selected twice
+        mutate(var = rownames(.),
+               var = fct_relevel(var, "Harmonized tests score",
+                                 "Literacy rate",
+                                 "Secondary schooling rate",
+                                 "Elementary occupation score",
+                                 "Informal work score",
+                                 "Underemployment score",
+                                 "Working poverty score",
+                                 "Mismatch score",
+                                 "Working conditions ratio",
+                                 "NEET score",
+                                 "Education",
+                                 "Working conditions",
+                                 "Transition",
+                                 "YLILI score"),
+               label = ifelse(V1 > 19.99, round(V1, 2), NA))
       })
+    
     
     right <- reactive({
       reactiveIndex() %>% 
@@ -328,17 +347,30 @@ server <- function(input, output) {
         select(-Country) %>% 
         t() %>%
         as.data.frame() %>%
-        mutate(var = rownames(.))
+        mutate(var = rownames(.),
+               var = fct_relevel(var, "Harmonized tests score",
+                           "Literacy rate",
+                           "Secondary schooling rate",
+                           "Elementary occupation score",
+                           "Informal work score",
+                           "Underemployment score",
+                           "Working poverty score",
+                           "Mismatch score",
+                           "Working conditions ratio",
+                           "NEET score",
+                           "Education",
+                           "Working conditions",
+                           "Transition",
+                           "YLILI score"),
+               label = ifelse(V1 > 19.99, round(V1, 2), NA))
     })
-    
     
     # Center labels
     g.mid<-ggplot(left(), aes(x=1,y=left()$var)) + geom_text(aes(label=left()$var, color = "NEET score"), size = rel(5)) +
       scale_colour_manual(values = c("white")) +
       ggtitle("")+
       ylab(NULL)+
-      scale_x_continuous(expand=c(0,0),limits=c(0.94,1.065))+
-      scale_y_discrete(expand = expansion(mult = c(0.095, 0.046))) +
+      scale_x_continuous(expand=c(0,0),limits=c(0.94,1.065)) +
       theme_minimal() +
       theme(text = element_text(color="white"),
             axis.title=element_blank(),
@@ -346,14 +378,14 @@ server <- function(input, output) {
             axis.text.y=element_blank(),
             axis.ticks.y=element_blank(),
             panel.background=element_blank(),
-            axis.text.x=element_text(color="white"),
+            axis.text.x=element_blank(),
             axis.ticks.x=element_line(color=NA),
-            plot.margin = unit(c(-5,-5,-5,-5), "mm"),
+            plot.margin = unit(c(-5,-5,5,-5), "mm"),
             legend.position="none")
     
-    g1 <- ggplot(data = left()) +
-      geom_bar(stat = "identity", aes(y= V1, x = var), fill = "white") +
-      ylim(0,100) +
+    g1 <- ggplot(data = left(),  aes(y= V1, x = var, label = label)) +
+      geom_bar(stat = "identity", fill = "white") +
+      geom_text(size = 4, hjust = -.3, na.rm=TRUE) +
       theme_minimal() +
       theme(axis.title.x = element_blank(), 
             axis.title.y = element_blank(), 
@@ -365,8 +397,9 @@ server <- function(input, output) {
       scale_y_reverse(limits=c(100,0)) + coord_flip()
 
     
-    g2 <- ggplot(data = right()) +
+    g2 <- ggplot(data = right(),  aes(y= V1, x = var, label = label)) +
       geom_bar(stat = "identity", aes(y= V1, x = var), fill = "white") +
+      geom_text(size = 4, hjust = 1.15, na.rm=TRUE) +
       ylim(0,100) +
       theme_minimal() +
       theme(axis.title.x = element_blank(), 
@@ -379,7 +412,7 @@ server <- function(input, output) {
       coord_flip()
     
     output$test <- renderPlot({
-      grid.arrange(g1,g.mid, g2,ncol=3)
+      grid.arrange(g1,g.mid, g2,ncol=3, widths = c(3,2,3))
     }, bg="transparent")
     
   })
