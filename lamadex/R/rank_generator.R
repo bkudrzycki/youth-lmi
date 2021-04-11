@@ -9,7 +9,7 @@
 rank_generator <- function(bygender = "Total", lastyear = 2009, impute = FALSE) {
   ## use the compute_indicators helper function to take raw data and calculate indicators as used in the index
   dfList <- compute_indicators()
-  data("data/country_list.csv")
+  data(country_list)
   country_list$ref_area.label <- country_list$ref_area.label %>%
     recode("Cote d'Ivoire" = "Côte d'Ivoire",
            "Curacao" = "Curaçao")
