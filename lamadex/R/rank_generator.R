@@ -6,24 +6,24 @@
 #' @export
 #' @examples
 
-rank_generator <- function(bygender = "Total", countries = "dev", years = c(2010,2020), impute = FALSE) {
+rank_generator <- function(bygender = "Total", countries = "dev", years = c(2010,2020), impute = TRUE) {
   ## use the compute_indicators helper function to take raw data and calculate indicators as used in the index
   dfList <- compute_indicators()
 
   if (countries == "all") {
-    country_list = countryLists[[9]][[1]]
-  }
-  else if (countries == "dev") {
-  country_list = countryLists[[3]][[1]]
+    country_list = countryLists()[[9]]
+  } else if (countries == "dev") {
+  country_list = countryLists()[[3]]
   }
 
   ## apply the filter_helper function to each indicator dataframe in dfList, then append the values to the chosen list of countries
   index <- lapply(dfList, filter_helper, bygender = bygender, years = years) %>%
-    reduce(full_join, by = "ref_area.label", accumulate == TRUE)
+    reduce(full_join, by = "ref_area.label", accumulate == TRUE) %>%
+    filter(ref_area.label %in% country_list[[1]]) ## filter data for countries in chosen list
 
-  index <- right_join(index, country_list, by = "ref_area.label") ## filter data for countries in chosen list
+  index <- left_join(country_list, index, by = "ref_area.label")
 
-  colnames(index) <- c("ref_area.label", "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores", "country_code")
+  colnames(index) <- c("ref_area.label", "country_code", "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores")
 
 
   ## rescale all indicators and calculate dimension scores
@@ -52,12 +52,12 @@ rank_generator <- function(bygender = "Total", countries = "dev", years = c(2010
   }
 
   index <- index %>%
-    mutate(transition_mean = ifelse(rowSums(is.na(.[2:4]))<2, rowMeans(.[2:4], na.rm = TRUE),NA)) %>%
-    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[5:8]))<3, rowMeans(.[5:8], na.rm = TRUE),NA)) %>%
-    mutate(education_mean = ifelse(rowSums(is.na(.[9:11]))<2, rowMeans(.[9:11], na.rm = TRUE),NA)) %>%
-    mutate(transition_geom = ifelse(rowSums(is.na(.[2:4]))<2, apply(.[2:4], 1, gm_mean),NA)) %>%
-    mutate(working_conditions_geom = ifelse(rowSums(is.na(.[5:8]))<3, apply(.[5:8], 1, gm_mean),NA)) %>%
-    mutate(education_geom = ifelse(rowSums(is.na(.[9:11]))<2, apply(.[9:11], 1, gm_mean),NA)) %>%
+    mutate(transition_mean = ifelse(rowSums(is.na(.[3:5]))<2, rowMeans(.[3:5], na.rm = TRUE),NA)) %>%
+    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[6:9]))<3, rowMeans(.[6:9], na.rm = TRUE),NA)) %>%
+    mutate(education_mean = ifelse(rowSums(is.na(.[10:12]))<2, rowMeans(.[10:12], na.rm = TRUE),NA)) %>%
+    mutate(transition_geom = ifelse(rowSums(is.na(.[3:5]))<2, apply(.[3:5], 1, gm_mean),NA)) %>%
+    mutate(working_conditions_geom = ifelse(rowSums(is.na(.[6:9]))<3, apply(.[6:9], 1, gm_mean),NA)) %>%
+    mutate(education_geom = ifelse(rowSums(is.na(.[10:12]))<2, apply(.[10:12], 1, gm_mean),NA)) %>%
     rename(country = "ref_area.label")
 
   rank <- index %>%

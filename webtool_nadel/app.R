@@ -12,7 +12,7 @@ library(rgdal)
 library(leaflet.extras)
 library(shinyWidgets)
 library(gridExtra)
-#devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
+devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
 
 ## ---------------------------------------
@@ -129,16 +129,18 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # generate index according to user specification
-  country_list <- reactive(
+  countries <- reactive(
     if (input$subset == "All") {
-      countryLists()[[9]][[1]]
+      "all"
     }
     else {
-      countryLists()[[3]][[1]]
+      "dev"
     }
   )
   
-  reactiveIndex <- reactive(rank_generator(bygender = input$gender, years = input$years, impute = input$impute) %>% 
+  countries
+  
+  reactiveIndex <- reactive(rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                                      wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -165,7 +167,7 @@ server <- function(input, output, session) {
                               )
                             )
                             
-  tot_ylili <- reactive(rank_generator(bygender = "Total", years = input$years, impute = input$impute) %>% 
+  tot_ylili <- reactive(rank_generator(bygender = "Total", countries <- countries(), years = input$years, impute = input$impute) %>% 
                           rowwise() %>%
                           rename("Country" = "country") %>% 
                           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
@@ -192,15 +194,13 @@ server <- function(input, output, session) {
     pal <- reactive(colorNumeric(c("#FFFFFFFF", viridis(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "white"))
     
     countries1 <- reactive(merge(countries,
-                                 tot_ylili() %>% 
-                                   filter(Country %in% country_list()),
+                                 tot_ylili(),
                                  by.x = "NAME",
                                  by.y = "Country",
                                  sort = FALSE))
     
     countries2 <- reactive(merge(countries,
-                                 reactiveIndex() %>% 
-                                   filter(Country %in% country_list()),
+                                 reactiveIndex(),
                                  by.x = "NAME",
                                  by.y = "Country",
                                  sort = FALSE))
@@ -260,7 +260,6 @@ server <- function(input, output, session) {
     scores <- DT::renderDataTable({
       rank <- reactiveIndex() %>% 
         mutate_if(is.numeric, round, 3) %>% 
-        filter(Country %in% country_list()) %>% 
         arrange(desc(`YLILI score`))
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
@@ -278,7 +277,6 @@ server <- function(input, output, session) {
     
     ranks <- DT::renderDataTable({
       rank <- reactiveIndex() %>% 
-        filter(Country %in% country_list()) %>% 
         ungroup() %>% 
         mutate(
           "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
@@ -423,7 +421,7 @@ server <- function(input, output, session) {
   #generate data
   data_list <- reactive({
     list(
-      total = rank_generator(bygender = input$gender, years = input$years, impute = input$impute) %>% 
+      total = rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -449,7 +447,7 @@ server <- function(input, output, session) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      male = rank_generator(bygender = "Male", years = input$years, impute = input$impute) %>% 
+      male = rank_generator(bygender = "Male", countries <- countries(), years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -475,7 +473,7 @@ server <- function(input, output, session) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      female = rank_generator(bygender = "Female", years = input$years, impute = input$impute) %>% 
+      female = rank_generator(bygender = "Female", countries <- countries(), years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
