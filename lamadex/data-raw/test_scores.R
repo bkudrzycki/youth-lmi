@@ -1,10 +1,10 @@
 ## load test scores
 
 test_scores <- read.csv("data-raw/test_scores_sex_wb.csv") %>%
-  rename("sex.label" = Indicator.Name,
-         "ref_area.label" = Economy.Name,
-         "obs_value" = X2017..YR2017.) %>%
-  mutate(time = 2017,
+  pivot_longer(cols = c(5:length(.)), names_to = "time", names_prefix = "X", values_to = "obs_value") %>%
+  rename("sex.label" = Series.Name,
+         "ref_area.label" = Economy.Name) %>%
+  mutate(time = as.numeric(substring(time, 1, 4)),
          obs_value = as.numeric(na_if(obs_value, "..")))
 
 test_scores$sex.label <- test_scores$sex.label %>%

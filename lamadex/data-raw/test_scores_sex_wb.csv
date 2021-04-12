@@ -1,472 +1,652 @@
-﻿Indicator Name,Indicator Code,Economy Name,Economy Code,2017 [YR2017]
-Harmonized Test Scores,HD.HCI.HLOS,Afghanistan,AFG,355
-Harmonized Test Scores,HD.HCI.HLOS,Albania,ALB,429
-Harmonized Test Scores,HD.HCI.HLOS,Algeria,DZA,374
-Harmonized Test Scores,HD.HCI.HLOS,Angola,AGO,326
-Harmonized Test Scores,HD.HCI.HLOS,Argentina,ARG,424
-Harmonized Test Scores,HD.HCI.HLOS,Armenia,ARM,443
-Harmonized Test Scores,HD.HCI.HLOS,Australia,AUS,524
-Harmonized Test Scores,HD.HCI.HLOS,Austria,AUT,525
-Harmonized Test Scores,HD.HCI.HLOS,Azerbaijan,AZE,472
-Harmonized Test Scores,HD.HCI.HLOS,Bahrain,BHR,452
-Harmonized Test Scores,HD.HCI.HLOS,Bangladesh,BGD,368
-Harmonized Test Scores,HD.HCI.HLOS,Belgium,BEL,519
-Harmonized Test Scores,HD.HCI.HLOS,Benin,BEN,384
-Harmonized Test Scores,HD.HCI.HLOS,Bosnia and Herzegovina,BIH,461
-Harmonized Test Scores,HD.HCI.HLOS,Botswana,BWA,391
-Harmonized Test Scores,HD.HCI.HLOS,Brazil,BRA,408
-Harmonized Test Scores,HD.HCI.HLOS,Bulgaria,BGR,498
-Harmonized Test Scores,HD.HCI.HLOS,Burkina Faso,BFA,404
-Harmonized Test Scores,HD.HCI.HLOS,Burundi,BDI,423
-Harmonized Test Scores,HD.HCI.HLOS,Cambodia,KHM,452
-Harmonized Test Scores,HD.HCI.HLOS,Cameroon,CMR,379
-Harmonized Test Scores,HD.HCI.HLOS,Canada,CAN,537
-Harmonized Test Scores,HD.HCI.HLOS,Chad,TCD,333
-Harmonized Test Scores,HD.HCI.HLOS,Chile,CHL,466
-Harmonized Test Scores,HD.HCI.HLOS,China,CHN,456
-Harmonized Test Scores,HD.HCI.HLOS,Colombia,COL,424
-Harmonized Test Scores,HD.HCI.HLOS,Comoros,COM,392
-Harmonized Test Scores,HD.HCI.HLOS,"Congo, Dem. Rep.",COD,318
-Harmonized Test Scores,HD.HCI.HLOS,"Congo, Rep.",COG,371
-Harmonized Test Scores,HD.HCI.HLOS,Costa Rica,CRI,430
-Harmonized Test Scores,HD.HCI.HLOS,Cote d'Ivoire,CIV,373
-Harmonized Test Scores,HD.HCI.HLOS,Croatia,HRV,505
-Harmonized Test Scores,HD.HCI.HLOS,Cyprus,CYP,502
-Harmonized Test Scores,HD.HCI.HLOS,Czech Republic,CZE,522
-Harmonized Test Scores,HD.HCI.HLOS,Denmark,DNK,531
-Harmonized Test Scores,HD.HCI.HLOS,Dominican Republic,DOM,350
-Harmonized Test Scores,HD.HCI.HLOS,Ecuador,ECU,420
-Harmonized Test Scores,HD.HCI.HLOS,"Egypt, Arab Rep.",EGY,356
-Harmonized Test Scores,HD.HCI.HLOS,El Salvador,SLV,362
-Harmonized Test Scores,HD.HCI.HLOS,Estonia,EST,542
-Harmonized Test Scores,HD.HCI.HLOS,Eswatini,SWZ,440
-Harmonized Test Scores,HD.HCI.HLOS,Ethiopia,ETH,359
-Harmonized Test Scores,HD.HCI.HLOS,Finland,FIN,548
-Harmonized Test Scores,HD.HCI.HLOS,France,FRA,506
-Harmonized Test Scores,HD.HCI.HLOS,Gabon,GAB,456
-Harmonized Test Scores,HD.HCI.HLOS,"Gambia, The",GMB,338
-Harmonized Test Scores,HD.HCI.HLOS,Georgia,GEO,445
-Harmonized Test Scores,HD.HCI.HLOS,Germany,DEU,528
-Harmonized Test Scores,HD.HCI.HLOS,Ghana,GHA,307
-Harmonized Test Scores,HD.HCI.HLOS,Greece,GRC,474
-Harmonized Test Scores,HD.HCI.HLOS,Guatemala,GTM,405
-Harmonized Test Scores,HD.HCI.HLOS,Guinea,GIN,408
-Harmonized Test Scores,HD.HCI.HLOS,Guyana,GUY,346
-Harmonized Test Scores,HD.HCI.HLOS,Haiti,HTI,345
-Harmonized Test Scores,HD.HCI.HLOS,Honduras,HND,400
-Harmonized Test Scores,HD.HCI.HLOS,"Hong Kong SAR, China",HKG,562
-Harmonized Test Scores,HD.HCI.HLOS,Hungary,HUN,516
-Harmonized Test Scores,HD.HCI.HLOS,Iceland,ISL,497
-Harmonized Test Scores,HD.HCI.HLOS,India,IND,355
-Harmonized Test Scores,HD.HCI.HLOS,Indonesia,IDN,403
-Harmonized Test Scores,HD.HCI.HLOS,"Iran, Islamic Rep.",IRN,432
-Harmonized Test Scores,HD.HCI.HLOS,Iraq,IRQ,363
-Harmonized Test Scores,HD.HCI.HLOS,Ireland,IRL,538
-Harmonized Test Scores,HD.HCI.HLOS,Israel,ISR,503
-Harmonized Test Scores,HD.HCI.HLOS,Italy,ITA,514
-Harmonized Test Scores,HD.HCI.HLOS,Jamaica,JAM,387
-Harmonized Test Scores,HD.HCI.HLOS,Japan,JPN,563
-Harmonized Test Scores,HD.HCI.HLOS,Jordan,JOR,409
-Harmonized Test Scores,HD.HCI.HLOS,Kazakhstan,KAZ,537
-Harmonized Test Scores,HD.HCI.HLOS,Kenya,KEN,455
-Harmonized Test Scores,HD.HCI.HLOS,Kiribati,KIR,383
-Harmonized Test Scores,HD.HCI.HLOS,"Korea, Rep.",KOR,563
-Harmonized Test Scores,HD.HCI.HLOS,Kosovo,XKX,375
-Harmonized Test Scores,HD.HCI.HLOS,Kuwait,KWT,383
-Harmonized Test Scores,HD.HCI.HLOS,Kyrgyz Republic,KGZ,420
-Harmonized Test Scores,HD.HCI.HLOS,Lao PDR,LAO,368
-Harmonized Test Scores,HD.HCI.HLOS,Latvia,LVA,530
-Harmonized Test Scores,HD.HCI.HLOS,Lebanon,LBN,405
-Harmonized Test Scores,HD.HCI.HLOS,Lesotho,LSO,393
-Harmonized Test Scores,HD.HCI.HLOS,Liberia,LBR,332
-Harmonized Test Scores,HD.HCI.HLOS,Lithuania,LTU,514
-Harmonized Test Scores,HD.HCI.HLOS,Luxembourg,LUX,500
-Harmonized Test Scores,HD.HCI.HLOS,"Macao SAR, China",MAC,545
-Harmonized Test Scores,HD.HCI.HLOS,"Macedonia, FYR",MKD,382
-Harmonized Test Scores,HD.HCI.HLOS,Madagascar,MDG,351
-Harmonized Test Scores,HD.HCI.HLOS,Malawi,MWI,359
-Harmonized Test Scores,HD.HCI.HLOS,Malaysia,MYS,468
-Harmonized Test Scores,HD.HCI.HLOS,Mali,MLI,307
-Harmonized Test Scores,HD.HCI.HLOS,Malta,MLT,474
-Harmonized Test Scores,HD.HCI.HLOS,Mauritania,MRT,342
-Harmonized Test Scores,HD.HCI.HLOS,Mauritius,MUS,473
-Harmonized Test Scores,HD.HCI.HLOS,Mexico,MEX,430
-Harmonized Test Scores,HD.HCI.HLOS,Moldova,MDA,436
-Harmonized Test Scores,HD.HCI.HLOS,Mongolia,MNG,435
-Harmonized Test Scores,HD.HCI.HLOS,Montenegro,MNE,433
-Harmonized Test Scores,HD.HCI.HLOS,Morocco,MAR,367
-Harmonized Test Scores,HD.HCI.HLOS,Mozambique,MOZ,368
-Harmonized Test Scores,HD.HCI.HLOS,Myanmar,MMR,425
-Harmonized Test Scores,HD.HCI.HLOS,Namibia,NAM,407
-Harmonized Test Scores,HD.HCI.HLOS,Nepal,NPL,369
-Harmonized Test Scores,HD.HCI.HLOS,Netherlands,NLD,530
-Harmonized Test Scores,HD.HCI.HLOS,New Zealand,NZL,517
-Harmonized Test Scores,HD.HCI.HLOS,Nicaragua,NIC,392
-Harmonized Test Scores,HD.HCI.HLOS,Niger,NER,305
-Harmonized Test Scores,HD.HCI.HLOS,Nigeria,NGA,325
-Harmonized Test Scores,HD.HCI.HLOS,Norway,NOR,512
-Harmonized Test Scores,HD.HCI.HLOS,Oman,OMN,424
-Harmonized Test Scores,HD.HCI.HLOS,Pakistan,PAK,339
-Harmonized Test Scores,HD.HCI.HLOS,Panama,PAN,396
-Harmonized Test Scores,HD.HCI.HLOS,Papua New Guinea,PNG,358
-Harmonized Test Scores,HD.HCI.HLOS,Paraguay,PRY,386
-Harmonized Test Scores,HD.HCI.HLOS,Peru,PER,407
-Harmonized Test Scores,HD.HCI.HLOS,Philippines,PHL,409
-Harmonized Test Scores,HD.HCI.HLOS,Poland,POL,537
-Harmonized Test Scores,HD.HCI.HLOS,Portugal,PRT,520
-Harmonized Test Scores,HD.HCI.HLOS,Qatar,QAT,432
-Harmonized Test Scores,HD.HCI.HLOS,Romania,ROU,452
-Harmonized Test Scores,HD.HCI.HLOS,Russian Federation,RUS,538
-Harmonized Test Scores,HD.HCI.HLOS,Rwanda,RWA,358
-Harmonized Test Scores,HD.HCI.HLOS,Saudi Arabia,SAU,407
-Harmonized Test Scores,HD.HCI.HLOS,Senegal,SEN,412
-Harmonized Test Scores,HD.HCI.HLOS,Serbia,SRB,521
-Harmonized Test Scores,HD.HCI.HLOS,Seychelles,SYC,463
-Harmonized Test Scores,HD.HCI.HLOS,Sierra Leone,SLE,316
-Harmonized Test Scores,HD.HCI.HLOS,Singapore,SGP,581
-Harmonized Test Scores,HD.HCI.HLOS,Slovak Republic,SVK,500
-Harmonized Test Scores,HD.HCI.HLOS,Slovenia,SVN,532
-Harmonized Test Scores,HD.HCI.HLOS,Solomon Islands,SLB,362
-Harmonized Test Scores,HD.HCI.HLOS,South Africa,ZAF,343
-Harmonized Test Scores,HD.HCI.HLOS,South Sudan,SSD,336
-Harmonized Test Scores,HD.HCI.HLOS,Spain,ESP,514
-Harmonized Test Scores,HD.HCI.HLOS,Sri Lanka,LKA,400
-Harmonized Test Scores,HD.HCI.HLOS,Sudan,SDN,380
-Harmonized Test Scores,HD.HCI.HLOS,Sweden,SWE,525
-Harmonized Test Scores,HD.HCI.HLOS,Switzerland,CHE,524
-Harmonized Test Scores,HD.HCI.HLOS,Tajikistan,TJK,444
-Harmonized Test Scores,HD.HCI.HLOS,Tanzania,TZA,388
-Harmonized Test Scores,HD.HCI.HLOS,Thailand,THA,436
-Harmonized Test Scores,HD.HCI.HLOS,Timor-Leste,TLS,371
-Harmonized Test Scores,HD.HCI.HLOS,Togo,TGO,384
-Harmonized Test Scores,HD.HCI.HLOS,Tonga,TON,376
-Harmonized Test Scores,HD.HCI.HLOS,Trinidad and Tobago,TTO,458
-Harmonized Test Scores,HD.HCI.HLOS,Tunisia,TUN,384
-Harmonized Test Scores,HD.HCI.HLOS,Turkey,TUR,459
-Harmonized Test Scores,HD.HCI.HLOS,Tuvalu,TUV,387
-Harmonized Test Scores,HD.HCI.HLOS,Uganda,UGA,397
-Harmonized Test Scores,HD.HCI.HLOS,Ukraine,UKR,490
-Harmonized Test Scores,HD.HCI.HLOS,United Arab Emirates,ARE,451
-Harmonized Test Scores,HD.HCI.HLOS,United Kingdom,GBR,517
-Harmonized Test Scores,HD.HCI.HLOS,United States,USA,523
-Harmonized Test Scores,HD.HCI.HLOS,Uruguay,URY,444
-Harmonized Test Scores,HD.HCI.HLOS,Vanuatu,VUT,356
-Harmonized Test Scores,HD.HCI.HLOS,Vietnam,VNM,519
-Harmonized Test Scores,HD.HCI.HLOS,West Bank and Gaza,PSE,412
-Harmonized Test Scores,HD.HCI.HLOS,"Yemen, Rep.",YEM,321
-Harmonized Test Scores,HD.HCI.HLOS,Zambia,ZMB,358
-Harmonized Test Scores,HD.HCI.HLOS,Zimbabwe,ZWE,396
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Afghanistan,AFG,350
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Albania,ALB,445
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Algeria,DZA,383
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Angola,AGO,325
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Argentina,ARG,421
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Armenia,ARM,448
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Australia,AUS,528
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Austria,AUT,524
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Azerbaijan,AZE,479
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bahrain,BHR,470
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bangladesh,BGD,370
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belgium,BEL,518
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Benin,BEN,384
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bosnia and Herzegovina,BIH,460
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Botswana,BWA,401
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Brazil,BRA,409
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bulgaria,BGR,506
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Burkina Faso,BFA,400
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Burundi,BDI,432
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cambodia,KHM,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cameroon,CMR,383
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Canada,CAN,539
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Chad,TCD,323
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Chile,CHL,465
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,China,CHN,456
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Colombia,COL,423
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Comoros,COM,387
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Congo, Dem. Rep.",COD,316
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Congo, Rep.",COG,369
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Costa Rica,CRI,426
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cote d'Ivoire,CIV,371
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Croatia,HRV,503
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cyprus,CYP,500
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Czech Republic,CZE,524
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Denmark,DNK,532
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Dominican Republic,DOM,356
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ecuador,ECU,421
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Egypt, Arab Rep.",EGY,368
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,El Salvador,SLV,354
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Estonia,EST,545
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Eswatini,SWZ,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ethiopia,ETH,356
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Finland,FIN,558
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,France,FRA,508
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Gabon,GAB,454
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Gambia, The",GMB,340
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Georgia,GEO,455
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Germany,DEU,529
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ghana,GHA,306
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Greece,GRC,482
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guatemala,GTM,408
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guinea,GIN,397
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guyana,GUY,356
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Haiti,HTI,355
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Honduras,HND,399
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Hong Kong SAR, China",HKG,564
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Hungary,HUN,517
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Iceland,ISL,504
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,India,IND,362
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Indonesia,IDN,408
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Iran, Islamic Rep.",IRN,446
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Iraq,IRQ,377
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ireland,IRL,537
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Israel,ISR,506
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Italy,ITA,511
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Jamaica,JAM,404
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Japan,JPN,562
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Jordan,JOR,428
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kazakhstan,KAZ,542
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kenya,KEN,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kiribati,KIR,394
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Korea, Rep.",KOR,567
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kosovo,XKX,381
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kuwait,KWT,398
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kyrgyz Republic,KGZ,426
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lao PDR,LAO,374
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Latvia,LVA,539
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lebanon,LBN,405
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lesotho,LSO,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Liberia,LBR,328
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lithuania,LTU,520
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Luxembourg,LUX,500
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Macao SAR, China",MAC,550
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Macedonia, FYR",MKD,395
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Madagascar,MDG,352
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malawi,MWI,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malaysia,MYS,473
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mali,MLI,307
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malta,MLT,483
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mauritania,MRT,343
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mauritius,MUS,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mexico,MEX,429
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Moldova,MDA,446
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mongolia,MNG,434
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Montenegro,MNE,439
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Morocco,MAR,376
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mozambique,MOZ,371
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Myanmar,MMR,431
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Namibia,NAM,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nepal,NPL,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Netherlands,NLD,532
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,New Zealand,NZL,522
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nicaragua,NIC,392
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Niger,NER,302
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nigeria,NGA,321
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Norway,NOR,518
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Oman,OMN,444
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Pakistan,PAK,343
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Panama,PAN,392
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Papua New Guinea,PNG,360
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Paraguay,PRY,383
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Peru,PER,405
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Philippines,PHL,418
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Poland,POL,540
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Portugal,PRT,519
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Qatar,QAT,446
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Romania,ROU,456
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Russian Federation,RUS,540
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Rwanda,RWA,365
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Saudi Arabia,SAU,436
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Senegal,SEN,408
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Serbia,SRB,523
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Seychelles,SYC,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sierra Leone,SLE,314
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Singapore,SGP,585
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Slovak Republic,SVK,503
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Slovenia,SVN,538
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Solomon Islands,SLB,373
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,South Africa,ZAF,359
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,South Sudan,SSD,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Spain,ESP,513
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sri Lanka,LKA,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sudan,SDN,389
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sweden,SWE,531
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Switzerland,CHE,525
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tajikistan,TJK,448
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tanzania,TZA,395
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Thailand,THA,444
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Timor-Leste,TLS,378
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Togo,TGO,383
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tonga,TON,386
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Trinidad and Tobago,TTO,471
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tunisia,TUN,386
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Turkey,TUR,463
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tuvalu,TUV,392
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Uganda,UGA,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ukraine,UKR,488
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United Arab Emirates,ARE,464
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United Kingdom,GBR,518
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United States,USA,523
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Uruguay,URY,444
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Vanuatu,VUT,360
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Vietnam,VNM,524
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,West Bank and Gaza,PSE,424
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Yemen, Rep.",YEM,322
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Zambia,ZMB,..
-"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Zimbabwe,ZWE,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Afghanistan,AFG,358
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Albania,ALB,414
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Algeria,DZA,366
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Angola,AGO,327
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Argentina,ARG,427
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Armenia,ARM,439
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Australia,AUS,520
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Austria,AUT,526
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Azerbaijan,AZE,466
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bahrain,BHR,434
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bangladesh,BGD,367
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belgium,BEL,521
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Benin,BEN,384
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bosnia and Herzegovina,BIH,461
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Botswana,BWA,381
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Brazil,BRA,408
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bulgaria,BGR,490
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Burkina Faso,BFA,407
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Burundi,BDI,415
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cambodia,KHM,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cameroon,CMR,376
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Canada,CAN,535
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Chad,TCD,338
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Chile,CHL,467
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,China,CHN,456
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Colombia,COL,425
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Comoros,COM,400
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Congo, Dem. Rep.",COD,320
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Congo, Rep.",COG,372
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Costa Rica,CRI,433
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cote d'Ivoire,CIV,375
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Croatia,HRV,506
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cyprus,CYP,504
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Czech Republic,CZE,521
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Denmark,DNK,529
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Dominican Republic,DOM,344
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ecuador,ECU,419
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Egypt, Arab Rep.",EGY,344
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,El Salvador,SLV,370
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Estonia,EST,539
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Eswatini,SWZ,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ethiopia,ETH,363
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Finland,FIN,538
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,France,FRA,504
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Gabon,GAB,458
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Gambia, The",GMB,336
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Georgia,GEO,435
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Germany,DEU,528
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ghana,GHA,308
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Greece,GRC,466
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guatemala,GTM,402
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guinea,GIN,417
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guyana,GUY,338
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Haiti,HTI,337
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Honduras,HND,401
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Hong Kong SAR, China",HKG,560
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Hungary,HUN,514
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Iceland,ISL,489
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,India,IND,347
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Indonesia,IDN,398
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Iran, Islamic Rep.",IRN,420
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Iraq,IRQ,353
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ireland,IRL,538
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Israel,ISR,501
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Italy,ITA,516
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Jamaica,JAM,372
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Japan,JPN,565
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Jordan,JOR,391
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kazakhstan,KAZ,533
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kenya,KEN,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kiribati,KIR,372
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Korea, Rep.",KOR,560
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kosovo,XKX,369
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kuwait,KWT,369
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kyrgyz Republic,KGZ,414
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lao PDR,LAO,363
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Latvia,LVA,522
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lebanon,LBN,405
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lesotho,LSO,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Liberia,LBR,335
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lithuania,LTU,507
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Luxembourg,LUX,499
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Macao SAR, China",MAC,541
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Macedonia, FYR",MKD,370
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Madagascar,MDG,350
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malawi,MWI,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malaysia,MYS,463
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mali,MLI,307
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malta,MLT,467
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mauritania,MRT,340
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mauritius,MUS,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mexico,MEX,430
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Moldova,MDA,425
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mongolia,MNG,435
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Montenegro,MNE,426
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Morocco,MAR,359
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mozambique,MOZ,365
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Myanmar,MMR,418
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Namibia,NAM,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nepal,NPL,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Netherlands,NLD,527
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,New Zealand,NZL,513
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nicaragua,NIC,392
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Niger,NER,307
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nigeria,NGA,329
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Norway,NOR,507
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Oman,OMN,404
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Pakistan,PAK,335
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Panama,PAN,400
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Papua New Guinea,PNG,355
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Paraguay,PRY,388
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Peru,PER,409
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Philippines,PHL,400
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Poland,POL,534
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Portugal,PRT,521
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Qatar,QAT,418
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Romania,ROU,448
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Russian Federation,RUS,535
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Rwanda,RWA,351
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Saudi Arabia,SAU,380
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Senegal,SEN,417
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Serbia,SRB,520
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Seychelles,SYC,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sierra Leone,SLE,318
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Singapore,SGP,577
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Slovak Republic,SVK,498
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Slovenia,SVN,526
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Solomon Islands,SLB,351
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,South Africa,ZAF,328
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,South Sudan,SSD,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Spain,ESP,514
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sri Lanka,LKA,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sudan,SDN,371
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sweden,SWE,519
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Switzerland,CHE,523
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tajikistan,TJK,441
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tanzania,TZA,382
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Thailand,THA,427
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Timor-Leste,TLS,366
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Togo,TGO,384
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tonga,TON,366
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Trinidad and Tobago,TTO,445
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tunisia,TUN,381
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Turkey,TUR,455
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tuvalu,TUV,381
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Uganda,UGA,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ukraine,UKR,492
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United Arab Emirates,ARE,439
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United Kingdom,GBR,515
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United States,USA,522
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Uruguay,URY,444
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Vanuatu,VUT,351
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Vietnam,VNM,514
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,West Bank and Gaza,PSE,399
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Yemen, Rep.",YEM,321
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Zambia,ZMB,..
-"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Zimbabwe,ZWE,..
+﻿Series Name,Series Code,Economy Name,Economy Code,2017 [YR2017],2018 [YR2018],2019 [YR2019],2020 [YR2020]
+Harmonized Test Scores,HD.HCI.HLOS,Afghanistan,AFG,355,354.7587891,..,354.7587891
+Harmonized Test Scores,HD.HCI.HLOS,Albania,ALB,429,429.32901,..,434.127594
+Harmonized Test Scores,HD.HCI.HLOS,Algeria,DZA,374,374.0890808,..,374.0890808
+Harmonized Test Scores,HD.HCI.HLOS,American Samoa,ASM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Andorra,AND,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Angola,AGO,326,325.9654846,..,325.9654846
+Harmonized Test Scores,HD.HCI.HLOS,Antigua and Barbuda,ATG,..,395.8977966,..,406.9974365
+Harmonized Test Scores,HD.HCI.HLOS,Argentina,ARG,424,424.0808105,..,408.1726379
+Harmonized Test Scores,HD.HCI.HLOS,Armenia,ARM,443,442.9694519,..,442.9694519
+Harmonized Test Scores,HD.HCI.HLOS,Aruba,ABW,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Australia,AUS,524,524.2651367,..,515.6853638
+Harmonized Test Scores,HD.HCI.HLOS,Austria,AUT,525,524.8326416,..,507.6393738
+Harmonized Test Scores,HD.HCI.HLOS,Azerbaijan,AZE,472,472.276886,..,415.9461975
+Harmonized Test Scores,HD.HCI.HLOS,"Bahamas, The",BHS,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bahrain,BHR,452,451.7059937,..,451.7059937
+Harmonized Test Scores,HD.HCI.HLOS,Bangladesh,BGD,368,368.3152771,..,368.3152771
+Harmonized Test Scores,HD.HCI.HLOS,Barbados,BRB,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Belarus,BLR,..,..,..,488.1430969
+Harmonized Test Scores,HD.HCI.HLOS,Belgium,BEL,519,519.4449463,..,516.8078613
+Harmonized Test Scores,HD.HCI.HLOS,Belize,BLZ,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Benin,BEN,384,383.9228516,..,383.9228516
+Harmonized Test Scores,HD.HCI.HLOS,Bermuda,BMU,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bhutan,BTN,..,..,..,386.7394104
+Harmonized Test Scores,HD.HCI.HLOS,Bolivia,BOL,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bosnia and Herzegovina,BIH,461,460.8042297,..,416.1340637
+Harmonized Test Scores,HD.HCI.HLOS,Botswana,BWA,391,391.3182983,..,391.3182983
+Harmonized Test Scores,HD.HCI.HLOS,Brazil,BRA,408,408.0993958,..,413.244751
+Harmonized Test Scores,HD.HCI.HLOS,British Virgin Islands,VGB,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Brunei Darussalam,BRN,..,..,..,437.5159302
+Harmonized Test Scores,HD.HCI.HLOS,Bulgaria,BGR,498,497.6109314,..,441.0933228
+Harmonized Test Scores,HD.HCI.HLOS,Burkina Faso,BFA,404,403.6543274,..,403.6543274
+Harmonized Test Scores,HD.HCI.HLOS,Burundi,BDI,423,422.7478027,..,422.7478027
+Harmonized Test Scores,HD.HCI.HLOS,Cabo Verde,CPV,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Cambodia,KHM,452,451.8895874,..,451.8895874
+Harmonized Test Scores,HD.HCI.HLOS,Cameroon,CMR,379,378.8688354,..,378.8688354
+Harmonized Test Scores,HD.HCI.HLOS,Canada,CAN,537,536.7554932,..,533.9979858
+Harmonized Test Scores,HD.HCI.HLOS,Cayman Islands,CYM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Central African Republic,CAF,..,..,..,368.7301636
+Harmonized Test Scores,HD.HCI.HLOS,Chad,TCD,333,333.1113281,..,333.1113281
+Harmonized Test Scores,HD.HCI.HLOS,Channel Islands,CHI,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Chile,CHL,466,465.7444153,..,452.2182312
+Harmonized Test Scores,HD.HCI.HLOS,China,CHN,456,441,..,441
+Harmonized Test Scores,HD.HCI.HLOS,Colombia,COL,424,423.6229858,..,419.0275269
+Harmonized Test Scores,HD.HCI.HLOS,Comoros,COM,392,392.2255249,..,392.2255249
+Harmonized Test Scores,HD.HCI.HLOS,"Congo, Dem. Rep.",COD,318,310.1971436,..,310.1971436
+Harmonized Test Scores,HD.HCI.HLOS,"Congo, Rep.",COG,371,370.6140747,..,370.6140747
+Harmonized Test Scores,HD.HCI.HLOS,Costa Rica,CRI,430,429.5550842,..,428.5556946
+Harmonized Test Scores,HD.HCI.HLOS,Cote d'Ivoire,CIV,373,373.2305298,..,373.2305298
+Harmonized Test Scores,HD.HCI.HLOS,Croatia,HRV,505,504.5490723,..,487.5812378
+Harmonized Test Scores,HD.HCI.HLOS,Cuba,CUB,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Curacao,CUW,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Cyprus,CYP,502,502.1621704,..,502.1621704
+Harmonized Test Scores,HD.HCI.HLOS,Czech Republic,CZE,522,522.3244019,..,512.2216187
+Harmonized Test Scores,HD.HCI.HLOS,Denmark,DNK,531,530.7277832,..,517.8778076
+Harmonized Test Scores,HD.HCI.HLOS,Djibouti,DJI,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Dominica,DMA,..,411.3955078,..,403.7832336
+Harmonized Test Scores,HD.HCI.HLOS,Dominican Republic,DOM,350,350.0990906,..,345.2165222
+Harmonized Test Scores,HD.HCI.HLOS,Ecuador,ECU,420,420.1485596,..,420.1485596
+Harmonized Test Scores,HD.HCI.HLOS,"Egypt, Arab Rep.",EGY,356,355.9865112,..,355.9865112
+Harmonized Test Scores,HD.HCI.HLOS,El Salvador,SLV,362,438.4388428,..,435.92276
+Harmonized Test Scores,HD.HCI.HLOS,Equatorial Guinea,GNQ,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Eritrea,ERI,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Estonia,EST,542,541.9866943,..,543.2060547
+Harmonized Test Scores,HD.HCI.HLOS,Eswatini,SWZ,440,440.3045044,..,440.3045044
+Harmonized Test Scores,HD.HCI.HLOS,Ethiopia,ETH,359,359.3746948,..,348.1990356
+Harmonized Test Scores,HD.HCI.HLOS,Faroe Islands,FRO,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Fiji,FJI,..,..,..,383.335968
+Harmonized Test Scores,HD.HCI.HLOS,Finland,FIN,548,547.7489014,..,533.7076416
+Harmonized Test Scores,HD.HCI.HLOS,France,FRA,506,505.9193115,..,510.2605896
+Harmonized Test Scores,HD.HCI.HLOS,French Polynesia,PYF,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Gabon,GAB,456,456.1276855,..,456.1276855
+Harmonized Test Scores,HD.HCI.HLOS,"Gambia, The",GMB,338,352.8996277,..,352.8996277
+Harmonized Test Scores,HD.HCI.HLOS,Georgia,GEO,445,444.8043823,..,399.7662964
+Harmonized Test Scores,HD.HCI.HLOS,Germany,DEU,528,528.1534424,..,517.2814331
+Harmonized Test Scores,HD.HCI.HLOS,Ghana,GHA,307,307.2757874,..,307.2757874
+Harmonized Test Scores,HD.HCI.HLOS,Gibraltar,GIB,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Greece,GRC,474,473.7549744,..,468.6362305
+Harmonized Test Scores,HD.HCI.HLOS,Greenland,GRL,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Grenada,GRD,..,387.0631714,..,394.7491455
+Harmonized Test Scores,HD.HCI.HLOS,Guam,GUM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Guatemala,GTM,405,405.2575684,..,405.2575684
+Harmonized Test Scores,HD.HCI.HLOS,Guinea,GIN,408,408.2490845,..,408.2490845
+Harmonized Test Scores,HD.HCI.HLOS,Guinea-Bissau,GNB,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Guyana,GUY,346,346.3659058,..,346.3659058
+Harmonized Test Scores,HD.HCI.HLOS,Haiti,HTI,345,337.8153076,..,337.8153076
+Harmonized Test Scores,HD.HCI.HLOS,Honduras,HND,400,399.7507935,..,399.7507935
+Harmonized Test Scores,HD.HCI.HLOS,"Hong Kong SAR, China",HKG,562,561.8934937,..,548.6314087
+Harmonized Test Scores,HD.HCI.HLOS,Hungary,HUN,516,515.7828369,..,495.4812317
+Harmonized Test Scores,HD.HCI.HLOS,Iceland,ISL,497,497.0681152,..,497.6827698
+Harmonized Test Scores,HD.HCI.HLOS,India,IND,355,399,..,399
+Harmonized Test Scores,HD.HCI.HLOS,Indonesia,IDN,403,402.9055176,..,394.9151001
+Harmonized Test Scores,HD.HCI.HLOS,"Iran, Islamic Rep.",IRN,432,432.1082153,..,432.1082153
+Harmonized Test Scores,HD.HCI.HLOS,Iraq,IRQ,363,363.4324951,..,363.4324951
+Harmonized Test Scores,HD.HCI.HLOS,Ireland,IRL,538,537.7294922,..,521.3285522
+Harmonized Test Scores,HD.HCI.HLOS,Isle of Man,IMN,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Israel,ISR,503,503.4998779,..,480.7521973
+Harmonized Test Scores,HD.HCI.HLOS,Italy,ITA,514,513.6931152,..,492.9878235
+Harmonized Test Scores,HD.HCI.HLOS,Jamaica,JAM,387,387.1329956,..,387.1329956
+Harmonized Test Scores,HD.HCI.HLOS,Japan,JPN,563,563.3580933,..,537.7234497
+Harmonized Test Scores,HD.HCI.HLOS,Jordan,JOR,409,409.4257202,..,429.954071
+Harmonized Test Scores,HD.HCI.HLOS,Kazakhstan,KAZ,537,537.3193359,..,416.1546326
+Harmonized Test Scores,HD.HCI.HLOS,Kenya,KEN,455,454.9584045,..,454.9584045
+Harmonized Test Scores,HD.HCI.HLOS,Kiribati,KIR,383,383.0861206,..,411.4844971
+Harmonized Test Scores,HD.HCI.HLOS,"Korea, Dem. People's Rep.",PRK,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,"Korea, Rep.",KOR,563,563.1258545,..,537.2097168
+Harmonized Test Scores,HD.HCI.HLOS,Kosovo,XKX,375,374.7974243,..,373.5487671
+Harmonized Test Scores,HD.HCI.HLOS,Kuwait,KWT,383,383.4022217,..,383.4022217
+Harmonized Test Scores,HD.HCI.HLOS,Kyrgyz Republic,KGZ,420,420.0865173,..,420.0865173
+Harmonized Test Scores,HD.HCI.HLOS,Lao PDR,LAO,368,368.1420898,..,368.1420898
+Harmonized Test Scores,HD.HCI.HLOS,Latvia,LVA,530,530.4233398,..,503.8697815
+Harmonized Test Scores,HD.HCI.HLOS,Lebanon,LBN,405,404.9303284,..,389.8890381
+Harmonized Test Scores,HD.HCI.HLOS,Lesotho,LSO,393,392.9119873,..,392.9119873
+Harmonized Test Scores,HD.HCI.HLOS,Liberia,LBR,332,331.7459412,..,331.7459412
+Harmonized Test Scores,HD.HCI.HLOS,Libya,LBY,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Liechtenstein,LIE,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Lithuania,LTU,514,513.6164551,..,495.8862915
+Harmonized Test Scores,HD.HCI.HLOS,Luxembourg,LUX,500,499.6028442,..,492.8478394
+Harmonized Test Scores,HD.HCI.HLOS,"Macao SAR, China",MAC,545,545.3005371,..,560.6135254
+Harmonized Test Scores,HD.HCI.HLOS,Madagascar,MDG,351,350.7733154,..,350.7733154
+Harmonized Test Scores,HD.HCI.HLOS,Malawi,MWI,359,359.4840698,..,359.4840698
+Harmonized Test Scores,HD.HCI.HLOS,Malaysia,MYS,468,468.067627,..,445.6753235
+Harmonized Test Scores,HD.HCI.HLOS,Maldives,MDV,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Mali,MLI,307,307.3649597,..,307.3649597
+Harmonized Test Scores,HD.HCI.HLOS,Malta,MLT,474,474.4675293,..,474.4349976
+Harmonized Test Scores,HD.HCI.HLOS,Marshall Islands,MHL,..,332.3353577,..,375.0296936
+Harmonized Test Scores,HD.HCI.HLOS,Mauritania,MRT,342,342.0935669,..,342.0935669
+Harmonized Test Scores,HD.HCI.HLOS,Mauritius,MUS,473,472.7672119,..,472.7672119
+Harmonized Test Scores,HD.HCI.HLOS,Mexico,MEX,430,429.504303,..,430.0651245
+Harmonized Test Scores,HD.HCI.HLOS,"Micronesia, Fed. Sts.",FSM,..,327.9390564,..,379.9025879
+Harmonized Test Scores,HD.HCI.HLOS,Moldova,MDA,436,435.5331726,..,438.6209412
+Harmonized Test Scores,HD.HCI.HLOS,Monaco,MCO,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Mongolia,MNG,435,434.6186829,..,434.6186829
+Harmonized Test Scores,HD.HCI.HLOS,Montenegro,MNE,433,432.6343384,..,436.1297302
+Harmonized Test Scores,HD.HCI.HLOS,Morocco,MAR,367,367.3240967,..,380.4052124
+Harmonized Test Scores,HD.HCI.HLOS,Mozambique,MOZ,368,368.2435913,..,368.2435913
+Harmonized Test Scores,HD.HCI.HLOS,Myanmar,MMR,425,424.6312866,..,424.6312866
+Harmonized Test Scores,HD.HCI.HLOS,Namibia,NAM,407,406.6618652,..,406.6618652
+Harmonized Test Scores,HD.HCI.HLOS,Nauru,NRU,..,..,..,346.6296692
+Harmonized Test Scores,HD.HCI.HLOS,Nepal,NPL,369,368.5575867,..,368.5575867
+Harmonized Test Scores,HD.HCI.HLOS,Netherlands,NLD,530,529.6234131,..,519.6346436
+Harmonized Test Scores,HD.HCI.HLOS,New Caledonia,NCL,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,New Zealand,NZL,517,517.161438,..,519.7484131
+Harmonized Test Scores,HD.HCI.HLOS,Nicaragua,NIC,392,391.990448,..,391.990448
+Harmonized Test Scores,HD.HCI.HLOS,Niger,NER,305,304.9222412,..,304.9222412
+Harmonized Test Scores,HD.HCI.HLOS,Nigeria,NGA,325,309.0249634,..,309.0249634
+Harmonized Test Scores,HD.HCI.HLOS,North Macedonia,MKD,382,381.5929565,..,413.6173096
+Harmonized Test Scores,HD.HCI.HLOS,Northern Mariana Islands,MNP,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Norway,NOR,512,512.4741211,..,513.5878296
+Harmonized Test Scores,HD.HCI.HLOS,Oman,OMN,424,423.5134277,..,423.5134277
+Harmonized Test Scores,HD.HCI.HLOS,Pakistan,PAK,339,338.6565552,..,338.6565552
+Harmonized Test Scores,HD.HCI.HLOS,Palau,PLW,..,439.615387,..,463.2114563
+Harmonized Test Scores,HD.HCI.HLOS,Panama,PAN,396,396.1061401,..,376.8646851
+Harmonized Test Scores,HD.HCI.HLOS,Papua New Guinea,PNG,358,357.8036194,..,363.3206177
+Harmonized Test Scores,HD.HCI.HLOS,Paraguay,PRY,386,385.544281,..,385.544281
+Harmonized Test Scores,HD.HCI.HLOS,Peru,PER,407,406.7502441,..,415.0254211
+Harmonized Test Scores,HD.HCI.HLOS,Philippines,PHL,409,408.9212646,..,361.6459961
+Harmonized Test Scores,HD.HCI.HLOS,Poland,POL,537,536.7810669,..,530.0858154
+Harmonized Test Scores,HD.HCI.HLOS,Portugal,PRT,520,519.9185791,..,508.5148926
+Harmonized Test Scores,HD.HCI.HLOS,Puerto Rico,PRI,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Qatar,QAT,432,431.6531372,..,427.4778442
+Harmonized Test Scores,HD.HCI.HLOS,Romania,ROU,452,452.2410278,..,442.1617432
+Harmonized Test Scores,HD.HCI.HLOS,Russian Federation,RUS,538,537.6397095,..,497.5462341
+Harmonized Test Scores,HD.HCI.HLOS,Rwanda,RWA,358,358.0839844,..,358.0839844
+Harmonized Test Scores,HD.HCI.HLOS,Samoa,WSM,..,341.3546143,..,369.9078979
+Harmonized Test Scores,HD.HCI.HLOS,San Marino,SMR,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Sao Tome and Principe,STP,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Saudi Arabia,SAU,407,407.394104,..,398.9689331
+Harmonized Test Scores,HD.HCI.HLOS,Senegal,SEN,412,412.4538574,..,412.4538574
+Harmonized Test Scores,HD.HCI.HLOS,Serbia,SRB,521,521.2537231,..,457.4534912
+Harmonized Test Scores,HD.HCI.HLOS,Seychelles,SYC,463,463.3793335,..,463.3793335
+Harmonized Test Scores,HD.HCI.HLOS,Sierra Leone,SLE,316,315.875946,..,315.875946
+Harmonized Test Scores,HD.HCI.HLOS,Singapore,SGP,581,580.8654785,..,575.2721558
+Harmonized Test Scores,HD.HCI.HLOS,Sint Maarten (Dutch part),SXM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Slovak Republic,SVK,500,500.317627,..,485.3500061
+Harmonized Test Scores,HD.HCI.HLOS,Slovenia,SVN,532,531.9897461,..,520.809021
+Harmonized Test Scores,HD.HCI.HLOS,Solomon Islands,SLB,362,362.1949463,..,350.5186157
+Harmonized Test Scores,HD.HCI.HLOS,Somalia,SOM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,South Africa,ZAF,343,342.7639771,..,342.7639771
+Harmonized Test Scores,HD.HCI.HLOS,South Sudan,SSD,336,335.5874329,..,335.5874329
+Harmonized Test Scores,HD.HCI.HLOS,Spain,ESP,514,513.7651367,..,506.6211853
+Harmonized Test Scores,HD.HCI.HLOS,Sri Lanka,LKA,400,400,..,400
+Harmonized Test Scores,HD.HCI.HLOS,St. Kitts and Nevis,KNA,..,395.0333557,..,409.0744629
+Harmonized Test Scores,HD.HCI.HLOS,St. Lucia,LCA,..,404.5244446,..,417.7606506
+Harmonized Test Scores,HD.HCI.HLOS,St. Martin (French part),MAF,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,St. Vincent and the Grenadines,VCT,..,386.3221741,..,391.3927002
+Harmonized Test Scores,HD.HCI.HLOS,Sudan,SDN,380,379.633667,..,379.633667
+Harmonized Test Scores,HD.HCI.HLOS,Suriname,SUR,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Sweden,SWE,525,525.1103516,..,519.3617554
+Harmonized Test Scores,HD.HCI.HLOS,Switzerland,CHE,524,523.5562744,..,515.1390381
+Harmonized Test Scores,HD.HCI.HLOS,Syrian Arab Republic,SYR,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Tajikistan,TJK,444,444.4423523,..,390.5655518
+Harmonized Test Scores,HD.HCI.HLOS,Tanzania,TZA,388,388.4801636,..,388.4801636
+Harmonized Test Scores,HD.HCI.HLOS,Thailand,THA,436,436.4974976,..,426.5999756
+Harmonized Test Scores,HD.HCI.HLOS,Timor-Leste,TLS,371,371.4412537,..,371.4412537
+Harmonized Test Scores,HD.HCI.HLOS,Togo,TGO,384,383.717804,..,383.717804
+Harmonized Test Scores,HD.HCI.HLOS,Tonga,TON,376,370.0202942,..,385.9567871
+Harmonized Test Scores,HD.HCI.HLOS,Trinidad and Tobago,TTO,458,458.2889404,..,458.2889404
+Harmonized Test Scores,HD.HCI.HLOS,Tunisia,TUN,384,384.0787354,..,384.0787354
+Harmonized Test Scores,HD.HCI.HLOS,Turkey,TUR,459,459.1798096,..,477.9626465
+Harmonized Test Scores,HD.HCI.HLOS,Turkmenistan,TKM,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Turks and Caicos Islands,TCA,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Tuvalu,TUV,387,351.4472351,..,346.4979553
+Harmonized Test Scores,HD.HCI.HLOS,Uganda,UGA,397,397.159668,..,397.159668
+Harmonized Test Scores,HD.HCI.HLOS,Ukraine,UKR,490,490.0887451,..,478.1733398
+Harmonized Test Scores,HD.HCI.HLOS,United Arab Emirates,ARE,451,451.3416138,..,448.0406799
+Harmonized Test Scores,HD.HCI.HLOS,United Kingdom,GBR,517,516.7156372,..,520.3564453
+Harmonized Test Scores,HD.HCI.HLOS,United States,USA,523,522.6086426,..,511.7986755
+Harmonized Test Scores,HD.HCI.HLOS,Uruguay,URY,444,444.3097229,..,437.6966248
+Harmonized Test Scores,HD.HCI.HLOS,Uzbekistan,UZB,..,..,..,474.0751343
+Harmonized Test Scores,HD.HCI.HLOS,Vanuatu,VUT,356,331.9752502,..,347.6858215
+Harmonized Test Scores,HD.HCI.HLOS,"Venezuela, RB",VEN,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Vietnam,VNM,519,519.1002808,..,519.1002808
+Harmonized Test Scores,HD.HCI.HLOS,Virgin Islands (U.S.),VIR,..,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,West Bank and Gaza,PSE,412,412.317749,..,412.317749
+Harmonized Test Scores,HD.HCI.HLOS,"Yemen, Rep.",YEM,321,321.3270264,..,321.3270264
+Harmonized Test Scores,HD.HCI.HLOS,Zambia,ZMB,358,358.1404419,..,358.1404419
+Harmonized Test Scores,HD.HCI.HLOS,Zimbabwe,ZWE,396,396.1388245,..,396.1388245
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Afghanistan,AFG,358,357.7947388,..,357.7947388
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Albania,ALB,414,413.5842896,..,424.344635
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Algeria,DZA,366,365.7583618,..,365.7583618
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,American Samoa,ASM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Andorra,AND,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Angola,AGO,327,326.8101501,..,326.8101501
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Antigua and Barbuda,ATG,..,389.0388489,..,396.8749084
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Argentina,ARG,427,427.1090393,..,409.9423828
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Armenia,ARM,439,438.5485229,..,438.5485229
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Aruba,ABW,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Australia,AUS,520,520.1119385,..,511.851532
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Austria,AUT,526,525.7001343,..,505.7073669
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Azerbaijan,AZE,466,466.0608521,..,412.3319702
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Bahamas, The",BHS,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bahrain,BHR,434,433.5432129,..,433.5432129
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bangladesh,BGD,367,366.714325,..,366.714325
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Barbados,BRB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belarus,BLR,..,..,..,486.0481262
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belgium,BEL,521,521.3059082,..,516.1454468
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belize,BLZ,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Benin,BEN,384,384.0949707,..,384.0949707
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bermuda,BMU,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bhutan,BTN,..,..,..,389.1724854
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bolivia,BOL,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bosnia and Herzegovina,BIH,461,461.2832336,..,411.6533203
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Botswana,BWA,381,380.8065491,..,380.8065491
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Brazil,BRA,408,407.6626892,..,410.1988831
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,British Virgin Islands,VGB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Brunei Darussalam,BRN,..,..,..,430.0654297
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bulgaria,BGR,490,489.7230835,..,432.0115662
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Burkina Faso,BFA,407,407.0654297,..,407.0654297
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Burundi,BDI,415,414.9550476,..,414.9550476
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cabo Verde,CPV,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cambodia,KHM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cameroon,CMR,376,375.5628662,..,375.5628662
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Canada,CAN,535,534.5358887,..,529.5247803
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cayman Islands,CYM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Central African Republic,CAF,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Chad,TCD,338,338.2959595,..,338.2959595
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Channel Islands,CHI,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Chile,CHL,467,466.8792114,..,450.8530884
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,China,CHN,456,441,..,441
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Colombia,COL,425,424.7273254,..,422.9562988
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Comoros,COM,400,399.8339844,..,399.8339844
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Congo, Dem. Rep.",COD,320,311.8802185,..,311.8802185
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Congo, Rep.",COG,372,371.7765503,..,371.7765503
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Costa Rica,CRI,433,433.0547485,..,430.9234314
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cote d'Ivoire,CIV,375,374.9365234,..,374.9365234
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Croatia,HRV,506,505.6651306,..,482.8865662
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cuba,CUB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Curacao,CUW,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Cyprus,CYP,504,503.8149719,..,503.8149719
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Czech Republic,CZE,521,521.1974487,..,507.1329956
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Denmark,DNK,529,529.1731567,..,513.2960205
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Djibouti,DJI,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Dominica,DMA,..,404.5577087,..,393.3358154
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Dominican Republic,DOM,344,344.462738,..,337.7883911
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ecuador,ECU,419,418.8943176,..,418.8943176
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Egypt, Arab Rep.",EGY,344,343.7782593,..,343.7782593
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,El Salvador,SLV,370,438.0723572,..,432.9086914
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Equatorial Guinea,GNQ,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Eritrea,ERI,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Estonia,EST,539,538.8894653,..,538.7080078
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Eswatini,SWZ,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ethiopia,ETH,363,362.9316406,..,351.8259277
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Faroe Islands,FRO,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Fiji,FJI,..,..,..,367.8787842
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Finland,FIN,538,537.7814941,..,520.1315918
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,France,FRA,504,503.5499268,..,507.0996704
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,French Polynesia,PYF,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Gabon,GAB,458,457.9222412,..,457.9222412
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Gambia, The",GMB,336,352.124939,..,352.124939
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Georgia,GEO,435,435.1738281,..,390.6624756
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Germany,DEU,528,527.7023926,..,514.258667
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ghana,GHA,308,308.3993225,..,308.3993225
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Gibraltar,GIB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Greece,GRC,466,466.3233032,..,459.8172302
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Greenland,GRL,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Grenada,GRD,..,380.1853027,..,380.2361145
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guam,GUM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guatemala,GTM,402,402.3792114,..,402.3792114
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guinea,GIN,417,416.8667908,..,416.8667908
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guinea-Bissau,GNB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Guyana,GUY,338,337.770813,..,337.770813
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Haiti,HTI,337,333.4346008,..,333.4346008
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Honduras,HND,401,400.6841431,..,400.6841431
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Hong Kong SAR, China",HKG,560,559.6069946,..,540.5510864
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Hungary,HUN,514,514.3198242,..,493.6636353
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Iceland,ISL,489,489.1919861,..,487.6502075
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,India,IND,347,399,..,399
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Indonesia,IDN,398,398.2272949,..,387.6659546
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Iran, Islamic Rep.",IRN,420,419.6252136,..,419.6252136
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Iraq,IRQ,353,353.0837708,..,353.0837708
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ireland,IRL,538,537.9285889,..,518.220459
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Isle of Man,IMN,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Israel,ISR,501,500.7711487,..,467.0482178
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Italy,ITA,516,516.0928955,..,492.1820984
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Jamaica,JAM,372,371.9668884,..,371.9668884
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Japan,JPN,565,564.6515503,..,536.550293
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Jordan,JOR,391,391.1554871,..,414.961731
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kazakhstan,KAZ,533,533.3169556,..,410.7625122
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kenya,KEN,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kiribati,KIR,372,371.5993652,..,396.0749817
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Korea, Dem. People's Rep.",PRK,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Korea, Rep.",KOR,560,559.9121094,..,534.8189697
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kosovo,XKX,369,368.9067688,..,369.1021729
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kuwait,KWT,369,368.7728271,..,368.7728271
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Kyrgyz Republic,KGZ,414,414.4076233,..,414.4076233
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lao PDR,LAO,363,362.5689087,..,362.5689087
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Latvia,LVA,522,521.5270386,..,498.0272827
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lebanon,LBN,405,404.8486938,..,384.041687
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lesotho,LSO,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Liberia,LBR,335,335.3847351,..,335.3847351
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Libya,LBY,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Liechtenstein,LIE,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Lithuania,LTU,507,506.9926453,..,488.116394
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Luxembourg,LUX,499,499.3682251,..,488.540741
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Macao SAR, China",MAC,541,541.062561,..,557.322937
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Madagascar,MDG,350,349.6518555,..,349.6518555
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malawi,MWI,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malaysia,MYS,463,463.2440796,..,438.8643494
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Maldives,MDV,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mali,MLI,307,307.3067322,..,307.3067322
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Malta,MLT,467,466.5861511,..,461.0299377
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Marshall Islands,MHL,..,323.5498352,..,368.206665
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mauritania,MRT,340,340.4776917,..,340.4776917
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mauritius,MUS,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mexico,MEX,430,429.5965881,..,431.9877014
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Micronesia, Fed. Sts.",FSM,..,317.2005005,..,370.8382263
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Moldova,MDA,425,425.4381409,..,429.9052734
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Monaco,MCO,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mongolia,MNG,435,434.9142456,..,434.9142456
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Montenegro,MNE,426,426.355072,..,431.927887
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Morocco,MAR,359,359.3378906,..,374.9187012
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Mozambique,MOZ,365,365.1433105,..,365.1433105
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Myanmar,MMR,418,418.2120972,..,418.2120972
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Namibia,NAM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nauru,NRU,..,..,..,319.8755188
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nepal,NPL,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Netherlands,NLD,527,527.3616943,..,513.6401367
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,New Caledonia,NCL,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,New Zealand,NZL,513,512.7993774,..,516.809082
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nicaragua,NIC,392,391.8805847,..,391.8805847
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Niger,NER,307,307.0905151,..,307.0905151
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Nigeria,NGA,329,309.5513306,..,309.5513306
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,North Macedonia,MKD,370,369.9472961,..,401.0678406
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Northern Mariana Islands,MNP,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Norway,NOR,507,507.1495972,..,502.7848511
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Oman,OMN,404,403.9751587,..,403.9751587
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Pakistan,PAK,335,334.589386,..,334.589386
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Palau,PLW,..,426.0149231,..,447.7826843
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Panama,PAN,400,400.0605469,..,375.8752747
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Papua New Guinea,PNG,355,355.3710938,..,359.1444092
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Paraguay,PRY,388,388.3286438,..,388.3286438
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Peru,PER,409,408.8549805,..,418.3853149
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Philippines,PHL,400,399.6191406,..,354.1044312
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Poland,POL,534,533.6831665,..,524.8143921
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Portugal,PRT,521,521.1956787,..,506.9641724
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Puerto Rico,PRI,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Qatar,QAT,418,417.8609619,..,405.8242188
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Romania,ROU,448,448.3396912,..,437.4741821
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Russian Federation,RUS,535,534.9584961,..,494.0293579
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Rwanda,RWA,351,351.3924866,..,351.3924866
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Samoa,WSM,..,330.4725037,..,354.3607788
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,San Marino,SMR,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sao Tome and Principe,STP,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Saudi Arabia,SAU,380,379.7403564,..,383.1060181
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Senegal,SEN,417,417.1992188,..,417.1992188
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Serbia,SRB,520,519.8110352,..,451.1727905
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Seychelles,SYC,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sierra Leone,SLE,318,317.8432007,..,317.8432007
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Singapore,SGP,577,577.2592773,..,572.7935791
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sint Maarten (Dutch part),SXM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Slovak Republic,SVK,498,497.8988037,..,479.3838806
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Slovenia,SVN,526,526.3240356,..,512.4590454
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Solomon Islands,SLB,351,351.3658752,..,339.3473816
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Somalia,SOM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,South Africa,ZAF,328,327.7851868,..,327.7851868
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,South Sudan,SSD,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Spain,ESP,514,514.1120605,..,508.9121094
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sri Lanka,LKA,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,St. Kitts and Nevis,KNA,..,386.4541321,..,403.5119324
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,St. Lucia,LCA,..,393.3802185,..,409.2669067
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,St. Martin (French part),MAF,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,St. Vincent and the Grenadines,VCT,..,378.8331299,..,385.7758484
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sudan,SDN,371,371.2857056,..,371.2857056
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Suriname,SUR,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Sweden,SWE,519,519.3547363,..,512.0943604
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Switzerland,CHE,523,522.5650635,..,511.4260864
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Syrian Arab Republic,SYR,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tajikistan,TJK,441,440.9378357,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tanzania,TZA,382,381.863678,..,381.863678
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Thailand,THA,427,427.3915405,..,413.0079346
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Timor-Leste,TLS,366,365.5281067,..,365.5281067
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Togo,TGO,384,384.239563,..,384.239563
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tonga,TON,366,354.6081543,..,374.7849731
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Trinidad and Tobago,TTO,445,444.8232422,..,444.8232422
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tunisia,TUN,381,381.4621277,..,381.4621277
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Turkey,TUR,455,455.3063965,..,473.3563843
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Turkmenistan,TKM,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Turks and Caicos Islands,TCA,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Tuvalu,TUV,381,338.801239,..,332.2262878
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Uganda,UGA,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Ukraine,UKR,492,491.946228,..,474.3380737
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United Arab Emirates,ARE,439,438.7260742,..,432.2431335
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United Kingdom,GBR,515,515.2550049,..,519.5404663
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,United States,USA,522,521.8433838,..,509.5594482
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Uruguay,URY,444,444.2828674,..,435.8312073
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Uzbekistan,UZB,..,..,..,474.5487671
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Vanuatu,VUT,351,323.6277161,..,340.0162964
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Venezuela, RB",VEN,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Vietnam,VNM,514,513.8037109,..,513.8037109
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Virgin Islands (U.S.),VIR,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,West Bank and Gaza,PSE,399,399.372406,..,399.372406
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Yemen, Rep.",YEM,321,320.7136841,..,320.7136841
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Zambia,ZMB,..,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Zimbabwe,ZWE,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Afghanistan,AFG,350,350.1461487,..,350.1461487
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Albania,ALB,445,445.0104065,..,444.3222656
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Algeria,DZA,383,383.3707581,..,383.3707581
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,American Samoa,ASM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Andorra,AND,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Angola,AGO,325,324.9247131,..,324.9247131
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Antigua and Barbuda,ATG,..,403.0300903,..,417.3804932
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Argentina,ARG,421,420.9333496,..,406.4526672
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Armenia,ARM,448,447.720459,..,447.720459
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Aruba,ABW,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Australia,AUS,528,528.434082,..,519.6480713
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Austria,AUT,524,524.0130005,..,509.6305542
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Azerbaijan,AZE,479,479.3009338,..,419.9551086
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Bahamas, The",BHS,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bahrain,BHR,470,470.2436523,..,470.2436523
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bangladesh,BGD,370,369.8027954,..,369.8027954
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Barbados,BRB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belarus,BLR,..,..,..,490.4130554
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belgium,BEL,518,517.5237427,..,517.4660645
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belize,BLZ,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Benin,BEN,384,383.7683716,..,383.7683716
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bermuda,BMU,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bhutan,BTN,..,..,..,370.2079773
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bolivia,BOL,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bosnia and Herzegovina,BIH,460,460.3023071,..,420.841095
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Botswana,BWA,401,401.3695984,..,401.3695984
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Brazil,BRA,409,408.5113831,..,416.2886047
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,British Virgin Islands,VGB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Brunei Darussalam,BRN,..,..,..,445.1125793
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bulgaria,BGR,506,506.1734009,..,451.3691711
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Burkina Faso,BFA,400,400.3675537,..,400.3675537
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Burundi,BDI,432,432.2043762,..,432.2043762
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cabo Verde,CPV,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cambodia,KHM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cameroon,CMR,383,382.7994995,..,382.7994995
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Canada,CAN,539,539.0578613,..,538.5418701
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cayman Islands,CYM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Central African Republic,CAF,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Chad,TCD,323,323.3292542,..,323.3292542
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Channel Islands,CHI,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Chile,CHL,465,464.6570435,..,453.6184082
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,China,CHN,456,441,..,441
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Colombia,COL,423,422.6323242,..,415.2518311
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Comoros,COM,387,386.857666,..,386.857666
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Congo, Dem. Rep.",COD,316,308.4146118,..,308.4146118
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Congo, Rep.",COG,369,369.4405823,..,369.4405823
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Costa Rica,CRI,426,426.1654358,..,426.2440186
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cote d'Ivoire,CIV,371,371.2103882,..,371.2103882
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Croatia,HRV,503,503.3066406,..,492.2142334
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cuba,CUB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Curacao,CUW,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Cyprus,CYP,500,500.453949,..,500.453949
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Czech Republic,CZE,524,523.5154419,..,517.5387573
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Denmark,DNK,532,532.2062988,..,522.4678955
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Djibouti,DJI,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Dominica,DMA,..,419.8184509,..,416.0996094
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Dominican Republic,DOM,356,355.5447998,..,352.5970459
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ecuador,ECU,421,421.2407837,..,421.2407837
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Egypt, Arab Rep.",EGY,368,368.0671997,..,368.0671997
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,El Salvador,SLV,354,439.3007813,..,439.1496887
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Equatorial Guinea,GNQ,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Eritrea,ERI,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Estonia,EST,545,545.2114868,..,547.7084961
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Eswatini,SWZ,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ethiopia,ETH,356,355.7655029,..,344.4136963
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Faroe Islands,FRO,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Fiji,FJI,..,..,..,399.8179626
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Finland,FIN,558,558.2585449,..,547.8078613
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,France,FRA,508,508.2247925,..,513.5078125
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,French Polynesia,PYF,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Gabon,GAB,454,454.4380493,..,454.4380493
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Gambia, The",GMB,340,353.5550232,..,353.5550232
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Georgia,GEO,455,455.2915344,..,409.6955566
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Germany,DEU,529,528.5886841,..,520.7980957
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ghana,GHA,306,306.1173096,..,306.1173096
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Gibraltar,GIB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Greece,GRC,482,481.8164368,..,477.7095642
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Greenland,GRL,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Grenada,GRD,..,394.2234192,..,408.973877
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guam,GUM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guatemala,GTM,408,408.1192932,..,408.1192932
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guinea,GIN,397,397.3538818,..,397.3538818
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guinea-Bissau,GNB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Guyana,GUY,356,356.2154541,..,356.2154541
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Haiti,HTI,355,342.330658,..,342.330658
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Honduras,HND,399,398.8105469,..,398.8105469
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Hong Kong SAR, China",HKG,564,564.1342773,..,557.156311
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Hungary,HUN,517,517.2677002,..,497.2653198
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Iceland,ISL,504,504.4917297,..,507.5847778
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,India,IND,362,399,..,399
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Indonesia,IDN,408,407.7769775,..,401.9364624
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Iran, Islamic Rep.",IRN,446,446.2572937,..,446.2572937
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Iraq,IRQ,377,376.7118225,..,376.7118225
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ireland,IRL,537,537.4331055,..,524.4013062
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Isle of Man,IMN,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Israel,ISR,506,506.1626587,..,493.0715637
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Italy,ITA,511,511.3209229,..,493.8516235
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Jamaica,JAM,404,403.7667847,..,403.7667847
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Japan,JPN,562,562.0338135,..,538.8413086
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Jordan,JOR,428,427.5616455,..,444.4230957
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kazakhstan,KAZ,542,541.5197754,..,421.8588257
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kenya,KEN,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kiribati,KIR,394,394.4172363,..,426.3183594
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Korea, Dem. People's Rep.",PRK,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Korea, Rep.",KOR,567,566.6578369,..,539.8439331
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kosovo,XKX,381,380.8766785,..,377.9941406
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kuwait,KWT,398,397.5344238,..,397.5344238
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Kyrgyz Republic,KGZ,426,426.216217,..,426.216217
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lao PDR,LAO,374,373.618042,..,373.618042
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Latvia,LVA,539,539.149231,..,509.5335999
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lebanon,LBN,405,405.0064087,..,394.9086304
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lesotho,LSO,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Liberia,LBR,328,327.6463623,..,327.6463623
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Libya,LBY,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Liechtenstein,LIE,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Lithuania,LTU,520,520.3370972,..,504.0040588
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Luxembourg,LUX,500,499.8342285,..,497.2763062
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Macao SAR, China",MAC,550,549.5775146,..,563.9934692
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Madagascar,MDG,352,351.7545776,..,351.7545776
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malawi,MWI,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malaysia,MYS,473,472.9451294,..,452.1435242
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Maldives,MDV,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mali,MLI,307,307.4287415,..,307.4287415
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Malta,MLT,483,482.7182922,..,489.0462952
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Marshall Islands,MHL,..,341.0513611,..,382.6455078
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mauritania,MRT,343,343.3378601,..,343.3378601
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mauritius,MUS,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mexico,MEX,429,429.4093933,..,428.2935486
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Micronesia, Fed. Sts.",FSM,..,338.0918579,..,394.9458008
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Moldova,MDA,446,445.7139893,..,447.8305054
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Monaco,MCO,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mongolia,MNG,434,434.4581604,..,434.4581604
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Montenegro,MNE,439,439.2023926,..,440.7054749
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Morocco,MAR,376,375.7044678,..,386.4127502
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Mozambique,MOZ,371,370.8493042,..,370.8493042
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Myanmar,MMR,431,431.4023132,..,431.4023132
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Namibia,NAM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nauru,NRU,..,..,..,367.85849
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nepal,NPL,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Netherlands,NLD,532,531.8356934,..,525.6600342
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,New Caledonia,NCL,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,New Zealand,NZL,522,521.5130615,..,522.734436
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nicaragua,NIC,392,392.0843811,..,392.0843811
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Niger,NER,302,302.0892944,..,302.0892944
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Nigeria,NGA,321,308.4080811,..,308.4080811
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,North Macedonia,MKD,395,394.5806274,..,427.4854126
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Northern Mariana Islands,MNP,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Norway,NOR,518,517.930542,..,524.6289063
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Oman,OMN,444,443.5085754,..,443.5085754
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Pakistan,PAK,343,342.9056091,..,342.9056091
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Palau,PLW,..,454.9745178,..,477.7051697
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Panama,PAN,392,392.0277405,..,377.8391113
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Papua New Guinea,PNG,360,360.3070679,..,366.5190125
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Paraguay,PRY,383,382.8266602,..,382.8266602
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Peru,PER,405,404.6252441,..,411.5269165
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Philippines,PHL,418,418.2234192,..,368.3229675
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Poland,POL,540,539.9454346,..,535.3515625
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Portugal,PRT,519,518.5947266,..,510.1110535
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Puerto Rico,PRI,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Qatar,QAT,446,445.697876,..,449.7692566
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Romania,ROU,456,456.1056519,..,447.1408691
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Russian Federation,RUS,540,540.3207397,..,501.0059814
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Rwanda,RWA,365,365.0963135,..,365.0963135
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Samoa,WSM,..,352.3805237,..,387.229187
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,San Marino,SMR,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sao Tome and Principe,STP,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Saudi Arabia,SAU,436,436.3753052,..,415.8609619
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Senegal,SEN,408,408.2084045,..,408.2084045
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Serbia,SRB,523,522.7885742,..,463.9771118
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Seychelles,SYC,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sierra Leone,SLE,314,313.9417725,..,313.9417725
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Singapore,SGP,585,584.62677,..,577.848877
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sint Maarten (Dutch part),SXM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Slovak Republic,SVK,503,502.864563,..,491.2347107
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Slovenia,SVN,538,537.9299316,..,529.5725098
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Solomon Islands,SLB,373,373.0800781,..,363.0516663
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Somalia,SOM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,South Africa,ZAF,359,358.7709351,..,358.7709351
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,South Sudan,SSD,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Spain,ESP,513,513.4147339,..,504.271698
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sri Lanka,LKA,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,St. Kitts and Nevis,KNA,..,402.9366455,..,415.2475586
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,St. Lucia,LCA,..,415.4060974,..,426.0979919
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,St. Martin (French part),MAF,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,St. Vincent and the Grenadines,VCT,..,393.5921936,..,396.7874451
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sudan,SDN,389,389.3703918,..,389.3703918
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Suriname,SUR,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Sweden,SWE,531,531.1035156,..,526.6359253
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Switzerland,CHE,525,524.6339111,..,519.2683716
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Syrian Arab Republic,SYR,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tajikistan,TJK,448,448.0039063,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tanzania,TZA,395,394.8670654,..,394.8670654
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Thailand,THA,444,443.9415894,..,438.5606995
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Timor-Leste,TLS,378,377.7607727,..,377.7607727
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Togo,TGO,383,383.1079102,..,383.1079102
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tonga,TON,386,387.0483704,..,399.4349365
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Trinidad and Tobago,TTO,471,471.1539307,..,471.1539307
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tunisia,TUN,386,386.3384399,..,386.3384399
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Turkey,TUR,463,463.166626,..,482.6488037
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Turkmenistan,TKM,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Turks and Caicos Islands,TCA,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Tuvalu,TUV,392,362.9827881,..,361.2981567
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Uganda,UGA,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Ukraine,UKR,488,488.2571106,..,482.4337158
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United Arab Emirates,ARE,464,464.0154419,..,463.4134827
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United Kingdom,GBR,518,518.2227173,..,521.1264648
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,United States,USA,523,523.3952026,..,514.1365356
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Uruguay,URY,444,444.3341064,..,439.4090271
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Uzbekistan,UZB,..,..,..,473.5556641
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Vanuatu,VUT,360,340.7785645,..,355.6548767
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Venezuela, RB",VEN,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Vietnam,VNM,524,524.1538086,..,524.1538086
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Virgin Islands (U.S.),VIR,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,West Bank and Gaza,PSE,424,424.4718933,..,424.4718933
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Yemen, Rep.",YEM,322,322.1473999,..,322.1473999
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Zambia,ZMB,..,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Zimbabwe,ZWE,..,..,..,..
