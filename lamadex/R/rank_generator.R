@@ -6,14 +6,16 @@
 #' @export
 #' @examples
 
-rank_generator <- function(bygender = "Total", years = c(2010,2020), impute = FALSE) {
+rank_generator <- function(bygender = "Total", countries = "dev", years = c(2010,2020), impute = FALSE) {
   ## use the compute_indicators helper function to take raw data and calculate indicators as used in the index
   dfList <- compute_indicators()
-  data(country_list)
-  country_list$ref_area.label <- country_list$ref_area.label %>%
-    recode("Cote d'Ivoire" = "Côte d'Ivoire",
-           "Curacao" = "Curaçao")
 
+  if (countries == "all") {
+    country_list = countryLists[[9]][[1]]
+  }
+  else if (countries == "dev") {
+  country_list = countryLists[[3]][[1]]
+  }
 
   ## apply the filter_helper function to each indicator dataframe in dfList, then append the values to the chosen list of countries
   index <- lapply(dfList, filter_helper, bygender = bygender, years = years) %>%

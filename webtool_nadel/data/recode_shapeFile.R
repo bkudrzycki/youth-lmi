@@ -19,7 +19,7 @@ countries[["NAME"]]<-countries[["NAME"]] %>%
          "Macao" = "Macau, China",
          "Marshall Is." = "Marshall Islands",
          "Micronesia" = "Micronesia, Federated States of",
-         "N. Cyprus" = "Moldova, Republic of",
+         "Moldova" = "Moldova, Republic of",
          "North Korea" = "Korea, Democratic People's Republic of",
          "Palestine" = "Occupied Palestinian Territory",
          "Russia" = "Russian Federation",

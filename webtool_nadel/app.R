@@ -54,8 +54,8 @@ ui <- fluidPage(
                             fluidRow(
                               column(8,
                                      sliderInput("years", "Data range:",
-                                                 min = 2000, max = 2018,
-                                                 value = c(2010, 2018), sep = "", ticks = FALSE),
+                                                 min = 2000, max = 2020,
+                                                 value = c(2010, 2020), sep = "", ticks = FALSE),
                                      selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
                                      selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
                                      selectInput("gender", "Gender", c("Total", "Male", "Female")),
@@ -126,7 +126,7 @@ ui <- fluidPage(
 
 
 # Define server logic
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   # generate index according to user specification
   country_list <- reactive(
@@ -174,6 +174,12 @@ server <- function(input, output) {
                                  arith_score = mean(c(transdim,wcdim,educdim)),
                                  geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>%  # don't generate if missing dims
                           mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)))
+  
+  ## Last year cannot be earlier than 2018
+  observeEvent(input$years,{
+    lastyear <- c(min((input$years[1]), 2017), input$years[2])
+    updateSliderInput(session, "years", min = 2000, max = 2020, value = lastyear)
+  })
   
   observe({
     
