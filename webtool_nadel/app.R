@@ -129,7 +129,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # generate index according to user specification
-  countries <- reactive(
+  country_input <- reactive(
     if (input$subset == "All") {
       "all"
     }
@@ -138,9 +138,7 @@ server <- function(input, output, session) {
     }
   )
   
-  countries
-  
-  reactiveIndex <- reactive(rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
+  reactiveIndex <- reactive(rank_generator(bygender = input$gender, countries <- country_input(), years = input$years, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                                      wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -197,12 +195,14 @@ server <- function(input, output, session) {
                                  tot_ylili(),
                                  by.x = "NAME",
                                  by.y = "Country",
+                                 duplicateGeoms = TRUE,
                                  sort = FALSE))
     
     countries2 <- reactive(merge(countries,
                                  reactiveIndex(),
                                  by.x = "NAME",
                                  by.y = "Country",
+                                 duplicateGeoms = TRUE,
                                  sort = FALSE))
     
     table <- data.frame(a = 1:3, b= c("a", "b", "c"))
