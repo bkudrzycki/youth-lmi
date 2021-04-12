@@ -53,9 +53,9 @@ ui <- fluidPage(
                             titlePanel("Data Explorer"),
                             fluidRow(
                               column(8,
-                                     sliderInput("lastyear", "Last year:",
-                                                 min = 2000, max = 2017,
-                                                 value = 2010, sep = "", ticks = FALSE),
+                                     sliderInput("years", "Data range:",
+                                                 min = 2000, max = 2018,
+                                                 value = c(2010, 2018), sep = "", ticks = FALSE),
                                      selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
                                      selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
                                      selectInput("gender", "Gender", c("Total", "Male", "Female")),
@@ -138,7 +138,7 @@ server <- function(input, output) {
     }
   )
   
-  reactiveIndex <- reactive(rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
+  reactiveIndex <- reactive(rank_generator(bygender = input$gender, years = input$years, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                                      wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -165,7 +165,7 @@ server <- function(input, output) {
                               )
                             )
                             
-  tot_ylili <- reactive(rank_generator(bygender = "Total", lastyear = input$lastyear, impute = input$impute) %>% 
+  tot_ylili <- reactive(rank_generator(bygender = "Total", years = input$years, impute = input$impute) %>% 
                           rowwise() %>%
                           rename("Country" = "country") %>% 
                           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
@@ -417,7 +417,7 @@ server <- function(input, output) {
   #generate data
   data_list <- reactive({
     list(
-      total = rank_generator(bygender = input$gender, lastyear = input$lastyear, impute = input$impute) %>% 
+      total = rank_generator(bygender = input$gender, years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -443,7 +443,7 @@ server <- function(input, output) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      male = rank_generator(bygender = "Male", lastyear = input$lastyear, impute = input$impute) %>% 
+      male = rank_generator(bygender = "Male", years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -469,7 +469,7 @@ server <- function(input, output) {
           "Harmonized tests score" = test_scores
         ) %>% 
         arrange(desc(`YLILI score`)),
-      female = rank_generator(bygender = "Female", lastyear = input$lastyear, impute = input$impute) %>% 
+      female = rank_generator(bygender = "Female", years = input$years, impute = input$impute) %>% 
         rowwise() %>%
         mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),

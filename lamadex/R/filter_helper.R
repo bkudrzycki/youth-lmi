@@ -4,15 +4,15 @@
 #' @title filter_helper
 #' @keywords filter helper
 #' @export
-#' @examples index <- filter_helper(neet, bygender = TRUE, lastyear= 2009)
+#' @examples index <- filter_helper(neet, bygender = TRUE, years = c(2010,2020))
 
-filter_helper <- function(df, bygender, lastyear) {
+filter_helper <- function(df, bygender, years) {
   varname <- deparse(substitute(df)) ## save name of input dataframe as string
   df$sex.label <- substring(df$sex.label,6) ## remove prefix from Sex: Total, Sex: Male and Sex: Female labels
 
     df <- as_tibble(df) %>%
       filter(sex.label == bygender,
-             time >= lastyear,
+             between(time, years[1], years[2]),
              !is.na(obs_value)) %>%
       group_by(ref_area.label) %>%
       top_n(1, time) %>% ## include only a single observation per country per year
