@@ -25,9 +25,9 @@ rank <- rank_generator(bygender = "Total", countries = "dev",  years = c(2010, 2
 new_trans <- function (x, i) {
   varname <- paste0("no_", i)
   x %>% select(-i) %>%
-    mutate(transition_mean = ifelse(rowSums(is.na(.[2:3]))<2, rowMeans(.[2:3], na.rm = TRUE),NA)) %>%
-    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[4:7]))<3, rowMeans(.[4:7], na.rm = TRUE),NA)) %>%
-    mutate(education_mean = ifelse(rowSums(is.na(.[8:10]))<2, rowMeans(.[8:10], na.rm = TRUE),NA)) %>% 
+    mutate(transition_mean = ifelse(rowSums(is.na(.[3:4]))<2, rowMeans(.[3:4], na.rm = TRUE),NA)) %>%
+    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[5:8]))<3, rowMeans(.[5:8], na.rm = TRUE),NA)) %>%
+    mutate(education_mean = ifelse(rowSums(is.na(.[9:11]))<2, rowMeans(.[9:11], na.rm = TRUE),NA)) %>% 
     mutate(!!varname := ifelse(rowSums(is.na(.[12:14]))==0, rowMeans(.[12:14], na.rm = TRUE),NA)) %>% 
     select(c(!!varname))
 }
@@ -39,9 +39,9 @@ df <- cbind(df, new_trans(rank, "mismatch"))
 new_wc <- function (x, i) {
   varname <- paste0("no_", i)
   x %>% select(-i) %>%
-    mutate(transition_mean = ifelse(rowSums(is.na(.[2:4]))<2, rowMeans(.[2:4], na.rm = TRUE),NA)) %>%
-    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[5:7]))<3, rowMeans(.[5:7], na.rm = TRUE),NA)) %>%
-    mutate(education_mean = ifelse(rowSums(is.na(.[8:10]))<2, rowMeans(.[8:10], na.rm = TRUE),NA)) %>% 
+    mutate(transition_mean = ifelse(rowSums(is.na(.[3:5]))<2, rowMeans(.[3:5], na.rm = TRUE),NA)) %>%
+    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[6:8]))<3, rowMeans(.[6:8], na.rm = TRUE),NA)) %>%
+    mutate(education_mean = ifelse(rowSums(is.na(.[9:11]))<2, rowMeans(.[9:11], na.rm = TRUE),NA)) %>% 
     mutate(!!varname := ifelse(rowSums(is.na(.[12:14]))==0, rowMeans(.[12:14], na.rm = TRUE),NA)) %>%
     select(c(!!varname))
 }
@@ -54,9 +54,9 @@ df <- cbind(df, new_trans(rank, "elementary"))
 new_educ <- function (x, i) {
   varname <- paste0("no_", i)
   x %>% select(-i) %>%
-    mutate(transition_mean = ifelse(rowSums(is.na(.[2:4]))<2, rowMeans(.[2:4], na.rm = TRUE),NA)) %>%
-    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[5:8]))<3, rowMeans(.[5:8], na.rm = TRUE),NA)) %>%
-    mutate(education_mean = ifelse(rowSums(is.na(.[9:10]))<2, rowMeans(.[9:10], na.rm = TRUE),NA)) %>% 
+    mutate(transition_mean = ifelse(rowSums(is.na(.[3:5]))<2, rowMeans(.[3:5], na.rm = TRUE),NA)) %>%
+    mutate(working_conditions_mean = ifelse(rowSums(is.na(.[6:9]))<3, rowMeans(.[6:9], na.rm = TRUE),NA)) %>%
+    mutate(education_mean = ifelse(rowSums(is.na(.[10:11]))<2, rowMeans(.[10:11], na.rm = TRUE),NA)) %>% 
     mutate(!!varname := ifelse(rowSums(is.na(.[12:14]))==0, rowMeans(.[12:14], na.rm = TRUE),NA)) %>% 
     select(c(!!varname))
 }
