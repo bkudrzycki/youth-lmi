@@ -14,13 +14,12 @@ rm(installed_packages, packages)
 
 ## load lamadex and list of country lists
 devtools::load_all(here("lamadex"))
-source(here("R", "countryList.R"))
 
-rank <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
-  arrange(desc(index_mean)) %>% filter(country %in% country_lists[[3]][[1]])
+rank <- rank_generator(bygender = "Total", countries = "dev", years = c(2010, 2020), impute = TRUE) %>%
+  arrange(desc(index_mean))
 
-all_countries <- country_lists[[9]] %>% 
-  mutate(inc_level = ifelse(ref_area.label %in% c(country_lists[[1]]$ref_area.label, country_lists[[2]]$ref_area.label), "LIC/LMIC", "HIC/HMIC"))
+all_countries <- countryLists()[[9]] %>% 
+  mutate(inc_level = ifelse(ref_area.label %in% c(countryLists()[[1]]$ref_area.label, countryLists()[[2]]$ref_area.label), "LIC/LMIC", "HIC/HMIC"))
 
 ## UNEMPLOYMENT VS INFORMALITY RATE
 unemp_r <- read.csv(here("data", "raw", "unemployment_rate_sex_age_ilostat.csv")) %>% 

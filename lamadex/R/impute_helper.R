@@ -45,15 +45,15 @@ impute_helper <- function(index) {
   if (sum(!is.na(index$nosecondary)) > 1 & sum(!is.na(index$literacy)) > 1 & sum(!is.na(index$test_scores)) > 1) {
 
     index <- index %>%
-      add_column(education_pct = rowMeans(find_pct(index[9:11]), na.rm = TRUE)) %>%
+      add_column(education_pct = rowMeans(find_pct(index[10:12]), na.rm = TRUE)) %>%
       mutate(nosecondary_impute = quantile(index$nosecondary, education_pct, na.rm = TRUE),
              literacy_impute = quantile(index$literacy, education_pct, na.rm = TRUE),
              testScore_impute = quantile(index$test_scores, education_pct, na.rm = TRUE))
 
     index <- index %>%
-      mutate(nosecondary = ifelse(rowSums(is.na(.[9:11]))<2, coalesce(nosecondary, nosecondary_impute), nosecondary),
-             literacy = ifelse(rowSums(is.na(.[9:11]))<2, coalesce(literacy, literacy_impute), literacy),
-             test_scores = ifelse(rowSums(is.na(.[9:11]))<2, coalesce(test_scores, testScore_impute), test_scores))
+      mutate(nosecondary = ifelse(rowSums(is.na(.[10:12]))<2, coalesce(nosecondary, nosecondary_impute), nosecondary),
+             literacy = ifelse(rowSums(is.na(.[10:12]))<2, coalesce(literacy, literacy_impute), literacy),
+             test_scores = ifelse(rowSums(is.na(.[10:12]))<2, coalesce(test_scores, testScore_impute), test_scores))
 
   }
 

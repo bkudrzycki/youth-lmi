@@ -12,15 +12,14 @@ library(rgdal)
 library(leaflet.extras)
 library(shinyWidgets)
 library(gridExtra)
-devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
+#devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
 
 ## ---------------------------------------
 
 # load map, shapefile name "countries", country names saved as NAME
 source("data/recode_shapeFile.R")
-country_list_for_dropdown <- read.csv("data/country_list_for_dropdown.csv")
-
+country_list_for_dropdown <- countryLists()[[3]][[1]] %>% sort()
 # globals: load list of countries and raw data, define geometric mean function
 
 gm_mean = function(x, na.rm = FALSE) {
@@ -61,7 +60,8 @@ ui <- fluidPage(
                                      selectInput("gender", "Gender", c("Total", "Male", "Female")),
                                      checkboxInput("impute", "Impute missing values", value = TRUE),
                                      radioButtons("subset", label = "Countries Ranked:", choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
-                                     hr())
+                                     hr(),
+                                     downloadButton("dl", "Download .Excel"))
                             ),
                             width = 3,
                           ),
@@ -98,17 +98,17 @@ ui <- fluidPage(
                                                                       "Harmonized tests score" = "Harmonized tests score"),
                                                                     multiple = FALSE))),
                               tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
-                                       downloadButton("dl", "Download .Excel"),
                                        DT::dataTableOutput("scores")),
                               tabPanel("Country Comparison", 
                                        fluidRow(
                                          column(4,
-                                                selectInput("country1", "", sort(country_list_for_dropdown[,1]), selected = "Benin")),
+                                                selectInput("country1", "", choices = country_list_for_dropdown)),
                                          column(4,
                                          ),
                                          column(4,
-                                                selectInput("country2", "", sort(country_list_for_dropdown[,1]), selected = "Nepal"))),
-                                       plotOutput("test", width = "100%")
+                                                selectInput("country2", "", choices = country_list_for_dropdown)),
+                                         plotOutput("test", width = "100%")
+                                       )
                               )
                             )
                           )
@@ -117,7 +117,7 @@ ui <- fluidPage(
                tabPanel("About",
                         fluidRow(
                           column(6,
-                        tags$h5("The Youth Labor Market Index for Low Income Countries (YLILI) is a composite index that scores countries on the strength of their youth labor markets. This website allows users to recreate the scores and rankings used in the paper by Kudrzycki, Lefoll, and Günther (2021) and adjust the parameters used to generate them. The parameters are: gender (male, female, or total), the cutoff year for the oldest data to be entered into the index, and whether missing data should be imputed (for countries which have a sufficient number of 'true' observations. This tool was designed by NADEL of the ETH Zürich."))
+                                 tags$h5("The Youth Labor Market Index for Low Income Countries (YLILI) is a composite index that scores countries on the strength of their youth labor markets. This website allows users to recreate the scores and rankings used in the paper by Kudrzycki, Lefoll, and Günther (2021) and adjust the parameters used to generate them. The parameters are: gender (male, female, or total), the cutoff year for the oldest data to be entered into the index, and whether missing data should be imputed (for countries which have a sufficient number of 'true' observations. This tool was designed by NADEL of the ETH Zürich."))
                         )
                )
     )
@@ -138,7 +138,7 @@ server <- function(input, output, session) {
     }
   )
   
-  reactiveIndex <- reactive(rank_generator(bygender = input$gender, countries <- country_input(), years = input$years, impute = input$impute) %>% 
+  reactiveIndex <- reactive(rank_generator(bygender = input$gender, countries = country_input(), years = input$years, impute = input$impute) %>% 
                               rowwise() %>%
                               mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                                      wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -163,9 +163,10 @@ server <- function(input, output, session) {
                                 "Literacy rate" = literacy,
                                 "Harmonized tests score" = test_scores
                               )
-                            )
-                            
-  tot_ylili <- reactive(rank_generator(bygender = "Total", countries <- countries(), years = input$years, impute = input$impute) %>% 
+  )
+  
+  
+  tot_ylili <- reactive(rank_generator(bygender = "Total", countries = country_input(), years = input$years, impute = input$impute) %>% 
                           rowwise() %>%
                           rename("Country" = "country") %>% 
                           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
@@ -175,11 +176,28 @@ server <- function(input, output, session) {
                                  geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>%  # don't generate if missing dims
                           mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)))
   
+  observeEvent(input$subset, {
+    reactive_country_list_for_dropdown <- reactive({
+      reactiveIndex()[rowSums(!is.na(reactiveIndex()[6:15])) > 0, ] %>% 
+        select(Country) %>% 
+        t() %>% 
+        as.vector()
+    })
+    
+    updateSelectInput(session, "country1",
+                      choices = reactive_country_list_for_dropdown(),
+                      selected = sample(reactive_country_list_for_dropdown(), 1))
+    updateSelectInput(session, "country2",
+                      choices = reactive_country_list_for_dropdown(),
+                      selected = sample(reactive_country_list_for_dropdown(), 1))
+  })
+  
   ## Last year cannot be earlier than 2018
   observeEvent(input$years,{
     lastyear <- c(min((input$years[1]), 2017), input$years[2])
     updateSliderInput(session, "years", min = 2000, max = 2020, value = lastyear)
   })
+  
   
   observe({
     
@@ -250,11 +268,8 @@ server <- function(input, output, session) {
     })
   })
   
-  toListen <- reactive({
-    list(input$table, input$country1, input$country2)
-  })
   
-  observeEvent(toListen(), {
+  observeEvent(input$table, {
     
     # generate table with dynamic color-coding
     scores <- DT::renderDataTable({
@@ -269,11 +284,33 @@ server <- function(input, output, session) {
         {paste0("rgb(", ., ",", 75+.,",", ., ")")}
       clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
         {paste0("rgb(", ., ",", ., ",255)")}
-      DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
+      DT::datatable(rank, options = list(paging = FALSE,
+                                         searching = FALSE,
+                                         headerCallback = JS(
+                                           "function( thead, data, start, end, display ) {
+                                           $(thead).closest('thead').find('th').eq(1).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(2).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(3).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(4).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(5).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(6).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(7).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(8).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(9).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(10).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(11).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(12).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(13).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(14).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(15).css('color', 'white');
+              }"))) %>% 
         formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
         formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
         formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+      
     })
+    
+    ## find countries with at least one observed data point (for country comparison)
     
     ranks <- DT::renderDataTable({
       rank <- reactiveIndex() %>% 
@@ -304,7 +341,26 @@ server <- function(input, output, session) {
         {paste0("rgb(", ., ",", 75+.,",", ., ")")}
       clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
         {paste0("rgb(", ., ",", ., ",255)")}
-      DT::datatable(rank, options = list(paging = FALSE, searching = FALSE)) %>% 
+      DT::datatable(rank, options = list(paging = FALSE,
+                                         searching = FALSE,
+                                         headerCallback = JS(
+                                           "function( thead, data, start, end, display ) {
+                                           $(thead).closest('thead').find('th').eq(1).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(2).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(3).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(4).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(5).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(6).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(7).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(8).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(9).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(10).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(11).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(12).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(13).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(14).css('color', 'white');
+      $(thead).closest('thead').find('th').eq(15).css('color', 'white');
+              }"))) %>% 
         formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
         formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
         formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
@@ -316,7 +372,105 @@ server <- function(input, output, session) {
       output$scores <- ranks
     }
     
+    #generate data
+    data_list <- reactive({
+      list(
+        total = rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
+          rowwise() %>%
+          mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
+                 wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
+                 educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
+          mutate(arith_score = mean(c(transdim,wcdim,educdim)),
+                 geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
+          mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
+          select(
+            Country = country,
+            "YLILI score" = score,
+            "Transition" = transdim,
+            "Working conditions" = wcdim,
+            "Education" = educdim,
+            "NEET score" = neet,
+            "Working conditions ratio" = relative_wc,
+            "Mismatch score" = mismatch,
+            "Working poverty score" = workingpov,
+            "Under- employment score" = underemp,
+            "Informal work score" = informal,
+            "Elementary occupation score" = elementary,
+            "Secondary schooling rate" = nosecondary,
+            "Literacy rate" = literacy,
+            "Harmonized tests score" = test_scores
+          ) %>% 
+          arrange(desc(`YLILI score`)),
+        male = rank_generator(bygender = "Male", countries <- countries(), years = input$years, impute = input$impute) %>% 
+          rowwise() %>%
+          mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
+                 wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
+                 educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
+          mutate(arith_score = mean(c(transdim,wcdim,educdim)),
+                 geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
+          mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
+          select(
+            Country = country,
+            "YLILI score" = score,
+            "Transition" = transdim,
+            "Working conditions" = wcdim,
+            "Education" = educdim,
+            "NEET score" = neet,
+            "Working conditions ratio" = relative_wc,
+            "Mismatch score" = mismatch,
+            "Working poverty score" = workingpov,
+            "Under- employment score" = underemp,
+            "Informal work score" = informal,
+            "Elementary occupation score" = elementary,
+            "Secondary schooling rate" = nosecondary,
+            "Literacy rate" = literacy,
+            "Harmonized tests score" = test_scores
+          ) %>% 
+          arrange(desc(`YLILI score`)),
+        female = rank_generator(bygender = "Female", countries <- countries(), years = input$years, impute = input$impute) %>% 
+          rowwise() %>%
+          mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
+                 wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
+                 educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
+          mutate(arith_score = mean(c(transdim,wcdim,educdim)),
+                 geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
+          mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
+          select(
+            Country = country,
+            "YLILI score" = score,
+            "Transition" = transdim,
+            "Working conditions" = wcdim,
+            "Education" = educdim,
+            "NEET score" = neet,
+            "Working conditions ratio" = relative_wc,
+            "Mismatch score" = mismatch,
+            "Working poverty score" = workingpov,
+            "Under- employment score" = underemp,
+            "Informal work score" = informal,
+            "Elementary occupation score" = elementary,
+            "Secondary schooling rate" = nosecondary,
+            "Literacy rate" = literacy,
+            "Harmonized tests score" = test_scores
+          ) %>% 
+          arrange(desc(`YLILI score`))
+      )
+    })
+    
+    output$dl <- downloadHandler(
+      filename = function() {"ylili.xlsx"},
+      content = function(file) {write.xlsx(data_list(), file)}
+    )
+    
+  })
+  
+  toListen <- reactive({
+    list(input$country1, input$country2, input$years, input$dim_agg, input$score_agg, input$gender, input$impute)
+  })
+  
+  observeEvent(toListen(), {
+    
     # back-to-back bar graph
+    
     left <- reactive({
       reactiveIndex() %>% 
         filter(Country == input$country1) %>% 
@@ -339,8 +493,7 @@ server <- function(input, output, session) {
                                  "Transition",
                                  "YLILI score"),
                label = ifelse(V1 > 19.99, round(V1, 2), NA))
-      })
-    
+    })
     
     right <- reactive({
       reactiveIndex() %>% 
@@ -350,24 +503,24 @@ server <- function(input, output, session) {
         as.data.frame() %>%
         mutate(var = rownames(.),
                var = fct_relevel(var, "Harmonized tests score",
-                           "Literacy rate",
-                           "Secondary schooling rate",
-                           "Elementary occupation score",
-                           "Informal work score",
-                           "Underemployment score",
-                           "Working poverty score",
-                           "Mismatch score",
-                           "Working conditions ratio",
-                           "NEET score",
-                           "Education",
-                           "Working conditions",
-                           "Transition",
-                           "YLILI score"),
+                                 "Literacy rate",
+                                 "Secondary schooling rate",
+                                 "Elementary occupation score",
+                                 "Informal work score",
+                                 "Underemployment score",
+                                 "Working poverty score",
+                                 "Mismatch score",
+                                 "Working conditions ratio",
+                                 "NEET score",
+                                 "Education",
+                                 "Working conditions",
+                                 "Transition",
+                                 "YLILI score"),
                label = ifelse(V1 > 19.99, round(V1, 2), NA))
     })
     
     # Center labels
-    g.mid<-ggplot(left(), aes(x=1,y=left()$var)) + geom_text(aes(label=left()$var, color = "NEET score"), size = rel(5)) +
+    g.mid<-ggplot(left(), aes(x=1,y=left()$var)) + geom_text(aes(label=left()$var, color = "NEET score"), size = rel(5), na.rm = TRUE) +
       scale_colour_manual(values = c("white")) +
       ggtitle("")+
       ylab(NULL)+
@@ -396,7 +549,7 @@ server <- function(input, output, session) {
             axis.text.x=element_text(color = "white"),
             plot.margin = unit(c(1,-1,1,-1), "mm")) +
       scale_y_reverse(limits=c(100,0)) + coord_flip()
-
+    
     
     g2 <- ggplot(data = right(),  aes(y= V1, x = var, label = label)) +
       geom_bar(stat = "identity", aes(y= V1, x = var), fill = "white") +
@@ -418,96 +571,8 @@ server <- function(input, output, session) {
     
   })
   
-  #generate data
-  data_list <- reactive({
-    list(
-      total = rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
-        rowwise() %>%
-        mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
-               wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
-               educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
-        mutate(arith_score = mean(c(transdim,wcdim,educdim)),
-               geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
-        mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
-        select(
-          Country = country,
-          "YLILI score" = score,
-          "Transition" = transdim,
-          "Working conditions" = wcdim,
-          "Education" = educdim,
-          "NEET score" = neet,
-          "Working conditions ratio" = relative_wc,
-          "Mismatch score" = mismatch,
-          "Working poverty score" = workingpov,
-          "Under- employment score" = underemp,
-          "Informal work score" = informal,
-          "Elementary occupation score" = elementary,
-          "Secondary schooling rate" = nosecondary,
-          "Literacy rate" = literacy,
-          "Harmonized tests score" = test_scores
-        ) %>% 
-        arrange(desc(`YLILI score`)),
-      male = rank_generator(bygender = "Male", countries <- countries(), years = input$years, impute = input$impute) %>% 
-        rowwise() %>%
-        mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
-               wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
-               educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
-        mutate(arith_score = mean(c(transdim,wcdim,educdim)),
-               geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
-        mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
-        select(
-          Country = country,
-          "YLILI score" = score,
-          "Transition" = transdim,
-          "Working conditions" = wcdim,
-          "Education" = educdim,
-          "NEET score" = neet,
-          "Working conditions ratio" = relative_wc,
-          "Mismatch score" = mismatch,
-          "Working poverty score" = workingpov,
-          "Under- employment score" = underemp,
-          "Informal work score" = informal,
-          "Elementary occupation score" = elementary,
-          "Secondary schooling rate" = nosecondary,
-          "Literacy rate" = literacy,
-          "Harmonized tests score" = test_scores
-        ) %>% 
-        arrange(desc(`YLILI score`)),
-      female = rank_generator(bygender = "Female", countries <- countries(), years = input$years, impute = input$impute) %>% 
-        rowwise() %>%
-        mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
-               wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
-               educdim = ifelse(input$dim_agg == "Arithmetic", education_mean, education_geom)) %>% 
-        mutate(arith_score = mean(c(transdim,wcdim,educdim)),
-               geom_score = gm_mean(c(transdim,wcdim,educdim)), na.rm = FALSE) %>% 
-        mutate(score = ifelse(input$score_agg == "Arithmetic", arith_score, geom_score)) %>% 
-        select(
-          Country = country,
-          "YLILI score" = score,
-          "Transition" = transdim,
-          "Working conditions" = wcdim,
-          "Education" = educdim,
-          "NEET score" = neet,
-          "Working conditions ratio" = relative_wc,
-          "Mismatch score" = mismatch,
-          "Working poverty score" = workingpov,
-          "Under- employment score" = underemp,
-          "Informal work score" = informal,
-          "Elementary occupation score" = elementary,
-          "Secondary schooling rate" = nosecondary,
-          "Literacy rate" = literacy,
-          "Harmonized tests score" = test_scores
-        ) %>% 
-        arrange(desc(`YLILI score`))
-    )
-  })
-  
-  output$dl <- downloadHandler(
-    filename = function() {"ylili.xlsx"},
-    content = function(file) {write.xlsx(data_list(), file)}
-  )
-  
 }
+
 
 app <- shinyApp(ui = ui, server = server)
 

@@ -6,16 +6,14 @@ library(xtable)
 library(matrixStats)
 
 devtools::load_all(here("lamadex"))
-source(here("lamadex", "R", "source", "countryList.R"))
-source(here("lamadex", "R", "source", "data_loader.R"))
 
-raw <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = FALSE) %>%
+raw <- rank_generator(bygender = "Total", countries = "dev",  years = c(2010, 2020), impute = FALSE) %>%
   arrange(desc(index_mean)) %>%
   filter(!is.na(index_mean)) %>% 
   select(country,
          "raw" = index_mean)
 
-rank <- rank_generator(dfList, country_lists[[3]], bygender = "Total", lastyear = 2010, impute = TRUE) %>%
+rank <- rank_generator(bygender = "Total", countries = "dev",  years = c(2010, 2020), impute = TRUE) %>%
   arrange(desc(index_mean)) %>% 
   mutate(rank = rank(-index_mean,na.last = "keep")) %>% 
   filter(!is.na(index_mean))
