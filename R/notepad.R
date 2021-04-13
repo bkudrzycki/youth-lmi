@@ -7,7 +7,7 @@ setwd("~/polybox/Youth Employment/1b Index/youth-lmi")
 devtools::load_all(here("lamadex"))
 source(here("R", "countryList.R"))
 
-rank <- rank_generator(bygender = "Total", lastyear = 2010, impute = TRUE) %>%
+rank <- rank_generator(bygender = "Total", countries = "dev", years = c(2010, 2020), impute = TRUE) %>%
   arrange(desc(index_mean))
 
 regions <- read_csv(here("data", "raw", "country_regions.csv")) %>% 

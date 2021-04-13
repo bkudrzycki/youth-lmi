@@ -28,7 +28,7 @@ gm_mean = function(x, na.rm = FALSE) {
 
 # background color
 css <- HTML(" body {
-    background-color: #4e5d6c;
+    background-color: #FFFFFF;
 }")
 
 tags$head(
@@ -40,7 +40,7 @@ tags$head(
 # Define UI
 ui <- fluidPage(
   tags$head(
-    tags$style(HTML(".leaflet-container { background: #4e5d6c; }")),
+    tags$style(HTML(".leaflet-container { background: #FFFFFF; }")),
     navbarPage("YLILI", theme = shinytheme("superhero"),
                tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE,
                         tags$head(
@@ -61,7 +61,23 @@ ui <- fluidPage(
                                      checkboxInput("impute", "Impute missing values", value = TRUE),
                                      radioButtons("subset", label = "Countries Ranked:", choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
                                      hr(),
-                                     downloadButton("dl", "Download .Excel"))
+                                     downloadButton("dl", "Download .Excel"),
+                                     selectizeInput("select", "Show on map:",
+                                                    c("YLILI Score" = "YLILI score",
+                                                      "Transition" = "Transition",
+                                                      "Working conditions" = "Working conditions",
+                                                      "Education" = "Education",
+                                                      "NEET score" = "NEET score",
+                                                      "Working conditions ratio" =  "Working conditions ratio",
+                                                      "Mismatch score" = "Mismatch score",
+                                                      "Working poverty score" = "Working poverty score",
+                                                      "Underemployment score" = "Underemployment score",
+                                                      "Informal work score" = "Informal work score",
+                                                      "Elementary occupation score" = "Elementary occupation score",
+                                                      "Secondary schooling rate" = "Secondary schooling rate",
+                                                      "Literacy rate" = "Literacy rate",
+                                                      "Harmonized tests score" = "Harmonized tests score"),
+                                                    multiple = FALSE))
                             ),
                             width = 3,
                           ),
@@ -80,23 +96,7 @@ ui <- fluidPage(
         }
                "),
                                        absolutePanel(id = "controls", bottom = 50, left = 10,
-                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))),
-                                                     selectizeInput("select", "Show on map:",
-                                                                    c("YLILI Score" = "YLILI score",
-                                                                      "Transition" = "Transition",
-                                                                      "Working conditions" = "Working conditions",
-                                                                      "Education" = "Education",
-                                                                      "NEET score" = "NEET score",
-                                                                      "Working conditions ratio" =  "Working conditions ratio",
-                                                                      "Mismatch score" = "Mismatch score",
-                                                                      "Working poverty score" = "Working poverty score",
-                                                                      "Underemployment score" = "Under- employment score",
-                                                                      "Informal work score" = "Informal work score",
-                                                                      "Elementary occupation score" = "Elementary occupation score",
-                                                                      "Secondary schooling rate" = "Secondary schooling rate",
-                                                                      "Literacy rate" = "Literacy rate",
-                                                                      "Harmonized tests score" = "Harmonized tests score"),
-                                                                    multiple = FALSE))),
+                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))))),
                               tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
                                        DT::dataTableOutput("scores")),
                               tabPanel("Country Comparison", 
@@ -207,7 +207,7 @@ server <- function(input, output, session) {
     chosen_indicator <- reactive(reactiveIndex()[, c("Country", as.character(input$select)), drop=FALSE])
     scores<-reactive(left_join(data.frame(Country = countries$NAME%>%as.character()), chosen_indicator(), by = "Country"))
     
-    pal <- reactive(colorNumeric(c("#FFFFFFFF", viridis(256)), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "white"))
+    pal <- reactive(colorNumeric(inferno(256, begin = 0.1), domain = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)), na.color = "#D3D3D3"))
     
     countries1 <- reactive(merge(countries,
                                  tot_ylili(),
@@ -250,19 +250,21 @@ server <- function(input, output, session) {
       
       leaflet(countries2(), options = leafletOptions(
         minZoom = 2, maxZoom = 5,
+        zoomControl = FALSE,
         attributionControl=FALSE)) %>% 
         addPolygons(data = countries2(),
                     fillColor = ~pal()(countries2()[[indicator]]),
                     layerId = ~NAME, weight = 1, smoothFactor = 0.5,
-                    opacity = .8, fillOpacity = .8,  color = "#BDBDC3",
+                    opacity = .8, fillOpacity = .8,  color = "#808080",
                     highlightOptions = highlightOptions(color = "black", weight = 2, opacity = .8),
                     popup = country_popup) %>% 
-        setView(10, 20, zoom = 2) %>% 
+        setView(15, 20, zoom = 3) %>% 
         setMaxBounds(lng1 = -200,
                      lat1 = -90,
                      lng2 = 200,
                      lat2 = 90) %>% 
         addLegend(position = "bottomright",
+                  opacity = 0.8,
                   pal = pal(),
                   value = c(min(scores()[2], na.rm = T), max(scores()[2], na.rm = T)))
     })
@@ -393,7 +395,7 @@ server <- function(input, output, session) {
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
             "Working poverty score" = workingpov,
-            "Under- employment score" = underemp,
+            "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
             "Secondary schooling rate" = nosecondary,
@@ -419,7 +421,7 @@ server <- function(input, output, session) {
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
             "Working poverty score" = workingpov,
-            "Under- employment score" = underemp,
+            "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
             "Secondary schooling rate" = nosecondary,
@@ -445,7 +447,7 @@ server <- function(input, output, session) {
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
             "Working poverty score" = workingpov,
-            "Under- employment score" = underemp,
+            "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
             "Secondary schooling rate" = nosecondary,
