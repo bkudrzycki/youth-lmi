@@ -5,8 +5,8 @@ account: nadel
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3943737
-bundleId: 4466405
+bundleId: 4470252
 url: https://nadel.shinyapps.io/ylili/
-when: 1618329878.36658
+when: 1618404103.66319
 asMultiple: FALSE
 asStatic: FALSE

@@ -14,6 +14,7 @@ library(shinyWidgets)
 library(gridExtra)
 #devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
+library(RColorBrewer)
 
 ## ---------------------------------------
 
@@ -90,7 +91,7 @@ ui <- fluidPage(
                                                                       "Working conditions ratio" =  "Working conditions ratio",
                                                                       "Mismatch score" = "Mismatch score",
                                                                       "Working poverty score" = "Working poverty score",
-                                                                      "Underemployment score" = "Under- employment score",
+                                                                      "Underemployment score" = "Underemployment score",
                                                                       "Informal work score" = "Informal work score",
                                                                       "Elementary occupation score" = "Elementary occupation score",
                                                                       "Secondary schooling rate" = "Secondary schooling rate",
@@ -258,7 +259,7 @@ server <- function(input, output, session) {
                     opacity = .8, fillOpacity = .8,  color = "#808080",
                     highlightOptions = highlightOptions(color = "black", weight = 2, opacity = .8),
                     popup = country_popup) %>% 
-        setView(15, 20, zoom = 3) %>% 
+        setView(15, 20, zoom = 2) %>% 
         setMaxBounds(lng1 = -200,
                      lat1 = -90,
                      lng2 = 200,
@@ -280,12 +281,9 @@ server <- function(input, output, session) {
         arrange(desc(`YLILI score`))
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
-      clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(255,", ., ",", ., ")")}
-      clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(", ., ",", 75+.,",", ., ")")}
-      clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(", ., ",", ., ",255)")}
+      clrs_index <- viridis::inferno(n=length(brks)+1, alpha=.5, direction = -1)
+      clrs_dims <- colorRampPalette(brewer.pal(4, "Blues"))(length(brks)+1)
+      clrs <- colorRampPalette(brewer.pal(4, "Greens"))(length(brks)+1)
       DT::datatable(rank, options = list(paging = FALSE,
                                          searching = FALSE,
                                          headerCallback = JS(
@@ -337,12 +335,9 @@ server <- function(input, output, session) {
         arrange(`YLILI score`)
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
-      clrs_index <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(255,", ., ",", ., ")")}
-      clrs_dims <- round(seq(150, 80, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(", ., ",", 75+.,",", ., ")")}
-      clrs <- round(seq(200, 120, length.out = length(brks) + 1), 0) %>%
-        {paste0("rgb(", ., ",", ., ",255)")}
+      clrs_index <- viridis::plasma(n=length(brks)+1, alpha=.5)
+      clrs_dims <- colorRampPalette(rev(brewer.pal(4, "Blues")))(length(brks)+1)
+      clrs <- colorRampPalette(rev(brewer.pal(4, "Greens")))(length(brks)+1)
       DT::datatable(rank, options = list(paging = FALSE,
                                          searching = FALSE,
                                          headerCallback = JS(
