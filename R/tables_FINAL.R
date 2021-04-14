@@ -36,3 +36,60 @@ lower[lower.tri(cormat_indices, diag=TRUE)]<-""
 lower <- as.matrix(lower)
 
 stargazer(lower,align = T)
+
+
+## number of indicators available by year
+
+
+dfList <- compute_indicators()
+#dev_countries <- countryLists()[[3]][[1]]
+
+compress <- function (x) {
+  x %>%
+    as_tibble(.) %>%
+    filter(ref_area.label %in% countryLists()[[3]][[1]],
+           sex.label == "Sex: Total",
+           !is.na(obs_value)) %>%
+    group_by(time) %>% 
+    summarise(ref_area.label) %>% 
+    summarise(n_distinct(time))
+}
+
+years_list <- lapply(dfList, compress) %>% 
+  reduce(full_join, by = "time", accumulate == TRUE) 
+
+colnames(years_list) <- c("time",  "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores")
+
+
+dfList <- compute_indicators()
+
+compress2 <- function (x) {
+  x %>%
+    as_tibble(.) %>%
+    filter(ref_area.label %in% countryLists()[[3]][[1]],
+           sex.label == "Sex: Total",
+           !is.na(obs_value)) %>%
+    group_by(time) %>% 
+    summarise(length(unique(ref_area.label)))
+    
+}
+
+years_list <- lapply(dfList, compress2) %>% 
+  reduce(full_join, by = c("time"), accumulate == TRUE) %>% 
+  mutate_all(~replace(., is.na(.), 0)) %>% 
+  filter()
+
+colnames(years_list) <- c("time",  "neet", "relative_wc", "mismatch", "workingpov", "underemp", "informal", "elementary", "nosecondary", "literacy", "test_scores")
+
+
+df <- literacy %>% as.tibble %>% 
+  filter(ref_area.label %in% countryLists()[[3]][[1]],
+         sex.label == "Sex: Total",
+         !is.na(obs_value)) %>%
+  group_by(time) %>% 
+  summarise(length(unique(ref_area.label)))
+
+years_list <- lapply(dfList, compress2) %>% 
+  reduce(full_join, by = c("ref_area.label", "time"), accumulate == TRUE) 
+  
+       

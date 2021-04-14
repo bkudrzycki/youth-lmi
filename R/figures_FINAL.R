@@ -223,8 +223,13 @@ cor.mtest <- function(mat, ...) {
 
 p.mat <- cor.mtest(cormat_indices)
 
-corrplot(cormat_indices, method="circle", type="upper", p.mat = p.mat, sig.level = 0.1, tl.col="black", tl.srt=45)
-
+ggcorrplot(cormat_indices, hc.order = TRUE, type = "upper",
+           outline.col = "white",
+           ggtheme = ggplot2::theme_minimal,
+           p.mat = p.mat,
+           sig.level = .05,
+           colors = c("#FCFFA4FF", "#F98C0AFF", "#56106EFF")) +
+  ggsave(here("figures", "correlation_matrix.png"), width = 20, height = 12, units = "cm")
 
 ## SPIDER CHARTS
 

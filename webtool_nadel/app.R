@@ -28,7 +28,7 @@ gm_mean = function(x, na.rm = FALSE) {
 
 # background color
 css <- HTML(" body {
-    background-color: #FFFFFF;
+    background-color: #4e5d6c;
 }")
 
 tags$head(
@@ -40,7 +40,7 @@ tags$head(
 # Define UI
 ui <- fluidPage(
   tags$head(
-    tags$style(HTML(".leaflet-container { background: #FFFFFF; }")),
+    tags$style(HTML(".leaflet-container { background: #4e5d6c; }")),
     navbarPage("YLILI", theme = shinytheme("superhero"),
                tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE,
                         tags$head(
@@ -61,23 +61,7 @@ ui <- fluidPage(
                                      checkboxInput("impute", "Impute missing values", value = TRUE),
                                      radioButtons("subset", label = "Countries Ranked:", choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
                                      hr(),
-                                     downloadButton("dl", "Download .Excel"),
-                                     selectizeInput("select", "Show on map:",
-                                                    c("YLILI Score" = "YLILI score",
-                                                      "Transition" = "Transition",
-                                                      "Working conditions" = "Working conditions",
-                                                      "Education" = "Education",
-                                                      "NEET score" = "NEET score",
-                                                      "Working conditions ratio" =  "Working conditions ratio",
-                                                      "Mismatch score" = "Mismatch score",
-                                                      "Working poverty score" = "Working poverty score",
-                                                      "Underemployment score" = "Underemployment score",
-                                                      "Informal work score" = "Informal work score",
-                                                      "Elementary occupation score" = "Elementary occupation score",
-                                                      "Secondary schooling rate" = "Secondary schooling rate",
-                                                      "Literacy rate" = "Literacy rate",
-                                                      "Harmonized tests score" = "Harmonized tests score"),
-                                                    multiple = FALSE))
+                                     downloadButton("dl", "Download .Excel"))
                             ),
                             width = 3,
                           ),
@@ -96,7 +80,23 @@ ui <- fluidPage(
         }
                "),
                                        absolutePanel(id = "controls", bottom = 50, left = 10,
-                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))))),
+                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))),
+                                                     selectizeInput("select", "Show on map:",
+                                                                    c("YLILI Score" = "YLILI score",
+                                                                      "Transition" = "Transition",
+                                                                      "Working conditions" = "Working conditions",
+                                                                      "Education" = "Education",
+                                                                      "NEET score" = "NEET score",
+                                                                      "Working conditions ratio" =  "Working conditions ratio",
+                                                                      "Mismatch score" = "Mismatch score",
+                                                                      "Working poverty score" = "Working poverty score",
+                                                                      "Underemployment score" = "Under- employment score",
+                                                                      "Informal work score" = "Informal work score",
+                                                                      "Elementary occupation score" = "Elementary occupation score",
+                                                                      "Secondary schooling rate" = "Secondary schooling rate",
+                                                                      "Literacy rate" = "Literacy rate",
+                                                                      "Harmonized tests score" = "Harmonized tests score"),
+                                                                    multiple = FALSE))),
                               tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
                                        DT::dataTableOutput("scores")),
                               tabPanel("Country Comparison", 
