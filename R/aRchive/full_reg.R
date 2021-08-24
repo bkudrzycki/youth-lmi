@@ -219,36 +219,36 @@ m1 <- lm(data = df, index_mean ~ hdi)
 
 m2 <- lm(data = df, index_mean ~ youth_unemp_rate)
 
-m3 <- lm(data = df, index_mean ~ pop_growth_2019)
+m3 <- lm(data = df, index_mean ~ log_gdp)
 
-m4 <- lm(data = df, index_mean ~ log_gdp)
+m4 <- lm(data = df, index_mean ~ youth_ratio)
 
-m5 <- lm(data = df, index_mean ~ youth_ratio)
+m5 <- lm(data = df, index_mean ~ fertility_rate)
 
-m6 <- lm(data = df, index_mean ~ fertility_rate)
+m6 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate) 
 
-m7 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate) 
+m7 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export) 
 
-m8 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m8 <- lm(data = df, index_mean ~ youth_ratio + fertility_rate + agriculture + manu_value + export + fdi + savings_rate + doing_business + urban_pop + access_to_elec)
 
-stargazer(m1, m2, m3, m4, m5, m6, m7, m8, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("ylili"), covariate.labels = c("HDI Score", "Youth unemployment rate", "Population Growth (2019)", "log(GDP)","Youth population ratio", "Fertility rate", "Access to Electr.", "Agriculture (\\% of GDP)", "Ease of Doing Business", "Exports (\\% of GDP)", "FDI (\\% of GDP)", "Manufacturing (\\% of GDP)", "Urban population rate", "Savings rate"), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
+stargazer(m1, m2, m3, m4, m5, m6, m7, m8, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("YLILI Score"), covariate.labels = c("HDI Score", "Youth unemployment rate", "log(GDP)","Youth population ratio", "Fertility rate", "Agriculture (\\% of GDP)", "Manufacturing (\\% of GDP)", "Exports (\\% of GDP)", "FDI (\\% of GDP)", "Savings rate (\\% of GDP)", "Ease of Doing Business", "Urbanization rate", "Access to Electr."), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
 
 
 
-m7 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m7 <- lm(data = df, index_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
 
-m8 <- lm(data = df, male_index_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m8 <- lm(data = df, male_index_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
 
-m9 <- lm(data = df, female_index_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m9 <- lm(data = df, female_index_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
 
-m10 <- lm(data = df, transition_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m10 <- lm(data = df, transition_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
 
-m11 <- lm(data = df, working_conditions_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m11 <- lm(data = df, working_conditions_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
 
-m12 <- lm(data = df, education_mean ~ log_gdp + youth_ratio + fertility_rate + access_to_elec + agriculture + doing_business + export + fdi + manu_value + urban_pop + savings_rate)
+m12 <- lm(data = df, education_mean ~ log_gdp + youth_ratio + fertility_rate + agriculture + manu_value + export)
             
 
 
-stargazer(m7, m8, m9, m10, m11, m12, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("ylili", "male", "female", "transition", "working cond.", "education"), covariate.labels = c("Log GDP", "Youth population ratio", "Fertility rate", "Access to Electr.", "Agriculture (\\% of GDP)", "Ease of Doing Business", "Exports (\\% of GDP)", "FDI (\\% of GDP)", "Manufacturing (\\% of GDP)", "Urban population rate", "Savings rate"), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
+stargazer(m7, m8, m9, m10, m11, m12, omit.stat = c("f", "adj.rsq", "ser"), column.sep.width = "-10pt", dep.var.labels = c("YLILI Score", "Male", "Female", "Transition", "working cond.", "education"), covariate.labels = c("log(GDP)","Youth population ratio", "Fertility rate", "Agriculture (\\% of GDP)", "Manufacturing (\\% of GDP)", "Exports (\\% of GDP)"), omit = "Constant", column.labels = NULL, model.numbers = FALSE)
 
 

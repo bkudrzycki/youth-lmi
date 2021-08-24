@@ -15,6 +15,7 @@ library(gridExtra)
 #devtools::install_github("bkudrzycki/youth-lmi/lamadex", quiet = TRUE, upgrade = "always")
 library(lamadex)
 library(RColorBrewer)
+library(shinyBS)
 
 ## ---------------------------------------
 
@@ -43,7 +44,7 @@ ui <- fluidPage(
   tags$head(
     tags$style(HTML(".leaflet-container { background: #4e5d6c; }")),
     navbarPage("YLILI", theme = shinytheme("superhero"),
-               tabPanel("Youth Labor Market Index for Low-Income Countries", fluid = TRUE,
+               tabPanel("Youth Labor Index for Low-Income Countries", fluid = TRUE,
                         tags$head(
                           tags$style(css)),
                         # Sidebar layout with a input and output definitions
@@ -52,15 +53,58 @@ ui <- fluidPage(
                             # App title ----
                             titlePanel("Data Explorer"),
                             fluidRow(
-                              column(8,
-                                     sliderInput("years", "Data range:",
+                              column(9,
+                                     sliderInput("years", h6(style="height:20px;", "Data range:",
+                                                             bsButton("q1", label = "", icon = icon("fal fa-question-circle"))),
                                                  min = 2000, max = 2020,
                                                  value = c(2010, 2020), sep = "", ticks = FALSE),
-                                     selectInput("dim_agg", "Dimension aggregation", c("Arithmetic", "Geometric")),
-                                     selectInput("score_agg", "Index aggregation", c("Arithmetic", "Geometric")),
-                                     selectInput("gender", "Gender", c("Total", "Male", "Female")),
-                                     checkboxInput("impute", "Impute missing values", value = TRUE),
-                                     radioButtons("subset", label = "Countries Ranked:", choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
+                                     bsPopover(id = "q1", title = "",
+                                               content = "Must start in 2017 or earlier. For each indicator, the most recent observation available in the chosen range will be used to generate YLILI.",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")
+                                     ),
+                                     selectInput("score_agg", h6(style="height:20px;", "Index aggregation:",
+                                                                 bsButton("q2", label = "", icon = icon("fal fa-question-circle"))),
+                                                                 c("Arithmetic", "Geometric")),
+                                     bsPopover(id = "q2", title = "",
+                                               content = "Arithmetic = simple average <br> Geometric = cubed root of the product of the three dimensions",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")
+                                     ),
+                                     selectInput("dim_agg", label = h6(style="height:20px;", "Dimension aggregation:",
+                                                                       bsButton("q3", label = "", icon = icon("fal fa-question-circle"))),
+                                                 c("Arithmetic", "Geometric")),
+                                     bsPopover(id = "q3", title = "",
+                                               content = "Arithmetic = simple average <br> Geometric = <i>n</i><sup>th</sup> root of product of <i>n</i> indicators available for dimension",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")
+                                     ),
+                                     selectInput("gender", label = h6(style="height:20px;", "Gender:",
+                                                                      bsButton("q4", label = "", icon = icon("fal fa-question-circle"))), c("Total", "Male", "Female")),
+                                     bsPopover(id = "q4", title = "",
+                                               content = "Generate YLILI for the total youth population or for males and females separately.",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")
+                                     ),
+                                     div(
+                                     checkboxInput("impute", label = h6(style="position: relative;top: -18px; height:0px;", "Impute missing values:", bsButton("q5", label = "", icon = icon("fal fa-question-circle"))), value = TRUE)
+                                     ),
+                                     bsPopover(id = "q5", title = "",
+                                               content = "Replaces missing observations with estimated values. Imputation is based on countries\\' relative performance on indicators in the same dimension as the missing value.",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")
+                                     ),
+                                     radioButtons("subset", label = h6(style="height:20px;", "Countries Ranked:", bsButton("q6", label = "", icon = icon("fal fa-question-circle"))), choices = list("All", "LICs/LMICs"), inline = T, selected = "LICs/LMICs"),
+                                     bsPopover(id = "q6", title = "",
+                                               content = "LICs/LMICs = low-income and lower-middle income countries, 2021 World Bank classification",
+                                               placement = "right", 
+                                               trigger = "hover", 
+                                               options = list(container = "body")),
                                      hr(),
                                      downloadButton("dl", "Download .Excel"))
                             ),
@@ -80,45 +124,51 @@ ui <- fluidPage(
           opacity: 1;
         }
                "),
-                                       absolutePanel(id = "controls", bottom = 50, left = 10,
-                                                     tags$head(tags$style(HTML('#select+ div>.selectize-dropdown{bottom: 100% !important; top:auto!important;}'))),
+                                       absolutePanel(id = "controls", top = 50, left = 10,
                                                      selectizeInput("select", "Show on map:",
-                                                                    c("YLILI Score" = "YLILI score",
-                                                                      "Transition" = "Transition",
-                                                                      "Working conditions" = "Working conditions",
-                                                                      "Education" = "Education",
-                                                                      "NEET score" = "NEET score",
-                                                                      "Working conditions ratio" =  "Working conditions ratio",
-                                                                      "Mismatch score" = "Mismatch score",
-                                                                      "Working poverty score" = "Working poverty score",
-                                                                      "Underemployment score" = "Underemployment score",
-                                                                      "Informal work score" = "Informal work score",
-                                                                      "Elementary occupation score" = "Elementary occupation score",
-                                                                      "Secondary schooling rate" = "Secondary schooling rate",
-                                                                      "Literacy rate" = "Literacy rate",
-                                                                      "Harmonized tests score" = "Harmonized tests score"),
-                                                                    multiple = FALSE))),
-                              tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
-                                       DT::dataTableOutput("scores")),
-                              tabPanel("Country Comparison", 
-                                       fluidRow(
-                                         column(4,
-                                                selectInput("country1", "", choices = country_list_for_dropdown)),
-                                         column(4,
-                                         ),
-                                         column(4,
-                                                selectInput("country2", "", choices = country_list_for_dropdown)),
-                                         plotOutput("test", width = "100%")
+                                                                    choices = list(
+                                                                      "YLILI Score" = "YLILI score",
+                                                                      Dimensions = c("Transition" = "Transition",
+                                                                                     "Working conditions" = "Working conditions",
+                                                                                     "Education" = "Education"),
+                                                                      Transition = c("NEET score" = "NEET score",
+                                                                                     "Working conditions ratio" =  "Working conditions ratio",
+                                                                                     "Mismatch score" = "Mismatch score"),
+                                                                      `Working Conditions` = c("Working poverty score" = "Working poverty score",
+                                                                                               "Underemployment score" = "Underemployment score",
+                                                                                               "Informal work score" = "Informal work score",
+                                                                                               "Elementary occupation score" = "Elementary occupation score"),
+                                                                      Education = c("Secondary schooling rate" = "Secondary schooling rate",
+                                                                                    "Literacy rate" = "Literacy rate",
+                                                                                    "Harmonized tests score" = "Harmonized tests score")),
+                                                                      multiple = FALSE))),
+                                       tabPanel("Scores", radioButtons("table", label = "", choices = list("Scores", "Ranks"),  inline = T),
+                                                DT::dataTableOutput("scores")),
+                                       tabPanel("Country Comparison", 
+                                                fluidRow(
+                                                  column(4,
+                                                         selectInput("country1", "", choices = country_list_for_dropdown)),
+                                                  column(4,
+                                                  ),
+                                                  column(4,
+                                                         selectInput("country2", "", choices = country_list_for_dropdown)),
+                                                  plotOutput("test", width = "100%")
+                                                )
                                        )
                               )
                             )
                           )
-                        )
-               ),
-               tabPanel("About",
+                        ),
+                        tabPanel("About",
                         fluidRow(
-                          column(6,
-                                 tags$h5("The Youth Labor Market Index for Low Income Countries (YLILI) is a composite index that scores countries on the strength of their youth labor markets. This website allows users to recreate the scores and rankings used in the paper by Kudrzycki, Lefoll, and Günther (2021) and adjust the parameters used to generate them. The parameters are: gender (male, female, or total), the cutoff year for the oldest data to be entered into the index, and whether missing data should be imputed (for countries which have a sufficient number of 'true' observations. This tool was designed by NADEL of the ETH Zürich."))
+                          column(8,
+                                 tags$h3("About the YLILI"),
+                                 tags$h5("The Youth Labor Market Index for Low Income Countries scores countries on the strength of the opportunities for decent and gainful work afforded their youth. The work done by youth in developing countries is overwhelmingly informal, and thus not well captured by a single indicator (like the youth unemployment rate). Instead, the YLILI ranks economies on a scale from 1-100 on various measures of labor market quality, with a higher score always indicating better performance -- for instance, a high underemployment score means that youth underemployment is low. Indicators are grouped into three categories, each consisting of 3-4 indicators, thus giving equal weight to each of the following topics: transition smoothness, working conditions, and education. Users can recreate the scores and rankings used in the paper by Kudrzycki, Lefoll, and Günther (2021), or adjust the parameters used to generate a new set of scores."),
+                                 tags$h4("Data sources"),
+                                 tags$h5("- The indicators underlying the youth NEET score, working conditions ratio, mismatch score, working poverty score, underemployment score, and elementary occupation score were obtained from the International Labour Organization's", tags$a("ILOSTAT", href="https://ilostat.ilo.org/data/"), "."),
+                                 tags$h5("- The youth literacy indicator was obtained from ", tags$a("UNESCO", href="http://data.uis.unesco.org/"), "."),
+                                 tags$h5("- The data for youth secondary school attainment was obtained from the", tags$a("DHS program", href="https://www.statcompiler.com/en/"), "."),
+                                 tags$h5("- Harmonized test score data was obtained from the", tags$a("World Bank DataBank", href="https://databank.worldbank.org/reports.aspx?source=3698&series=HD.HCI.HLOS"), "."))
                         )
                )
     )
@@ -151,15 +201,15 @@ server <- function(input, output, session) {
                                 Country = country,
                                 "YLILI score" = score,
                                 "Transition" = transdim,
-                                "Working conditions" = wcdim,
-                                "Education" = educdim,
                                 "NEET score" = neet,
                                 "Working conditions ratio" = relative_wc,
                                 "Mismatch score" = mismatch,
+                                "Working conditions" = wcdim,
                                 "Working poverty score" = workingpov,
                                 "Underemployment score" = underemp,
                                 "Informal work score" = informal,
                                 "Elementary occupation score" = elementary,
+                                "Education" = educdim,
                                 "Secondary schooling rate" = nosecondary,
                                 "Literacy rate" = literacy,
                                 "Harmonized tests score" = test_scores
@@ -282,8 +332,9 @@ server <- function(input, output, session) {
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
       clrs_index <- viridis::inferno(n=length(brks)+1, alpha=.5, direction = -1)
-      clrs_dims <- colorRampPalette(brewer.pal(4, "Blues"))(length(brks)+1)
-      clrs <- colorRampPalette(brewer.pal(4, "Greens"))(length(brks)+1)
+      clrs_trans <- colorRampPalette(brewer.pal(4, "Blues"))(length(brks)+1)
+      clrs_wc <- colorRampPalette(brewer.pal(4, "Greens"))(length(brks)+1)
+      clrs_educ <- colorRampPalette(brewer.pal(4, "Oranges"))(length(brks)+1)
       DT::datatable(rank, options = list(paging = FALSE,
                                          searching = FALSE,
                                          headerCallback = JS(
@@ -305,9 +356,10 @@ server <- function(input, output, session) {
       $(thead).closest('thead').find('th').eq(15).css('color', 'white');
               }"))) %>% 
         formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
-        formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
-        formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
-      
+        formatStyle(names(rank[c("YLILI score", "Transition", "Working conditions", "Education")]), fontWeight = 'bold') %>% 
+        formatStyle(names(rank[c("Transition", "NEET score", "Working conditions ratio", "Mismatch score")]), backgroundColor = styleInterval(brks, clrs_trans)) %>% 
+        formatStyle(names(rank[c("Working conditions", "Working poverty score", "Underemployment score", "Informal work score", "Elementary occupation score")]), backgroundColor = styleInterval(brks, clrs_wc)) %>% 
+        formatStyle(names(rank[c("Education", "Secondary schooling rate", "Literacy rate", "Harmonized tests score")]), backgroundColor = styleInterval(brks, clrs_educ))
     })
     
     ## find countries with at least one observed data point (for country comparison)
@@ -318,15 +370,15 @@ server <- function(input, output, session) {
         mutate(
           "YLILI score" = rank(-`YLILI score`, na.last = "keep"),
           "Transition" = rank(-`Transition`, na.last = "keep"),
-          "Working conditions" = rank(-`Working conditions`, na.last = "keep"),
-          "Education" = rank(-`Education`, na.last = "keep"),
           "NEET score" = rank(-`NEET score`, na.last = "keep"),
           "Working conditions ratio" = rank(-`Working conditions ratio`, na.last = "keep"),
           "Mismatch score" = rank(-`Mismatch score`, na.last = "keep"),
+          "Working conditions" = rank(-`Working conditions`, na.last = "keep"),
           "Working poverty score" = rank(-`Working poverty score`, na.last = "keep"),
           "Underemployment score" = rank(-`Underemployment score`, na.last = "keep"),
           "Informal work score" = rank(-`Informal work score`, na.last = "keep"),
           "Elementary occupation score" = rank(-`Elementary occupation score`, na.last = "keep"),
+          "Education" = rank(-`Education`, na.last = "keep"),
           "Secondary schooling rate" = rank(-`Secondary schooling rate`, na.last = "keep"),
           "Literacy rate" = rank(-`Literacy rate`, na.last = "keep"),
           "Harmonized tests score" = rank(-`Harmonized tests score`, na.last = "keep")
@@ -335,9 +387,10 @@ server <- function(input, output, session) {
         arrange(`YLILI score`)
       nums <- rank %>% select_if(is.numeric)
       brks <- quantile(nums, probs = seq(.05, .95, .05), na.rm = TRUE)
-      clrs_index <- viridis::plasma(n=length(brks)+1, alpha=.5)
-      clrs_dims <- colorRampPalette(rev(brewer.pal(4, "Blues")))(length(brks)+1)
-      clrs <- colorRampPalette(rev(brewer.pal(4, "Greens")))(length(brks)+1)
+      clrs_index <- viridis::inferno(n=length(brks)+1, alpha=.5, direction = -1)
+      clrs_trans <- colorRampPalette(brewer.pal(4, "Blues"))(length(brks)+1)
+      clrs_wc <- colorRampPalette(brewer.pal(4, "Greens"))(length(brks)+1)
+      clrs_educ <- colorRampPalette(brewer.pal(4, "Oranges"))(length(brks)+1)
       DT::datatable(rank, options = list(paging = FALSE,
                                          searching = FALSE,
                                          headerCallback = JS(
@@ -359,8 +412,10 @@ server <- function(input, output, session) {
       $(thead).closest('thead').find('th').eq(15).css('color', 'white');
               }"))) %>% 
         formatStyle(names(rank["YLILI score"]), backgroundColor = styleInterval(brks, clrs_index)) %>% 
-        formatStyle(names(rank[c("Transition", "Working conditions", "Education")]), backgroundColor = styleInterval(brks, clrs_dims)) %>% 
-        formatStyle(names(rank[c(6:ncol(rank))]), backgroundColor = styleInterval(brks, clrs))
+        formatStyle(names(rank[c("YLILI score", "Transition", "Working conditions", "Education")]), fontWeight = 'bold') %>% 
+        formatStyle(names(rank[c("Transition", "NEET score", "Working conditions ratio", "Mismatch score")]), backgroundColor = styleInterval(brks, clrs_trans)) %>% 
+        formatStyle(names(rank[c("Working conditions", "Working poverty score", "Underemployment score", "Informal work score", "Elementary occupation score")]), backgroundColor = styleInterval(brks, clrs_wc)) %>% 
+        formatStyle(names(rank[c("Education", "Secondary schooling rate", "Literacy rate", "Harmonized tests score")]), backgroundColor = styleInterval(brks, clrs_educ))
     })
     
     if (input$table == "Scores") {
@@ -372,7 +427,7 @@ server <- function(input, output, session) {
     #generate data
     data_list <- reactive({
       list(
-        total = rank_generator(bygender = input$gender, countries <- countries(), years = input$years, impute = input$impute) %>% 
+        total = rank_generator(bygender = input$gender, countries <- country_input(), years = input$years, impute = input$impute) %>% 
           rowwise() %>%
           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                  wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -384,21 +439,21 @@ server <- function(input, output, session) {
             Country = country,
             "YLILI score" = score,
             "Transition" = transdim,
-            "Working conditions" = wcdim,
-            "Education" = educdim,
             "NEET score" = neet,
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
+            "Working conditions" = wcdim,
             "Working poverty score" = workingpov,
             "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
+            "Education" = educdim,
             "Secondary schooling rate" = nosecondary,
             "Literacy rate" = literacy,
             "Harmonized tests score" = test_scores
           ) %>% 
           arrange(desc(`YLILI score`)),
-        male = rank_generator(bygender = "Male", countries <- countries(), years = input$years, impute = input$impute) %>% 
+        male = rank_generator(bygender = "Male", countries <- country_input(), years = input$years, impute = input$impute) %>% 
           rowwise() %>%
           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                  wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -410,21 +465,21 @@ server <- function(input, output, session) {
             Country = country,
             "YLILI score" = score,
             "Transition" = transdim,
-            "Working conditions" = wcdim,
-            "Education" = educdim,
             "NEET score" = neet,
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
+            "Working conditions" = wcdim,
             "Working poverty score" = workingpov,
             "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
+            "Education" = educdim,
             "Secondary schooling rate" = nosecondary,
             "Literacy rate" = literacy,
             "Harmonized tests score" = test_scores
           ) %>% 
           arrange(desc(`YLILI score`)),
-        female = rank_generator(bygender = "Female", countries <- countries(), years = input$years, impute = input$impute) %>% 
+        female = rank_generator(bygender = "Female", countries <- country_input(), years = input$years, impute = input$impute) %>% 
           rowwise() %>%
           mutate(transdim = ifelse(input$dim_agg == "Arithmetic", transition_mean, transition_geom),
                  wcdim = ifelse(input$dim_agg == "Arithmetic", working_conditions_mean, working_conditions_geom),
@@ -436,15 +491,15 @@ server <- function(input, output, session) {
             Country = country,
             "YLILI score" = score,
             "Transition" = transdim,
-            "Working conditions" = wcdim,
-            "Education" = educdim,
             "NEET score" = neet,
             "Working conditions ratio" = relative_wc,
             "Mismatch score" = mismatch,
+            "Working conditions" = wcdim,
             "Working poverty score" = workingpov,
             "Underemployment score" = underemp,
             "Informal work score" = informal,
             "Elementary occupation score" = elementary,
+            "Education" = educdim,
             "Secondary schooling rate" = nosecondary,
             "Literacy rate" = literacy,
             "Harmonized tests score" = test_scores
