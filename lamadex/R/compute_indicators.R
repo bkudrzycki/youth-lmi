@@ -19,7 +19,7 @@ compute_indicators <- function() {
   relative_workpov <- working_pov %>%
     pivot_wider(names_from = classif1.label, values_from = obs_value) %>%
     mutate(obs_value = `Age (Youth, adults): 15-24`/`Age (Youth, adults): 25+`,
-           obs_value = na_if(obs_value, "NaN"),
+           obs_value = na_if(obs_value, NaN),
            obs_value = ifelse(obs_value == Inf, 1, obs_value))
 
   ## calculate relative underemployment rate by dividing the working poverty rate for youth by that of all workers over 25 years of age
